@@ -1,0 +1,13 @@
+/**
+ * @file
+ * Generic base styles for contextual module.
+ */
+
+#edit-roles div:nth-child(1),#edit-roles div:nth-child(2),#edit-roles div:nth-child(3) {
+	display:none;
+}
+nav.tabs ul li:nth-child(3)
+{
+	display: none;
+}
+ 

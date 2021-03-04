@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * @file
+ * Contains helloworld.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function fleet_gen_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the helloworld module.
+    case 'help.page.fleet_gen':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('fleet_gen example module') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fleet_gen_theme() {
+  return [
+    'fleet_gen' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
+	function fleet_gen_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+		$current_path = \Drupal::service('path.current')->getPath();
+		$path_args = explode('/', $current_path);
+		switch($form_id){
+			case 'user_register_form':
+			    $form['account']['mail']['#description'] = '';
+				$form['account']['name']['#description'] = '';
+				
+				if($path_args[3]=="data_entry")
+				{
+
+					$roles = get_role_array('employee',$form);
+						
+					
+				}
+				else if($path_args[3]=="company") {
+					$roles = get_role_array('company', $form);
+
+				}
+				
+/*				echo "<pre>";print_r($roles);exit; 
+*/				$form['account']['roles']['#default_value'] = $roles;
+			   
+
+			
+
+			break;
+		}
+	}
+
+function get1_role_array($role_name, $form)
+{
+	$roles = array();
+
+	foreach($form['account']['roles']['#options'] as $key => $value) {
+		if($value == $role_name) {
+			$roles[] = $key;
+			break;
+		}
+	}
+
+	return $roles;
+}
+function fleet_gen_page_attachments(array &$page) {
+	$current_path = \Drupal::service('path.current')->getPath();
+	$path_args = explode('/', $current_path);
+	
+if($path_args[2]=="register" && $path_args[3]=="company"){
+		$page['#attached']['library'][] = 'fleet_gen/company-lib';
+	} ELSE 	if($path_args[2]=="register" &&  $path_args[3]=="data_entry" ){
+		$page['#attached']['library'][] = 'fleet_gen/operator-lib';
+	}
+}

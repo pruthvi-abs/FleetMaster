@@ -1,0 +1,12 @@
+company-lib:
+  version: 1.x
+  header: true
+  css:
+    component:
+      css/company.css: {}
+operator-lib:
+  version: 1.x
+  header: true
+  css:
+    component:
+      css/operator.css: {}

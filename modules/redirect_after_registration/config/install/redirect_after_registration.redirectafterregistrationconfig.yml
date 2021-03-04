@@ -1,0 +1,2 @@
+redirect_after_registration:
+  destination: "/user/login"

@@ -1,0 +1,7 @@
+fleet_gen.default_controller_hello:
+  path: '/hello/world'
+  defaults:
+    _controller: '\Drupal\fleet_gen\Controller\DefaultController::hello'
+    _title: 'Hello World!'
+  requirements:
+    _permission: 'access content'

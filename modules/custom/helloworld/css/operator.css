@@ -1,0 +1,16 @@
+/**
+ * @file
+ * Generic base styles for contextual module.
+ */
+
+#edit-role-change div:nth-child(1),#edit-role-change div:nth-child(2),#edit-role-change div:nth-child(3) ,#edit-role-change div:nth-child(10){
+
+	display:none;
+}
+.field--name-field-operatorcompany{
+	display: none;
+}
+nav.tabs ul li:nth-child(3) li:nth-child(2)
+{	
+	display: none;
+} 

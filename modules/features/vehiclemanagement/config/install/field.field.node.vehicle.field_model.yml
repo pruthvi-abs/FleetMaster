@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_model
+    - node.type.vehicle
+id: node.vehicle.field_model
+field_name: field_model
+entity_type: node
+bundle: vehicle
+label: MODEL
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

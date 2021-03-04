@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_make
+    - node.type.vehicle
+id: node.vehicle.field_make
+field_name: field_make
+entity_type: node
+bundle: vehicle
+label: MAKE
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,147 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.vehicle.field_body_type
+    - field.field.node.vehicle.field_brand
+    - field.field.node.vehicle.field_chassis_no
+    - field.field.node.vehicle.field_color
+    - field.field.node.vehicle.field_engine_capacity
+    - field.field.node.vehicle.field_engine_no
+    - field.field.node.vehicle.field_fuel_type
+    - field.field.node.vehicle.field_insurance_expiry_date
+    - field.field.node.vehicle.field_insurance_vendor
+    - field.field.node.vehicle.field_make
+    - field.field.node.vehicle.field_model
+    - field.field.node.vehicle.field_purchase_date
+    - field.field.node.vehicle.field_safety_sticker_expiry
+    - field.field.node.vehicle.field_tyre_type
+    - node.type.vehicle
+  module:
+    - datetime
+    - options
+    - user
+id: node.vehicle.default
+targetEntityType: node
+bundle: vehicle
+mode: default
+content:
+  field_body_type:
+    weight: 107
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_brand:
+    weight: 103
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_chassis_no:
+    weight: 109
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_color:
+    weight: 105
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_engine_capacity:
+    weight: 108
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_engine_no:
+    weight: 110
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_fuel_type:
+    weight: 106
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_insurance_expiry_date:
+    weight: 112
+    label: inline
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_insurance_vendor:
+    weight: 111
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_make:
+    weight: 104
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_model:
+    weight: 102
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_purchase_date:
+    weight: 115
+    label: inline
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_safety_sticker_expiry:
+    weight: 113
+    label: inline
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_tyre_type:
+    weight: 114
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

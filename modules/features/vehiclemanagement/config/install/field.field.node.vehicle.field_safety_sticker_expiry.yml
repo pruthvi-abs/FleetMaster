@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_safety_sticker_expiry
+    - node.type.vehicle
+  module:
+    - datetime
+id: node.vehicle.field_safety_sticker_expiry
+field_name: field_safety_sticker_expiry
+entity_type: node
+bundle: vehicle
+label: 'SAFETY STICKER EXPIRY'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

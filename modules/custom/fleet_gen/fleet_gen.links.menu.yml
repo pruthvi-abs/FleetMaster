@@ -1,0 +1,6 @@
+fleet_gen.default_controller_hello:
+  title: 'Fleet Gen'
+  description: 'Hello World (example D8 module)'
+  route_name: fleet_gen.default_controller_hello
+  weight: 100
+  menu_name: main
