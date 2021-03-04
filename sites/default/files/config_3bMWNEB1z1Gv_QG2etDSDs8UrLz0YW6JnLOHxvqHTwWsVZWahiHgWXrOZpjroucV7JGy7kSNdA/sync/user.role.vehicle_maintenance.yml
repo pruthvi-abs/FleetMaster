@@ -1,0 +1,14 @@
+uuid: 2233c10e-21c3-4e03-9e63-12d3c95632bc
+langcode: en
+status: true
+dependencies: {  }
+id: vehicle_maintenance
+label: 'Vehicle Maintenance'
+weight: 13
+is_admin: null
+permissions:
+  - 'create vehicle_maintenance content'
+  - 'delete any vehicle_maintenance content'
+  - 'delete own vehicle_maintenance content'
+  - 'edit any vehicle_maintenance content'
+  - 'edit own vehicle_maintenance content'

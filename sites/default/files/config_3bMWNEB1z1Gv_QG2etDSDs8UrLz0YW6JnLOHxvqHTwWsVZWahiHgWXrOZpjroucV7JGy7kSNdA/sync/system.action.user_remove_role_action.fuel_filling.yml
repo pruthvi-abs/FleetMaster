@@ -1,0 +1,14 @@
+uuid: e3fe6534-8baa-4694-add7-0e0a124db3b7
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.fuel_filling
+  module:
+    - user
+id: user_remove_role_action.fuel_filling
+label: 'Remove the Fuel Filling role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: fuel_filling

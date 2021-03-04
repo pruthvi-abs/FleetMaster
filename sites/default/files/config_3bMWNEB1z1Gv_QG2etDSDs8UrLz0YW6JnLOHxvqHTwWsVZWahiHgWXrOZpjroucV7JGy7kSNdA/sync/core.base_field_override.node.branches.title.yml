@@ -1,0 +1,18 @@
+uuid: 2163a934-c44b-4a40-b478-d0cc67060dc4
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.branches
+id: node.branches.title
+field_name: title
+entity_type: node
+bundle: branches
+label: 'BRANCH NAME'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

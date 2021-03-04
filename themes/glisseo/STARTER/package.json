@@ -1,0 +1,23 @@
+{
+  "name": "STARTER",
+  "version": "1.0.0",
+  "description": "STARTER theme.",
+  "private": true,
+  "keywords": [
+    "Drupal",
+    "theme"
+  ],
+  "dependencies": {
+    "autoprefixer": "^9.4.3",
+    "gulp": "^4.0.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sass-glob": "^1.1.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "postcss-custom-media": "^7.0.8"
+  },
+  "scripts": {
+    "build:theme": "gulp build:css",
+    "watch:theme": "gulp watch:css"
+  }
+}

@@ -1,0 +1,9 @@
+{% extends 'region.html.twig' %}
+
+{% block region %}
+  <footer{{ attributes.addClass(classes) }}>
+    <div class="{{ bem(block, 'content') }}">
+      {{ block('content') }}
+    </div>
+  </footer>
+{% endblock %}

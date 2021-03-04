@@ -1,0 +1,28 @@
+uuid: 6fc56bb2-ecc1-4984-ae96-13dea584ca54
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_driver_name
+    - node.type.driver
+    - node.type.vehicle_maintenance
+id: node.vehicle_maintenance.field_driver_name
+field_name: field_driver_name
+entity_type: node
+bundle: vehicle_maintenance
+label: 'DRIVER NAME'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      driver: driver
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

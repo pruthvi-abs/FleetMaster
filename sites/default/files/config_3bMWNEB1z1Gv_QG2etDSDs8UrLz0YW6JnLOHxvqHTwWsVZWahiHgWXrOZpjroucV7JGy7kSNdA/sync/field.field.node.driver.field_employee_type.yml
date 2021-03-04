@@ -1,0 +1,21 @@
+uuid: 1c43411f-c028-455a-b033-7d92a8520ccc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_employee_type
+    - node.type.driver
+  module:
+    - options
+id: node.driver.field_employee_type
+field_name: field_employee_type
+entity_type: node
+bundle: driver
+label: 'EMPLOYEE TYPE'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

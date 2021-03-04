@@ -1,0 +1,23 @@
+uuid: 52dc69a5-c142-4ebf-b5f0-b04368d783c1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_injured_persons
+    - node.type.accident_reporting
+id: node.accident_reporting.field_injured_persons
+field_name: field_injured_persons
+entity_type: node
+bundle: accident_reporting
+label: 'INJURED PERSONS'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

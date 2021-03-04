@@ -1,0 +1,20 @@
+uuid: 2af8e8c9-cb68-4de0-a488-85ac83d0b2bd
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - user
+id: user.field_doj
+field_name: field_doj
+entity_type: user
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,8 @@
+uuid: 19197151-5f11-482d-b5ab-e739cf904ed5
+langcode: en
+status: true
+dependencies: {  }
+name: DEPARTMENTS
+vid: departments
+description: 'Various Departments In a company'
+weight: 0

@@ -1,0 +1,20 @@
+uuid: d402fff2-6b7c-4cdb-bf0d-5ac7f7059513
+langcode: en
+status: true
+dependencies:
+  theme:
+    - construction_zymphonies_theme
+_core:
+  default_config_hash: s9gYVJj1A1cSq8gT95-MhoFQhe70Fkr3H7UPx8zy3d4
+id: construction_zymphonies_theme_page_title
+theme: construction_zymphonies_theme
+region: page_title
+weight: 0
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

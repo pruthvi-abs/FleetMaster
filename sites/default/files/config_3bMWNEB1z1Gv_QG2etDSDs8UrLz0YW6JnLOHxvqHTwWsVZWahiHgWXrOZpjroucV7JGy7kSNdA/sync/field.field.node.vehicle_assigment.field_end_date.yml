@@ -1,0 +1,21 @@
+uuid: 8efabdd3-cd81-4622-a0fe-7466fd7d21af
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_end_date
+    - node.type.vehicle_assigment
+  module:
+    - datetime
+id: node.vehicle_assigment.field_end_date
+field_name: field_end_date
+entity_type: node
+bundle: vehicle_assigment
+label: 'END DATE'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

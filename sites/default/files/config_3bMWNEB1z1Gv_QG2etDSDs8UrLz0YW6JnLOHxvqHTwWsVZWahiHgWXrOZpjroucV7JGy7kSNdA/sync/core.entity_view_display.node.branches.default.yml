@@ -1,0 +1,32 @@
+uuid: ae72e090-9bc2-4e82-a534-416ae139d522
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.branches.field_branch_
+    - field.field.node.branches.field_city
+    - node.type.branches
+  module:
+    - user
+id: node.branches.default
+targetEntityType: node
+bundle: branches
+mode: default
+content:
+  field_branch_:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_city:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  links: true

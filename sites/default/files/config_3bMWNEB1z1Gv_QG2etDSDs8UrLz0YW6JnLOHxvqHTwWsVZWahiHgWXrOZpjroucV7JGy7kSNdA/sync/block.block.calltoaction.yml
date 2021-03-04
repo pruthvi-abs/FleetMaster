@@ -1,0 +1,49 @@
+uuid: aec00e7f-7c20-4a04-8017-3b3677ac8bb6
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:7bbf7bb5-a298-4436-b94b-1b901f191068'
+  module:
+    - block_content
+    - system
+    - user
+  theme:
+    - fleet_management_theme
+id: calltoaction
+theme: fleet_management_theme
+region: features_second
+weight: -9
+provider: null
+plugin: 'block_content:7bbf7bb5-a298-4436-b94b-1b901f191068'
+settings:
+  id: 'block_content:7bbf7bb5-a298-4436-b94b-1b901f191068'
+  label: 'Call To Action'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+      authenticated: authenticated
+      administrator: administrator
+      company: company
+      data_entry: data_entry
+      vehicle_: vehicle_
+      employee: employee
+      fuel_filling: fuel_filling
+      vehicle_allotment: vehicle_allotment
+      accident_monitering: accident_monitering
+      vehicle_maintenance: vehicle_maintenance
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

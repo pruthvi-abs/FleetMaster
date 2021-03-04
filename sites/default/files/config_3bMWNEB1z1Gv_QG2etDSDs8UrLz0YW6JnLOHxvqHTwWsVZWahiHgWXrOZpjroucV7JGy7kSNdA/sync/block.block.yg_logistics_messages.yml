@@ -1,0 +1,22 @@
+uuid: d5c6085e-6d4e-4142-aebe-6a9319b3cfab
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - yg_logistics
+_core:
+  default_config_hash: XJqWwLt1LDCnazcEN6QkJmCLjk4R0__-8s0OO9xeNjg
+id: yg_logistics_messages
+theme: yg_logistics
+region: header
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

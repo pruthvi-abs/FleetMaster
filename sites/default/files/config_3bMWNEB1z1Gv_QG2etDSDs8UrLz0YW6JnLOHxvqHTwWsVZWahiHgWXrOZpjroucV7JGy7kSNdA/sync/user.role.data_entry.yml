@@ -1,0 +1,14 @@
+uuid: cb087bac-bd68-4e87-8c92-7daa916e93c0
+langcode: en
+status: true
+dependencies: {  }
+id: data_entry
+label: Operator
+weight: 7
+is_admin: null
+permissions:
+  - 'administer multiple_registration'
+  - 'create users'
+  - 'view any unpublished content'
+  - 'view any unpublished driver content'
+  - 'view any unpublished vehicle content'

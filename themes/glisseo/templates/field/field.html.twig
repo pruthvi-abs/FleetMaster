@@ -1,0 +1,93 @@
+{#
+/**
+ * @file
+ * Default theme implementation to present field.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for containing element.
+ * - classes: An array of classes for main wrapper.
+ * - entity_type: The name of entity type, which field belongs to.
+ * - bundle: The entity bundle name for the field.
+ * - view_mode: The view mode used to render field.
+ *
+ * @see glisseo_preprocess_field()
+ */
+#}
+{% set field_block = 'field' %}
+{%
+  set field_modifiers = [
+    'name-' ~ field_name,
+    'type-' ~ field_type,
+    'label-' ~ label_display,
+  ]
+%}
+{%
+  set entity_block = bem_block([
+    entity_type,
+    bundle != entity_type ? bundle,
+    field_name,
+  ])
+%}
+{%
+  set entity_modifiers = [
+    view_mode,
+  ]
+%}
+{%
+  set classes = [
+    bem(entity_block, null, entity_modifiers),
+    bem(field_block, null, field_modifiers),
+  ]
+%}
+{%
+  set title_classes = [
+    bem(entity_block, 'label'),
+    bem(field_block, 'label'),
+  ]
+%}
+{% set content_element = multiple ? 'items' : 'value' %}
+{%
+  set content_classes = [
+    bem(entity_block, content_element),
+    bem(field_block, content_element),
+  ]
+%}
+{%
+  set item_classes = [
+    bem(entity_block, 'item'),
+    bem(field_block, 'item'),
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {% block field %}
+
+    {% if not label_hidden %}
+      <div{{ title_attributes.addClass(title_classes) }}>
+        {% block label %}
+          {{ label }}
+        {% endblock %}
+      </div>
+    {% endif %}
+
+    {% block items %}
+      {% set content_attributes_not_empty -%}{{ content_attributes }}{%- endset %}
+      <div{{ content_attributes.addClass(content_classes) }}>
+        {% for item in items %}
+          {% set item_attributes_not_empty -%}{{ item.attributes }}{%- endset %}
+          {% if multiple or item_attributes_not_empty %}
+            <div{{ item.attributes.addClass(item_classes) }}>
+          {% endif -%}
+
+          {% block item %}
+            {{- item.content -}}
+          {% endblock %}
+
+          {% if multiple or item_attributes_not_empty %}
+            </div> {# /__item #}
+          {% endif -%}
+        {% endfor %}
+      </div> {# /__items and __value #}
+    {% endblock %}
+
+  {% endblock %}
+</div>

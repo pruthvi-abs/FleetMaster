@@ -1,0 +1,33 @@
+uuid: 49951c1f-ce45-4270-bc98-578749e72ac6
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.company-navigation
+  module:
+    - system
+    - user
+  theme:
+    - fleet_management_theme
+id: companynavigation
+theme: fleet_management_theme
+region: header
+weight: 0
+provider: null
+plugin: 'system_menu_block:company-navigation'
+settings:
+  id: 'system_menu_block:company-navigation'
+  label: 'Company Navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      company: company
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

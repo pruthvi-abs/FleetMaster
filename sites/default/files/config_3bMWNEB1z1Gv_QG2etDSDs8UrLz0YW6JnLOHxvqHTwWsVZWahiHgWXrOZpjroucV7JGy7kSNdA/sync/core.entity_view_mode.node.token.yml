@@ -1,0 +1,10 @@
+uuid: baddb883-e930-48cc-9530-6c74ba2e4e0a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.token
+label: Token
+targetEntityType: node
+cache: true

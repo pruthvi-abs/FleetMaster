@@ -1,0 +1,21 @@
+nid_list: {  }
+translation_sync: true
+search: false
+_core:
+  default_config_hash: avgYHPM-altr_AzKnQXTMVOX45XPWncreZepSjW8m7c
+content_types:
+  article: none
+  driver: none
+  fuel_master: none
+  page: none
+  vehicle: none
+  vehicle_assigment: all
+content_type_modes:
+  article: {  }
+  driver: {  }
+  fuel_master: {  }
+  page: {  }
+  vehicle: {  }
+  vehicle_assigment:
+    - full
+    - nodeform

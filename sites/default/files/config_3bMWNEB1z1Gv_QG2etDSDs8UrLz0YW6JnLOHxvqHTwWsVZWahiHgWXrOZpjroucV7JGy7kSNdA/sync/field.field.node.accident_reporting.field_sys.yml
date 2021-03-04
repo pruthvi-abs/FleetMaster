@@ -1,0 +1,24 @@
+uuid: eb7436f9-5412-47a1-bfbe-b7af1ab4c2d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sys
+    - node.type.accident_reporting
+  module:
+    - datetime
+id: node.accident_reporting.field_sys
+field_name: field_sys
+entity_type: node
+bundle: accident_reporting
+label: 'SYSTEM DATE'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

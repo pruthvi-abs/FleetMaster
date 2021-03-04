@@ -1,0 +1,14 @@
+uuid: d8cd03ce-adcc-4dde-9af2-1be4595fdf1a
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.vehicle_
+  module:
+    - user
+id: user_remove_role_action.vehicle_
+label: 'Remove the Vehicle role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: vehicle_

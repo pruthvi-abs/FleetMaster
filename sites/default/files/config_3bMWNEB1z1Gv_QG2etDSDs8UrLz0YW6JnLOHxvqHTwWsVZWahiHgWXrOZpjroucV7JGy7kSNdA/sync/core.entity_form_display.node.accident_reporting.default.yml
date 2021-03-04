@@ -1,0 +1,156 @@
+uuid: 1bb730e1-c12c-4211-852f-3163e207294f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.accident_reporting.field_accident_date
+    - field.field.node.accident_reporting.field_accident_location
+    - field.field.node.accident_reporting.field_damage_
+    - field.field.node.accident_reporting.field_deaths
+    - field.field.node.accident_reporting.field_driver_name
+    - field.field.node.accident_reporting.field_images
+    - field.field.node.accident_reporting.field_injured_persons
+    - field.field.node.accident_reporting.field_sys
+    - field.field.node.accident_reporting.field_third_party_damages
+    - field.field.node.accident_reporting.field_vehicle_no
+    - image.style.thumbnail
+    - node.type.accident_reporting
+  module:
+    - datetime
+    - image
+    - path
+id: node.accident_reporting.default
+targetEntityType: node
+bundle: accident_reporting
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_accident_date:
+    weight: 123
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_accident_location:
+    weight: 130
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_damage_:
+    weight: 131
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_deaths:
+    weight: 129
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_driver_name:
+    weight: 124
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_images:
+    weight: 126
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_injured_persons:
+    weight: 125
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_sys:
+    weight: 121
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_third_party_damages:
+    weight: 128
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_vehicle_no:
+    weight: 122
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,808 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block.
+ *
+ * Available variables:
+ * - plugin_id: The ID of the block implementation.
+ * - label: The configured label of the block if visible.
+ * - configuration: A list of the block's configuration values.
+ *   - label: The configured label for the block.
+ *   - label_display: The display settings for the label.
+ *   - provider: The module or other provider that provided this block plugin.
+ *   - Block plugin specific settings will also be stored here.
+ * - content: The content of this block.
+ * - attributes: array of HTML attributes populated by modules, intended to
+ *   be added to the main container tag of this template.
+ *   - id: A valid HTML ID and guaranteed unique.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ *
+ * @see template_preprocess_block()
+ *
+ * @ingroup themeable
+ */
+#}
+{#
+{{ attach_library("fleet_management_theme/Charts-header") }}
+#}
+{% set currentpage = url('<current>')['#markup']|split('/') %}
+  {% if currentpage[4] == 'company' %}
+  <!-- <div class="row">
+    <div class="container-fluid"> -->
+{% if label == 'Vehicle Allotment' %}
+{% block vehicle_allotment %}
+  <div class='col-sm-12'>
+    <div class="widget-area-2 lorvens-box-shadow widget-morris vehicle_allotment">
+      <h3 class="widget-title">{{ label }} Chart </h3>
+      <div id="donutMorris_vehicle" class="chart-one"></div>
+      {%  set g_data = content['#markup'] %}
+      <input type="hidden" id="vehicle" name="vehicle" value="{{ g_data }}">
+    </div>
+  </div>
+  <script>
+        var graphdata = $("#vehicle").val();
+        if( graphdata == '""'){
+          $('.vehicle_allotment').addClass('d-none');
+        }
+        if ($("#donutMorris_vehicle").length == 1) {
+          var $donutMorris_vehicle = JSON.parse(graphdata);
+          // console.log($donutData);
+      Morris.Donut({
+        element: "donutMorris_vehicle",
+        data: $donutMorris_vehicle,
+        barSize: 0.1,
+        labelColor: "#3e5569",
+        resize: true, //defaulted to true
+        colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+      });
+        }
+      </script>
+    {% endblock %}
+    {% elseif label == 'Employee Status' %}
+    {% block emp_status %}
+    <div class='col-sm-12'>
+      <div class="widget-area-2 lorvens-box-shadow widget-morris employee_status">
+        <h3 class="widget-title">{{ label }} Chart</h3>
+        <div id="donutMorris_emp" class="chart-one"></div>
+        {%  set g_data1 = content['#markup'] %}
+        <input type="hidden" id="empstatus" name="empstatus" value="{{ g_data1 }}">
+      </div>
+    </div>
+      <script>
+      var graphdata1 = $("#empstatus").val();
+      if( graphdata1 == '""'){
+          $('.employee_status').addClass('d-none');
+        }
+      if ($("#donutMorris_emp").length == 1) {
+        var $donutMorris_emp = JSON.parse(graphdata1);
+    Morris.Donut({
+      element: "donutMorris_emp",
+      data: $donutMorris_emp,
+      barSize: 0.1,
+      labelColor: "#3e5569",
+      resize: true, //defaulted to true
+      colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+    });
+  }
+    </script>
+    {% endblock %}
+    {% elseif label == 'Trip Analysis' %}
+    {% block trip_analysis %}
+    <div class='col-sm-12'>
+      <div class="widget-area-2 lorvens-box-shadow widget-morris trip_analysis">
+        <h3 class="widget-title">{{ label }} Chart</h3>
+        <div id="barMorris" class="chart-one"></div>
+        {%  set g_data2 = content['#markup'] %}
+        <input type="hidden" id="tripanalysis" name="tripanalysis" value="{{ g_data2 }}">
+      </div>
+    </div>
+      <script>
+  // var ctx = document.getElementById("barMorris");
+    var graphdata3 = $("#tripanalysis").val();
+    if( graphdata3 == '""'){
+          $('.trip_analysis').addClass('d-none');
+        }
+    var $tripanalysis = JSON.parse(graphdata3);
+    var chart = Morris.Bar({
+      element: "barMorris",
+      data: $tripanalysis,
+      xkey: "y",
+      ykeys: ["x"],
+      labels: ["Trips"],
+      barColors: ["#86C417"],
+      barOpacity: 1,
+      barSizeRatio: 0.5,
+      hideHover: "auto",
+      gridLineColor: "#eef0f2",
+      resize: true,
+    });
+  </script>
+  {% endblock %}
+  {% elseif label == 'Number of Employee' %}
+    {% block Employee_count %}
+    {% set ecount = content['#markup'] | json_decode %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget-area lorvens-box-shadow color-blue">
+          <div class="widget-left">
+            <span class="ti-user"></span>
+          </div>
+          <div class="widget-right">
+            <h3 class="wiget-title font-weight-bold">Total Employees</h3>
+            <span class="numeric color-blue">{{ ecount[0].total_emp }}</span>
+          </div>
+          <footer class="pd-top-10 pd-bottom-10 col-md-12">
+            <div class="text-right lorvens-text-color">
+              <a href="{{ url('<front>') }}employeelist">View More</a>
+              <a href="{{ url('<front>') }}node/add/driver" class="ml-3 add_new">Add New</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  {% elseif label == 'Number of Branches' %}
+    {% block Branches_count %}
+    {% set bcount = content['#markup'] | json_decode %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget-area lorvens-box-shadow color-green">
+          <div class="widget-left">
+            <span class="ti-layout-grid3-alt"></span>
+          </div>
+          <div class="widget-right">
+            <h3 class="wiget-title font-weight-bold">Total Branches</h3>
+            <span class="numeric color-green">{{ bcount[0].total_branches }}</span>
+          </div>
+          <footer class="pd-top-10 pd-bottom-10 col-md-12">
+            <div class="text-right lorvens-text-color">
+              <a href="{{ url('<front>') }}branch-list">View More</a>
+              <a href="{{ url('<front>') }}node/add/branches" class="ml-3">Add New</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  {% elseif label == 'Number of Vehicle' %}
+    {% block Vehicle_count %}
+    {% set vcount = content['#markup'] | json_decode %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget-area lorvens-box-shadow color-green">
+          <div class="widget-left">
+            <span class="ti-car"></span>
+          </div>
+          <div class="widget-right">
+            <h3 class="wiget-title font-weight-bold">Total Vehicles</h3>
+            <span class="numeric color-green">{{ vcount[0].total_vehicle }}</span>
+          </div>
+          <footer class="pd-top-10 pd-bottom-10 col-md-12">
+            <div class="text-right lorvens-text-color">
+              <a href="{{ url('<front>') }}vehicles">View More</a>
+              <a href="{{ url('<front>') }}node/add/vehicle" class="ml-3">Add New</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  {% elseif label == 'Number of Department' %}
+    {% block Department_count %}
+    {% set dcount = content['#markup'] | json_decode %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget-area lorvens-box-shadow color-blue">
+          <div class="widget-left">
+            <span class="ti-briefcase"></span>
+          </div>
+          <div class="widget-right">
+            <h3 class="wiget-title font-weight-bold">Total Department</h3>
+            <span class="numeric color-blue">{{ dcount[0].total_department }}</span>
+          </div>
+          <footer class="pd-top-10 pd-bottom-10 col-md-12">
+            <div class="text-right lorvens-text-color">
+              <a href="{{ url('<front>') }}department-list">View More</a>
+              <a href="{{ url('<front>') }}node/add/departments" class="ml-3">Add New</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+      </div>
+    {% endblock %}
+    {% elseif label == 'Accident Analysis' %}
+    {% block accident_analysis %}
+    <div class='col-sm-12'>
+      <div class="widget-area-2 lorvens-box-shadow widget-morris accident_analysis">
+        <h3 class="widget-title">{{ label }} Chart</h3>
+        <div id="barMorris1" class="chart-one"></div>
+        {%  set g_data2 = content['#markup'] %}
+        <input type="hidden" id="accidentanalysis" name="accidentanalysis" value="{{ g_data2 }}">
+      </div>
+    </div>
+      <script>
+  // var ctx = document.getElementById("barMorris");
+    var graphdata2 = $("#accidentanalysis").val();
+    if( graphdata2 == '""'){
+          $('.accident_analysis').addClass('d-none');
+        }
+    var $accidentanalysis = JSON.parse(graphdata2);
+    var chart = Morris.Bar({
+      element: "barMorris1",
+      data: $accidentanalysis,
+      xkey: "y",
+      ykeys: ["x"],
+      labels: ["Accidents"],
+      barColors: ["#86C417"],
+      barOpacity: 1,
+      barSizeRatio: 0.5,
+      hideHover: "auto",
+      gridLineColor: "#eef0f2",
+      resize: true,
+    });
+  </script>
+  {% endblock %}
+  {% elseif label == 'Fuel Filling' %}
+    {% block fuel_filling %}
+    <div class='col-sm-12'>
+      <div class="widget-area-2 lorvens-box-shadow widget-morris fuel_filling">
+        <h3 class="widget-title">{{ label }} Chart</h3>
+        <div id="barMorris2" class="chart-one"></div>
+        {%  set g_data3 = content['#markup'] %}
+        <input type="hidden" id="fuel_filling" name="fuel_filling" value="{{ g_data3 }}">
+      </div>
+    </div>
+      <script>
+  // var ctx = document.getElementById("barMorris");
+    var graphdata2 = $("#fuel_filling").val();
+    if( graphdata2 == '""'){
+          $('.fuel_filling').addClass('d-none');
+        }
+    var $fuel_filling = JSON.parse(graphdata2);
+    var chart = Morris.Bar({
+      element: "barMorris2",
+      data: $fuel_filling,
+      xkey: "y",
+      ykeys: ["x"],
+      labels: ["Accidents"],
+      barColors: ["#86C417"],
+      barOpacity: 1,
+      barSizeRatio: 0.5,
+      hideHover: "auto",
+      gridLineColor: "#eef0f2",
+      resize: true,
+    });
+  </script>
+  {% endblock %}
+{% else %}
+<div{{ attributes.addClass('widget-area-2 lorvens-box-shadow md-10') }}>
+  {{ title_prefix }}
+  {% if label %}
+  <h2{{ title_attributes.addClass('widget-title') }}>{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+  {% block Company_content %}
+  {{ content }}
+  {% endblock %}
+</div>
+{% endif %}
+
+
+
+{% elseif currentpage[4] == 'operator' %} {# operator Block #}
+{% if label == 'Number of Vehicle' %}
+    {% block Vehicle_count_operator %}
+    {% set vcount = content['#markup'] | json_decode %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget-area lorvens-box-shadow color-green">
+          <div class="widget-left">
+            <span class="ti-car"></span>
+          </div>
+          <div class="widget-right">
+            <h3 class="wiget-title font-weight-bold">Total Vehicles</h3>
+            <span class="numeric color-green">{{ vcount[0].total_vehicle }}</span>
+          </div>
+          <footer class="pd-top-10 pd-bottom-10 col-md-12">
+            <div class="text-right lorvens-text-color">
+              <a href="{{ url('<front>') }}vehicles">View More</a>
+              <a href="{{ url('<front>') }}node/add/vehicle" class="ml-3">Add New</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+    {% elseif label == 'Accident Analysis' %}
+    {% block accident_analysis_operator %}
+    <div class='col-sm-12'>
+      <div class="widget-area-2 lorvens-box-shadow widget-morris accident_analysis">
+        <h3 class="widget-title">{{ label }} Chart</h3>
+        <div id="barMorris1" class="chart-one"></div>
+        {%  set g_data2 = content['#markup'] %}
+        <input type="hidden" id="accidentanalysis" name="accidentanalysis" value="{{ g_data2 }}">
+      </div>
+    </div>
+      <script>
+  // var ctx = document.getElementById("barMorris");
+    var graphdata2 = $("#accidentanalysis").val();
+    if( graphdata2 == '""'){
+          $('.accident_analysis').addClass('d-none');
+        }
+    var $accidentanalysis = JSON.parse(graphdata2);
+    var chart = Morris.Bar({
+      element: "barMorris1",
+      data: $accidentanalysis,
+      xkey: "y",
+      ykeys: ["x"],
+      labels: ["Accidents"],
+      barColors: ["#86C417"],
+      barOpacity: 1,
+      barSizeRatio: 0.5,
+      hideHover: "auto",
+      gridLineColor: "#eef0f2",
+      resize: true,
+    });
+  </script>
+  {% endblock %}
+    {% elseif label == 'Number of Employee' %}
+    {% block Employee_count_operator %}
+    {% set ecount = content['#markup'] | json_decode %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget-area lorvens-box-shadow color-blue">
+          <div class="widget-left">
+            <span class="ti-user"></span>
+          </div>
+          <div class="widget-right">
+            <h3 class="wiget-title font-weight-bold">Total Employees</h3>
+            <span class="numeric color-blue">{{ ecount[0].total_emp }}</span>
+          </div>
+          <footer class="pd-top-10 pd-bottom-10 col-md-12">
+            <div class="text-right lorvens-text-color">
+              <a href="{{ url('<front>') }}employeelist">View More</a>
+              <a href="{{ url('<front>') }}node/add/driver" class="ml-3 add_new">Add New</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  {% elseif label == 'Number of Branches' %}
+    {% block Branches_count_operator %}
+    {% set bcount = content['#markup'] | json_decode %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget-area lorvens-box-shadow color-green">
+          <div class="widget-left">
+            <span class="ti-layout-grid3-alt"></span>
+          </div>
+          <div class="widget-right">
+            <h3 class="wiget-title font-weight-bold">Total Branches</h3>
+            <span class="numeric color-green">{{ bcount[0].total_branches }}</span>
+          </div>
+          <footer class="pd-top-10 pd-bottom-10 col-md-12">
+            <div class="text-right lorvens-text-color">
+              <a href="{{ url('<front>') }}branch-list">View More</a>
+              <a href="{{ url('<front>') }}node/add/branches" class="ml-3">Add New</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+    {% elseif label == 'Number of Department' %}
+    {% block Department_count_operator %}
+    {% set dcount = content['#markup'] | json_decode %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget-area lorvens-box-shadow color-blue">
+          <div class="widget-left">
+            <span class="ti-briefcase"></span>
+          </div>
+          <div class="widget-right">
+            <h3 class="wiget-title font-weight-bold">Total Department</h3>
+            <span class="numeric color-blue">{{ dcount[0].total_department }}</span>
+          </div>
+          <footer class="pd-top-10 pd-bottom-10 col-md-12">
+            <div class="text-right lorvens-text-color">
+              <a href="{{ url('<front>') }}department-list">View More</a>
+              <a href="{{ url('<front>') }}node/add/departments" class="ml-3">Add New</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+      </div>
+    {% endblock %}
+    {% elseif label == 'Trip Analysis' %}
+    {% block trip_analysis_operator %}
+    <div class='col-sm-12'>
+      <div class="widget-area-2 lorvens-box-shadow widget-morris trip_analysis">
+        <h3 class="widget-title">{{ label }} Chart</h3>
+        <div id="barMorris" class="chart-one"></div>
+        {%  set g_data2 = content['#markup'] %}
+        <input type="hidden" id="tripanalysis" name="tripanalysis" value="{{ g_data2 }}">
+      </div>
+    </div>
+      <script>
+  // var ctx = document.getElementById("barMorris");
+    var graphdata2 = $("#tripanalysis").val();
+    if( graphdata2 == '""'){
+          $('.trip_analysis').addClass('d-none');
+        }
+    var $tripanalysis = JSON.parse(graphdata2);
+    var chart = Morris.Bar({
+      element: "barMorris",
+      data: $tripanalysis,
+      xkey: "y",
+      ykeys: ["x"],
+      labels: ["Trips"],
+      barColors: ["#86C417"],
+      barOpacity: 1,
+      barSizeRatio: 0.5,
+      hideHover: "auto",
+      gridLineColor: "#eef0f2",
+      resize: true,
+    });
+  </script>
+  {% endblock %}
+  {% elseif label == 'Vehicle Allotment' %}
+{% block vehicle_allotment_operator %}
+  <div class='col-sm-12'>
+    <div class="widget-area-2 lorvens-box-shadow widget-morris vehicle_allotment">
+      <h3 class="widget-title">{{ label }} Chart </h3>
+      <div id="donutMorris_vehicle" class="chart-one"></div>
+      {%  set g_data = content['#markup'] %}
+      <input type="hidden" id="vehicle" name="vehicle" value="{{ g_data }}">
+    </div>
+  </div>
+  <script>
+        var graphdata = $("#vehicle").val();
+        if( graphdata == '""'){
+          $('.vehicle_allotment').addClass('d-none');
+        }
+        if ($("#donutMorris_vehicle").length == 1) {
+          var $donutMorris_vehicle = JSON.parse(graphdata);
+          // console.log($donutData);
+      Morris.Donut({
+        element: "donutMorris_vehicle",
+        data: $donutMorris_vehicle,
+        barSize: 0.1,
+        labelColor: "#3e5569",
+        resize: true, //defaulted to true
+        colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+      });
+        }
+      </script>
+    {% endblock %}
+    {% elseif label == 'Employee Status' %}
+    {% block emp_status_operator %}
+    <div class='col-sm-12'>
+      <div class="widget-area-2 lorvens-box-shadow widget-morris employee_status">
+        <h3 class="widget-title">{{ label }} Chart</h3>
+        <div id="donutMorris_emp" class="chart-one"></div>
+        {%  set g_data1 = content['#markup'] %}
+        <input type="hidden" id="empstatus" name="empstatus" value="{{ g_data1 }}">
+      </div>
+    </div>
+      <script>
+      var graphdata1 = $("#empstatus").val();
+      if( graphdata1 == '""'){
+          $('.employee_status').addClass('d-none');
+        }
+      if ($("#donutMorris_emp").length == 1) {
+        var $donutMorris_emp = JSON.parse(graphdata1);
+    Morris.Donut({
+      element: "donutMorris_emp",
+      data: $donutMorris_emp,
+      barSize: 0.1,
+      labelColor: "#3e5569",
+      resize: true, //defaulted to true
+      colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+    });
+  }
+    </script>
+    {% endblock %}
+    {% elseif label == 'Fuel Filling' %}
+    {% block fuel_filling_operator %}
+    <div class='col-sm-12'>
+      <div class="widget-area-2 lorvens-box-shadow widget-morris fuel_filling">
+        <h3 class="widget-title">{{ label }} Chart</h3>
+        <div id="barMorris2" class="chart-one"></div>
+        {%  set g_data3 = content['#markup'] %}
+        <input type="hidden" id="fuel_filling" name="fuel_filling" value="{{ g_data3 }}">
+      </div>
+    </div>
+      <script>
+  // var ctx = document.getElementById("barMorris");
+    var graphdata2 = $("#fuel_filling").val();
+    if( graphdata2 == '""'){
+          $('.fuel_filling').addClass('d-none');
+        }
+    var $fuel_filling = JSON.parse(graphdata2);
+    var chart = Morris.Bar({
+      element: "barMorris2",
+      data: $fuel_filling,
+      xkey: "y",
+      ykeys: ["x"],
+      labels: ["Accidents"],
+      barColors: ["#86C417"],
+      barOpacity: 1,
+      barSizeRatio: 0.5,
+      hideHover: "auto",
+      gridLineColor: "#eef0f2",
+      resize: true,
+    });
+  </script>
+  {% endblock %}
+    {% else %}
+    <div{{ attributes.addClass('widget-area-2 lorvens-box-shadow md-10') }}>
+      {{ title_prefix }}
+      {% if label %}
+      <h2{{ title_attributes.addClass('widget-title') }}>{{ label }}</h2>
+      {% endif %}
+      {{ title_suffix }}
+      {% block Operator_content %}
+      {{ content }}
+      {% endblock %}
+    </div>
+    {% endif %}
+{% elseif currentpage[4] == 'admin' %}
+{% if label == 'Number Of Companies' %}
+    {% block registerd_companies %}
+    {%  set g_data5 = content['#markup'] %}
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="widget-area-2 lorvens-box-shadow widget-morris number_of_companies">
+          <h3 class="widget-title">{{ label }} Chart</h3>
+          <div id="barMorris" class="chart-one"></div>
+          <input type="hidden" id="numberofcompany" name="numberofcompany" value="{{ g_data5 }}">
+        </div>
+      </div>
+    </div>
+      <script>
+  // var ctx = document.getElementById("barMorris");
+    var graphdata2 = $("#numberofcompany").val();
+    if( graphdata2 == '""'){
+          $('.number_of_companies').addClass('d-none');
+        }
+    var $numberofcompanies = JSON.parse(graphdata2);
+    var chart = Morris.Bar({
+      element: "barMorris",
+      data: $numberofcompanies,
+      xkey: "y",
+      ykeys: ["x"],
+      labels: ["Package"],
+      barColors: ["#86C417"],
+      barOpacity: 1,
+      barSizeRatio: 0.5,
+      hideHover: "auto",
+      gridLineColor: "#eef0f2",
+      resize: true,
+    });
+  </script>
+    {% endblock %}
+  {% elseif label == 'Company Status' %}
+    {% block company_status %}
+    {%  set g_data1 = content['#markup'] %}
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="widget-area-2 lorvens-box-shadow widget-morris company_status">
+          <h3 class="widget-title">{{ label }} Chart</h3>
+          <div id="donutMorris_emp" class="chart-one"></div>
+          <input type="hidden" id="empstatus" name="empstatus" value="{{ g_data1 }}">
+        </div>
+      </div>
+    </div>
+      <script>
+      var graphdata1 = $("#empstatus").val();
+      if( graphdata1 == '""'){
+          $('.company_status').addClass('d-none');
+        }
+      if ($("#donutMorris_emp").length == 1) {
+        var $donutMorris_emp = JSON.parse(graphdata1);
+    Morris.Donut({
+      element: "donutMorris_emp",
+      data: $donutMorris_emp,
+      barSize: 0.1,
+      labelColor: "#3e5569",
+      resize: true, //defaulted to true
+      colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+    });
+  }
+    </script>
+    {% endblock %}
+    {% elseif label == 'Company Expiry' %}
+    {% block company_expiry %}
+    {%  set g_data6 = content['#markup'] | json_decode %}
+    {% set count = 1 %}
+    <div class="row">
+      <!-- Widget Item -->
+      <div class="col-md-12">
+        <div class="widget-area-2 lorvens-box-shadow">
+          <h3 class="widget-title">{{ label }} Chart</h3>
+          <div class="">
+            <table class="table" width="100%">
+              <thead>
+                <tr>
+                  <!-- <th>Serial Number</th> -->
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Package</th>
+                  <th>Expiry Date</th>
+                  <!-- <th>Status</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in g_data6 %}
+                  <tr>
+                    {# <td>{{ count }}</td> #}
+                    <td>{{ user.user_id }}</td>
+                    <td>{{ user.company_name }}</td>
+                    <td>{{ user.package }}</td>
+                    <td>{{ user.expiry_date }}</td>
+                    {# {% if user.status == 'Active' %}
+                      <td>
+                        <span class="badge badge-success">{{ user.status }}</span>
+                      </td>
+                      {% elseif user.status == 'Unactive' %}
+                      <td>
+                        <span class="badge badge-danger">{{ user.status }}</span>
+                      </td>
+                    {% endif %} #}
+                    {% set count = count + 1 %}
+                  </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /Widget Item -->
+    </div>
+    {% endblock %}
+    {% elseif label == 'Last Payment Details' %}
+    {% block last_payment %}
+    {%  set g_data6 = content['#markup'] | json_decode %}
+    {% set count = 1 %}
+    <div class="row">
+      <!-- Widget Item -->
+      <div class="col-md-12">
+        <div class="widget-area-2 lorvens-box-shadow">
+          <h3 class="widget-title">{{ label }} Chart</h3>
+          <div class="">
+            <table class="table" width="100%">
+              <thead>
+                <tr>
+                  <!-- <th>Serial Number</th> -->
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Package</th>
+                  <th>Payment Date</th>
+                  <th>Cost</th>
+                  <!-- <th>Status</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in g_data6 %}
+                  <tr>
+                    {# <td>{{ count }}</td> #}
+                    <td>{{ user.user_id }}</td>
+                    <td>{{ user.company_name }}</td>
+                    <td>{{ user.package }}</td>
+                    <td>{{ user.start_date }}</td>
+                    <td>{{ user.package_cost }}</td>
+                    {# {% if user.status == 'Active' %}
+                      <td>
+                        <span class="badge badge-success">{{ user.status }}</span>
+                      </td>
+                      {% elseif user.status == 'Unactive' %}
+                      <td>
+                        <span class="badge badge-danger">{{ user.status }}</span>
+                      </td>
+                    {% endif %} #}
+                    {% set count = count + 1 %}
+                  </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /Widget Item -->
+    </div>
+    {% endblock %}
+    {% elseif label == 'Company Details' %}
+    {% block company_details %}
+    {%  set g_data6 = content['#markup'] | json_decode %}
+    {% set count = 1 %}
+    <div class="row">
+      <!-- Widget Item -->
+      <div class="col-md-12">
+        <div class="widget-area-2 lorvens-box-shadow">
+          <h3 class="widget-title">{{ label }} Chart</h3>
+          <div class="">
+            <table class="table" width="100%">
+              <thead>
+                <tr>
+                  <!-- <th>Serial Number</th> -->
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Package</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in g_data6 %}
+                  <tr>
+                    {# <td>{{ count }}</td> #}
+                    <td>{{ user.user_id }}</td>
+                    <td>{{ user.company_name }}</td>
+                    <td>{{ user.package }}</td>
+                    {% if user.status == 'Active' %}
+                      <td>
+                        <span class="badge badge-success">{{ user.status }}</span>
+                      </td>
+                      {% elseif user.status == 'Inactive' %}
+                      <td>
+                        <span class="badge badge-danger">{{ user.status }}</span>
+                      </td>
+                    {% endif %}
+                    {% set count = count + 1 %}
+                  </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+            <footer class="pd-top-10 pd-bottom-10 col-md-12">
+              <div class="text-right lorvens-text-color">
+                <a href="">View More</a>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <!-- /Widget Item -->
+    </div>
+    {% endblock %}
+    {% endif %}
+  {% elseif currentpage[4] == 'node' and currentpage[4] != 'add' %}
+    <div{{ attributes }}>
+      {{ title_prefix }}
+      {% if label %}
+      <h2{{ title_attributes.addClass('col-md-12') }}>{{ label }}</h2>
+      {% endif %}
+      {{ title_suffix }}
+      {% block node_profile %}
+      {{ content }}
+      {% endblock %}
+    </div>
+  {% elseif currentpage[4] == 'user' and currentpage[4] != 'add' %}
+    <div{{ attributes }}>
+      {{ title_prefix }}
+      {% if label %}
+      <h2{{ title_attributes.addClass('col-md-12') }}>{{ label }}</h2>
+      {% endif %}
+      {{ title_suffix }}
+      {% block user_profile %}
+      {{ content }}
+      {% endblock %}
+    </div>
+{% else %}
+<div{{ attributes.addClass('widget-area-2 lorvens-box-shadow widget-morris') }}>
+  {{ title_prefix }}
+  {% if label %}
+  <h2{{ title_attributes.addClass('col-md-12') }}>{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+  {% block content %}
+  {{ content }}
+  {% endblock %}
+</div>
+{% endif %}
+<!-- </div>
+</div> -->

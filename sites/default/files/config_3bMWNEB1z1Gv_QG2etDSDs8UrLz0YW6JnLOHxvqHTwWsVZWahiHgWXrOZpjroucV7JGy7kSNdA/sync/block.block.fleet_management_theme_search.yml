@@ -1,0 +1,23 @@
+uuid: 69429ed9-dc36-4e82-a48b-84459fadec1e
+langcode: en
+status: false
+dependencies:
+  module:
+    - search
+  theme:
+    - fleet_management_theme
+_core:
+  default_config_hash: u2qTB_opzvdnn01pm6kVcIpXGJp5SqZqOYFDsa_slWI
+id: fleet_management_theme_search
+theme: fleet_management_theme
+region: header
+weight: -3
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: Search
+  provider: search
+  label_display: visible
+  page_id: ''
+visibility: {  }

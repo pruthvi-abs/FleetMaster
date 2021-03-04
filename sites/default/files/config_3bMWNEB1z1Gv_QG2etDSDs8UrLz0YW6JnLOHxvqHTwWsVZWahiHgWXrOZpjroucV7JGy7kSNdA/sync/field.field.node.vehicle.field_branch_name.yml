@@ -1,0 +1,25 @@
+uuid: 7de81711-bda4-47d9-a9bc-8833caee14a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_branch_name
+    - node.type.vehicle
+id: node.vehicle.field_branch_name
+field_name: field_branch_name
+entity_type: node
+bundle: vehicle
+label: 'BRANCH NAME'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: branch_list
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

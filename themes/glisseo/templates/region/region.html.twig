@@ -1,0 +1,15 @@
+{% set block = 'region-' ~ region %}
+{%
+  set classes = [
+    bem(block),
+  ]
+%}
+{% if content %}
+  {% block region %}
+    <div{{ attributes.addClass(classes) }}>
+      {% block content %}
+        {{ content }}
+      {% endblock %}
+    </div>
+  {% endblock %}
+{% endif %}

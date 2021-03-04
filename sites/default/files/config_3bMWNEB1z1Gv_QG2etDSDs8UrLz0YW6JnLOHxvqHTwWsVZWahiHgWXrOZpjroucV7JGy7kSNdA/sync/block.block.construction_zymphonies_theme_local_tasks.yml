@@ -1,0 +1,22 @@
+uuid: a9e15783-b1de-48db-a56a-5a44718df171
+langcode: en
+status: true
+dependencies:
+  theme:
+    - construction_zymphonies_theme
+_core:
+  default_config_hash: lSCMs48BvNzIEeDENQj2eLelJ6o9y5jzWKeuYEy6_y0
+id: construction_zymphonies_theme_local_tasks
+theme: construction_zymphonies_theme
+region: content
+weight: 0
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

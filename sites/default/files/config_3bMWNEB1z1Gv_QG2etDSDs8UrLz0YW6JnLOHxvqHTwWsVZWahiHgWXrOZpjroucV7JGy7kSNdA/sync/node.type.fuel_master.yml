@@ -1,0 +1,21 @@
+uuid: 6c5b3e25-80b4-42fe-8ccf-4d2c0c9e1bc5
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+    - unique_entity_title
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+  unique_entity_title:
+    enabled: false
+name: 'Fuel Master'
+type: fuel_master
+description: 'Details about fuel filling '
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

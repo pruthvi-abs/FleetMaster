@@ -1,0 +1,21 @@
+uuid: 23ea5e63-0892-47b2-9600-a46ea82c2baa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_maintenance
+    - node.type.vehicle_maintenance
+  module:
+    - options
+id: node.vehicle_maintenance.field_maintenance
+field_name: field_maintenance
+entity_type: node
+bundle: vehicle_maintenance
+label: 'MAINTENANCE TYPE'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

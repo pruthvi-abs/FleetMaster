@@ -1,0 +1,22 @@
+uuid: fbd6e47b-5756-46cc-8a83-57c468ea9eba
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.accident_reporting
+id: node.accident_reporting.promote
+field_name: promote
+entity_type: node
+bundle: accident_reporting
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

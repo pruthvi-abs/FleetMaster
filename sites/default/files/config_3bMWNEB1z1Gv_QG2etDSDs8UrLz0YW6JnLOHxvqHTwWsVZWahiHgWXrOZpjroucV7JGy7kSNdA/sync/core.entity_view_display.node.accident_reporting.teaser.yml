@@ -1,0 +1,40 @@
+uuid: 19343575-82d7-4e2e-9ee6-6457d3741683
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.accident_reporting.field_accident_date
+    - field.field.node.accident_reporting.field_accident_location
+    - field.field.node.accident_reporting.field_damage_
+    - field.field.node.accident_reporting.field_deaths
+    - field.field.node.accident_reporting.field_driver_name
+    - field.field.node.accident_reporting.field_images
+    - field.field.node.accident_reporting.field_injured_persons
+    - field.field.node.accident_reporting.field_sys
+    - field.field.node.accident_reporting.field_third_party_damages
+    - field.field.node.accident_reporting.field_vehicle_no
+    - node.type.accident_reporting
+  module:
+    - user
+id: node.accident_reporting.teaser
+targetEntityType: node
+bundle: accident_reporting
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_accident_date: true
+  field_accident_location: true
+  field_damage_: true
+  field_deaths: true
+  field_driver_name: true
+  field_images: true
+  field_injured_persons: true
+  field_sys: true
+  field_third_party_damages: true
+  field_vehicle_no: true

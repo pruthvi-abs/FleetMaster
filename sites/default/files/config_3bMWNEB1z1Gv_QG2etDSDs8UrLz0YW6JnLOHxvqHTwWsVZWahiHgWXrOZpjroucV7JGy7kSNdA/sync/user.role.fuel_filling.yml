@@ -1,0 +1,21 @@
+uuid: 5ac5e9b4-db59-4216-a11e-a156a6ad7424
+langcode: en
+status: true
+dependencies: {  }
+id: fuel_filling
+label: 'Fuel Filling'
+weight: 10
+is_admin: null
+permissions:
+  - 'create fuel_master content'
+  - 'create fuel_station_master content'
+  - 'delete any fuel_master content'
+  - 'delete any fuel_station_master content'
+  - 'delete fuel_master revisions'
+  - 'delete fuel_station_master revisions'
+  - 'delete own fuel_master content'
+  - 'delete own fuel_station_master content'
+  - 'edit any fuel_master content'
+  - 'edit any fuel_station_master content'
+  - 'edit own fuel_master content'
+  - 'edit own fuel_station_master content'

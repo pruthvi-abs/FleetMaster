@@ -1,0 +1,22 @@
+uuid: 17563452-3b05-4809-a8fa-b94624f96a12
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - lightship
+_core:
+  default_config_hash: XJqWwLt1LDCnazcEN6QkJmCLjk4R0__-8s0OO9xeNjg
+id: lightship_messages
+theme: lightship
+region: header
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

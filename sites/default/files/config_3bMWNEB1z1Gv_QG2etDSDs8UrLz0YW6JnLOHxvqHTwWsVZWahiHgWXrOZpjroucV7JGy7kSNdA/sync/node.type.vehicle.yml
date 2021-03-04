@@ -1,0 +1,21 @@
+uuid: 60c09c36-46b0-4edc-9eee-976a198ef86d
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+    - unique_entity_title
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+  unique_entity_title:
+    enabled: true
+name: vehicle
+type: vehicle
+description: 'managing vehicles'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

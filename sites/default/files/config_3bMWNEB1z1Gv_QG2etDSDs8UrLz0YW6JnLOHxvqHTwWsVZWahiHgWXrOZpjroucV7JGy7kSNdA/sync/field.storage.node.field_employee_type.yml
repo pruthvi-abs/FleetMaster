@@ -1,0 +1,27 @@
+uuid: 038e17d8-add9-42c0-bb8d-39ef05202165
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_employee_type
+field_name: field_employee_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'GENERAL DRIVER'
+      label: 'GENERAL DRIVER'
+    -
+      value: EMPLOYEE
+      label: EMPLOYEE
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

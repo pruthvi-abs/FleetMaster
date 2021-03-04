@@ -1,0 +1,21 @@
+uuid: df38e2fd-fc67-47a2-998d-e9c4ab292873
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: company_dashboard
+label: 'company dashboard'
+description: ''
+use_admin_theme: false
+path: /company/dashboard
+access_logic: and
+access_conditions:
+  -
+    id: user_role
+    roles:
+      company: company
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+parameters: {  }

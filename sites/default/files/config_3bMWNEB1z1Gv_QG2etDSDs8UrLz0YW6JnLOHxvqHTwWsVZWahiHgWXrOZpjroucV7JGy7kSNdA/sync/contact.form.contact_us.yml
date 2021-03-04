@@ -1,0 +1,12 @@
+uuid: 9d3d62a9-e0af-424b-b7b3-44f677cc6d58
+langcode: en
+status: true
+dependencies: {  }
+id: contact_us
+label: 'Contact US'
+recipients:
+  - salvachandanapriyavarma@gmail.com
+reply: ''
+weight: 0
+message: 'Your message has been sent.'
+redirect: ''

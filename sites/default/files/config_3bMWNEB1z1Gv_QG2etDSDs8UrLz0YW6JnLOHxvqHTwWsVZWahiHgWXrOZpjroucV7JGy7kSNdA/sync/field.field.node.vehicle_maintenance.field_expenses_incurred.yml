@@ -1,0 +1,19 @@
+uuid: a2053ea8-c5fd-48cd-95b9-cbaed5b3506c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_expenses_incurred
+    - node.type.vehicle_maintenance
+id: node.vehicle_maintenance.field_expenses_incurred
+field_name: field_expenses_incurred
+entity_type: node
+bundle: vehicle_maintenance
+label: 'EXPENSES INCURRED'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

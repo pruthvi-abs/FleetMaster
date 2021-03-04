@@ -1,0 +1,21 @@
+uuid: fcf29301-634d-4cef-8d29-6ad2124a945c
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: digitec_dashboard
+label: 'Digitec Dashboard'
+description: 'super admin digitec dashboard'
+use_admin_theme: false
+path: /digitec/dashboard
+access_logic: and
+access_conditions:
+  -
+    id: user_role
+    roles:
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+parameters: {  }

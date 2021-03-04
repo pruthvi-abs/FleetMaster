@@ -1,0 +1,19 @@
+uuid: 1d8643f2-8386-46b6-8933-41d7502e7129
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_name
+    - node.type.driver
+id: node.driver.field_name
+field_name: field_name
+entity_type: node
+bundle: driver
+label: 'KNICK NAME'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

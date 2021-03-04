@@ -1,0 +1,21 @@
+uuid: c5d6bb94-7d9a-4cd1-904a-a7c67477757a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_licence_expiry_date
+    - node.type.driver
+  module:
+    - datetime
+id: node.driver.field_licence_expiry_date
+field_name: field_licence_expiry_date
+entity_type: node
+bundle: driver
+label: 'LICENCE EXPIRY DATE'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

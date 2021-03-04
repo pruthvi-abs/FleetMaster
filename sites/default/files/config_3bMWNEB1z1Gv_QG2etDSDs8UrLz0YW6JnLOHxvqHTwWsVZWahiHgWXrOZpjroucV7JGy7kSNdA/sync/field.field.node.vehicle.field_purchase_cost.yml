@@ -1,0 +1,19 @@
+uuid: 264e6db6-19ce-41f5-b69c-1ef2c2c54c30
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_purchase_cost
+    - node.type.vehicle
+id: node.vehicle.field_purchase_cost
+field_name: field_purchase_cost
+entity_type: node
+bundle: vehicle
+label: 'PURCHASE COST'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,21 @@
+uuid: bb6581d9-16ef-4e52-81e6-0e4095774085
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+    - unique_entity_title
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+  unique_entity_title:
+    enabled: false
+name: 'Accident Reporting'
+type: accident_reporting
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

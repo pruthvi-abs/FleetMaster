@@ -1,0 +1,21 @@
+uuid: 71b65b38-61b5-4460-b60e-7fe7614f3851
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+    - unique_entity_title
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+  unique_entity_title:
+    enabled: false
+name: DEPARTMENTS
+type: departments
+description: 'add departments'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

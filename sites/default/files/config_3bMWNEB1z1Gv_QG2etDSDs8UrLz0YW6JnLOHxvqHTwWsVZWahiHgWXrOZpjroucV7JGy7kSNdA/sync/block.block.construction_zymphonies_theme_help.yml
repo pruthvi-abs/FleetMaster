@@ -1,0 +1,22 @@
+uuid: f184fa7c-2de3-4ffc-8ce2-005944d11bb7
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - construction_zymphonies_theme
+_core:
+  default_config_hash: 0BbJN29_duim0xYv20GX0Mv_WisJu-3jxSJ04LW-7Js
+id: construction_zymphonies_theme_help
+theme: construction_zymphonies_theme
+region: highlighted
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

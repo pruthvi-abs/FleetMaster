@@ -1,0 +1,27 @@
+uuid: 7d6ca2b3-2e53-4bdb-a77b-1a0f984c3e81
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - construction_zymphonies_theme
+_core:
+  default_config_hash: SRFjdk6lDaU2MFTWNGkywFrWIKqPXrQKEhHsY9UV4UQ
+id: construction_zymphonies_theme_main_menu
+theme: construction_zymphonies_theme
+region: primary_menu
+weight: -6
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 2
+  expand_all_items: false
+visibility: {  }

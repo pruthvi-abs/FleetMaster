@@ -1,0 +1,13 @@
+uuid: a53dc89d-5254-4a91-93d3-ae543390fb4e
+langcode: en
+status: true
+dependencies: {  }
+id: vehicle_allotment
+label: 'Vehicle Allotment'
+weight: 11
+is_admin: null
+permissions:
+  - 'create vehicle content'
+  - 'delete own vehicle content'
+  - 'edit any vehicle content'
+  - 'edit own vehicle content'

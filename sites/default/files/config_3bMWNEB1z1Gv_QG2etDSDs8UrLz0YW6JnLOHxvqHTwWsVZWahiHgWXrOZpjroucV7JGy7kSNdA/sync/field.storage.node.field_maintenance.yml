@@ -1,0 +1,30 @@
+uuid: 1027a669-7a3c-4984-801c-205d1132f224
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_maintenance
+field_name: field_maintenance
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'Regular Maintenance'
+      label: 'Regular Maintenance'
+    -
+      value: 'General Repair'
+      label: 'General Repair'
+    -
+      value: 'Accident Repair'
+      label: 'Accident Repair'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,21 @@
+uuid: 0f43a109-f070-48bb-be1f-cc34bbbd7a5f
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+    - unique_entity_title
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+  unique_entity_title:
+    enabled: false
+name: 'vehicle assigment'
+type: vehicle_assigment
+description: 'assigning vehicles to drivers or employees'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

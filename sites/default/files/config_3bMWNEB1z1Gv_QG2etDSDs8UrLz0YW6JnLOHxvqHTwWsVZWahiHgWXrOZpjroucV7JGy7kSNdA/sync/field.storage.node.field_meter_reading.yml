@@ -1,0 +1,20 @@
+uuid: ec870c2e-e892-40a3-85e1-88d14d4cc6fa
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_meter_reading
+field_name: field_meter_reading
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

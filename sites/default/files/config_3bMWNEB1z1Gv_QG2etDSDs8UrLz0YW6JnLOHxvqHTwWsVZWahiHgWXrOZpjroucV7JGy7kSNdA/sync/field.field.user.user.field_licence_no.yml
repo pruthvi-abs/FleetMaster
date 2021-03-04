@@ -1,0 +1,31 @@
+uuid: c78bfbd0-2800-4157-92c4-3c0a2cb72140
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_licence_no
+  module:
+    - multiple_registration
+    - user
+third_party_settings:
+  multiple_registration:
+    user_additional_register_form:
+      data_entry: data_entry
+      authenticated: 0
+      company: 0
+    user_additional_register_form_required:
+      data_entry: data_entry
+      authenticated: 0
+      company: 0
+id: user.user.field_licence_no
+field_name: field_licence_no
+entity_type: user
+bundle: user
+label: 'LICENCE NO'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

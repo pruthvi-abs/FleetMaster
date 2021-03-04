@@ -1,0 +1,60 @@
+uuid: 41b067a4-a762-49d5-959b-a80d087dcda3
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.vehicle.field_body_type
+    - field.field.node.vehicle.field_branch_name
+    - field.field.node.vehicle.field_brand
+    - field.field.node.vehicle.field_chassis_no
+    - field.field.node.vehicle.field_color
+    - field.field.node.vehicle.field_engine_capacity
+    - field.field.node.vehicle.field_engine_no
+    - field.field.node.vehicle.field_expected_depreciated_per
+    - field.field.node.vehicle.field_fleet
+    - field.field.node.vehicle.field_fuel
+    - field.field.node.vehicle.field_fuel_card_expiry_date
+    - field.field.node.vehicle.field_fuel_type
+    - field.field.node.vehicle.field_insurance_expiry_date
+    - field.field.node.vehicle.field_insurance_vendor
+    - field.field.node.vehicle.field_make
+    - field.field.node.vehicle.field_model
+    - field.field.node.vehicle.field_purchase_cost
+    - field.field.node.vehicle.field_purchase_date
+    - field.field.node.vehicle.field_safet
+    - field.field.node.vehicle.field_tyre_type
+    - node.type.vehicle
+  module:
+    - user
+id: node.vehicle.teaser
+targetEntityType: node
+bundle: vehicle
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_body_type: true
+  field_branch_name: true
+  field_brand: true
+  field_chassis_no: true
+  field_color: true
+  field_engine_capacity: true
+  field_engine_no: true
+  field_expected_depreciated_per: true
+  field_fleet: true
+  field_fuel: true
+  field_fuel_card_expiry_date: true
+  field_fuel_type: true
+  field_insurance_expiry_date: true
+  field_insurance_vendor: true
+  field_make: true
+  field_model: true
+  field_purchase_cost: true
+  field_purchase_date: true
+  field_safet: true
+  field_tyre_type: true

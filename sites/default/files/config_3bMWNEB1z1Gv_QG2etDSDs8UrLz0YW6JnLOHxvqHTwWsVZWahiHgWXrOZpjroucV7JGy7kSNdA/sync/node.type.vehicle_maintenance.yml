@@ -1,0 +1,21 @@
+uuid: db361fd3-db38-4dd8-a623-0efcc6667ccd
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+    - unique_entity_title
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+  unique_entity_title:
+    enabled: false
+name: 'vehicle maintenance'
+type: vehicle_maintenance
+description: 'Maintenance  of vehicles '
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

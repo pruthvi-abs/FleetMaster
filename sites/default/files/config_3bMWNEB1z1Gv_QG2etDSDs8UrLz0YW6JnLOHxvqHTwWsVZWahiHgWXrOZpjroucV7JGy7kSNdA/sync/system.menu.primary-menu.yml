@@ -1,0 +1,8 @@
+uuid: 9ad5aa77-9d99-4666-b64d-57b5b4541559
+langcode: en
+status: true
+dependencies: {  }
+id: primary-menu
+label: 'Primary Menu'
+description: 'Frontend navigation'
+locked: false

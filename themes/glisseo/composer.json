@@ -1,0 +1,19 @@
+{
+  "name": "drupal/glisseo",
+  "description": "Base theme with simple starter theme.",
+  "type": "drupal-theme",
+  "homepage": "https://www.drupal.org/project/glisseo",
+  "authors": [
+    {
+      "name": "Nikita Malyshev (niklan)",
+      "homepage": "https://niklan.net"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/glisseo"
+  },
+  "license": "GPL-2.0-or-later",
+  "require": {
+      "drupal/twig_tweak": "^3.0.0@dev"
+  }
+}

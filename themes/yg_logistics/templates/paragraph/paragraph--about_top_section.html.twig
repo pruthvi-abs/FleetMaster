@@ -1,0 +1,17 @@
+  <div class="top_section">
+    <div class="col-md-6 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.3s">
+      <div class="youtube left_side">
+        <img src="{{ file_url(content.field_image['#items'].entity.uri.value) }}" />
+        <div class="play-icon">
+          <a class="popup-youtube" href="{{ content.field_telephone_no.0 }}">
+            <i class="fa fa-play"></i>
+          </a>
+         </div>
+      </div>
+    </div>
+     <div class="col-md-6 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.6s">
+      <div class="right_side">
+        <p>{{ content.field_description.0 }}</p>
+      </div>
+    </div>
+  </div>

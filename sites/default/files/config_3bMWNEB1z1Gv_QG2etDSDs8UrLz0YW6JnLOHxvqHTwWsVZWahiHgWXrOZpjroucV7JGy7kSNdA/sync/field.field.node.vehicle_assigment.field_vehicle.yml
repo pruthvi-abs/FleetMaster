@@ -1,0 +1,25 @@
+uuid: 94969a4e-c583-43e3-a274-ecec11c23be9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vehicle
+    - node.type.vehicle_assigment
+id: node.vehicle_assigment.field_vehicle
+field_name: field_vehicle
+entity_type: node
+bundle: vehicle_assigment
+label: VEHICLE
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: driver_details
+      display_name: entity_reference_2
+      arguments: {  }
+field_type: entity_reference

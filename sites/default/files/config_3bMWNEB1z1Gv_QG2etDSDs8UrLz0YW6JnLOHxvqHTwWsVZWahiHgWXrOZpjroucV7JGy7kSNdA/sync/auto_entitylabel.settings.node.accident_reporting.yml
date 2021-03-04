@@ -1,0 +1,6 @@
+status: 1
+pattern: '[node:field_driver_name]'
+escape: false
+dependencies:
+  config:
+    - node.type.accident_reporting

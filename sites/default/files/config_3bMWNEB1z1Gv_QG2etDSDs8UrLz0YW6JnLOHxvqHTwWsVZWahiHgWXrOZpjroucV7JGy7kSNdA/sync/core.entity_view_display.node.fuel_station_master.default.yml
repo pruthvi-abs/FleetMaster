@@ -1,0 +1,48 @@
+uuid: 73597bbf-74fa-4c5e-8b4e-e6f0fbfc50d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.fuel_station_master.field_address
+    - field.field.node.fuel_station_master.field_contact_no
+    - field.field.node.fuel_station_master.field_deposit
+    - node.type.fuel_station_master
+  module:
+    - user
+id: node.fuel_station_master.default
+targetEntityType: node
+bundle: fuel_station_master
+mode: default
+content:
+  field_address:
+    weight: 102
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_contact_no:
+    weight: 103
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_deposit:
+    weight: 104
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

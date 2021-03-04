@@ -1,0 +1,73 @@
+front-style:
+  css:
+    theme:
+      assets/front/vendor/bootstrap/css/bootstrap.min.css: {}
+      assets/front/vendor/icofont/icofont.min.css: {}
+      assets/front/vendor/boxicons/css/boxicons.min.css: {}
+      assets/front/vendor/remixicon/remixicon.css: {}
+      assets/front/vendor/venobox/venobox.css: {}
+      assets/front/vendor/owl.carousel/../assets/owl.carousel.min.css: {}
+      assets/front/vendor/aos/aos.css: {}
+      assets/front/css/flexslider.css: {}
+      assets/front/css/style.css: {}
+      assets/front/css/frontdesign.css: {}
+  js:
+    assets/front/vendor/jquery/jquery.min.js: {}
+    assets/front/vendor/bootstrap/js/bootstrap.bundle.min.js: {}
+    assets/front/vendor/jquery.easing/jquery.easing.min.js: {}
+    assets/front/vendor/php-email-form/validate.js: {}
+    assets/front/vendor/waypoints/jquery.waypoints.min.js: {}
+    assets/front/vendor/isotope-layout/isotope.pkgd.min.js: {}
+    assets/front/vendor/venobox/venobox.min.js: {}
+    assets/front/vendor/owl.carousel/owl.carousel.min.js: {}
+    assets/front/vendor/aos/aos.js: {}
+    assets/front/js/jquery.flexslider-min.js: {}
+    assets/front/js/main.js: {}
+    assets/back/js/operator.js: {}  
+
+    
+back-style:
+  css:
+    theme:
+      assets/back/css/bootstrap.min.css: {}
+      assets/back/css/themify-icons.css: {}
+      assets/back/css/animate.css: {}
+      assets/back/css/styles.css: {}
+      assets/back/css/red.css: {}
+      assets/back/css/responsive.css: {}
+      assets/back/css/jquery-jvectormap.css: {}
+      assets/front/css/backdesign.css: {}
+  js:
+    assets/front/js/main.js: {}
+    assets/back/js/operator.js: {}  
+    
+# back-style-js:      
+#   js:
+#       #assets/back/js/modernizr.min.js: {}
+#       assets/back/js/jquery-3.2.1.min.js: {}
+#       assets/back/js/popper.min.js: {}
+#       assets/back/js/bootstrap.min.js: {}
+#       assets/back/js/jquery-jvectormap.min.js: {}
+#       assets/back/js/jquery-jvectormap-world-mill.js: {}
+#       assets/back/js/custom-vector.js: {}
+#       assets/back/charts/js/raphael-min.js: {}
+#       assets/back/charts/js/morris.min.js: {}
+#       #assets/back/js/custom-morris.js: {}
+#       assets/back/js/custom.js: {}
+      
+
+Charts-header:
+  header: true
+  js:
+    assets/back/js/modernizr.min.js: {}
+
+#Charts-footer:
+#  js:
+#      assets/back/js/jquery-3.2.1.min.js: {}
+#      assets/back/js/popper.min.js: {}
+#      assets/back/js/bootstrap.min.js: {}
+#      assets/back/charts/js/raphael-min.js: {}
+#      assets/back/charts/js/morris.min.js: {}
+#      assets/back/js/custom-morris.js: {}
+#      assets/back/js/custom.js: {}
+

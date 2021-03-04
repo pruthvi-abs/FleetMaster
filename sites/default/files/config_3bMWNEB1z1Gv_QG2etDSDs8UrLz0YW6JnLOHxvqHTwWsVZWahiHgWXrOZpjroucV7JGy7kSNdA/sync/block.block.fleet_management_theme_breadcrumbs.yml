@@ -1,0 +1,22 @@
+uuid: 1ebe4a86-cb1f-45b4-934e-9dd54b2790e3
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - fleet_management_theme
+_core:
+  default_config_hash: FYN9DTTnf2YaUvezjZMDzfNbx5WDzkjFN7wUFSHOQs8
+id: fleet_management_theme_breadcrumbs
+theme: fleet_management_theme
+region: header
+weight: -7
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

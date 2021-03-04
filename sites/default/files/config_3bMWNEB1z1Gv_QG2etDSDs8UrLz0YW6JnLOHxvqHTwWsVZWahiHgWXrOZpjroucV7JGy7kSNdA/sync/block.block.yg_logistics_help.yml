@@ -1,0 +1,22 @@
+uuid: 2cafa2bb-f913-40b5-a486-8ad1cb537e6b
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - yg_logistics
+_core:
+  default_config_hash: NU5A_49mwLHfs5xFzMFrZ850w9pgUolxMS9NNF3vv4c
+id: yg_logistics_help
+theme: yg_logistics
+region: header
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

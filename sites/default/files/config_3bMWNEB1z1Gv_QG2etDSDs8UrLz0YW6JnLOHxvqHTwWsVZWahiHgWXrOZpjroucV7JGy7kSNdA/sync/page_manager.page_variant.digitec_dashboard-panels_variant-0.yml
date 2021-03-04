@@ -1,0 +1,29 @@
+uuid: 894183ff-8e1d-41bd-a8f4-c8096c565153
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.digitec_dashboard
+  module:
+    - panels
+id: digitec_dashboard-panels_variant-0
+label: Panels
+variant: panels_variant
+variant_settings:
+  blocks: {  }
+  id: panels_variant
+  uuid: 17288be2-b23b-41c6-821f-f85b3e4443c0
+  label: null
+  weight: 0
+  layout: layout_threecol_33_34_33
+  layout_settings:
+    label: 'DIgitec Dashboard'
+  page_title: ''
+  storage_type: page_manager
+  storage_id: digitec_dashboard-panels_variant-0
+  builder: standard
+page: digitec_dashboard
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

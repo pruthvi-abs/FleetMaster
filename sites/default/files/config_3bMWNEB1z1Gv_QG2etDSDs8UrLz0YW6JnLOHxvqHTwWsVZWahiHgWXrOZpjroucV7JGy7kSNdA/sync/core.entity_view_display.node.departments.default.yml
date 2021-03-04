@@ -1,0 +1,24 @@
+uuid: 46760a8a-94bf-4e74-af1d-340891d3ce4f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.departments.field_branch_name
+    - node.type.departments
+  module:
+    - user
+id: node.departments.default
+targetEntityType: node
+bundle: departments
+mode: default
+content:
+  field_branch_name:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+hidden:
+  links: true

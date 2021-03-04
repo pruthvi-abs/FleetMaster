@@ -1,0 +1,10 @@
+multiple_registration_path_company: register/company
+multiple_registration_url_company: /user/register/company
+multiple_registration_hidden_company: 0
+multiple_registration_form_mode_register_company: register
+multiple_registration_form_mode_edit_company: default
+multiple_registration_path_data_entry: register/employee
+multiple_registration_url_data_entry: /user/register/data_entry
+multiple_registration_hidden_data_entry: 1
+multiple_registration_form_mode_register_data_entry: register
+multiple_registration_form_mode_edit_data_entry: default

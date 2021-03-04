@@ -1,0 +1,24 @@
+<!-- Indicators -->
+<ol class="carousel-indicators wow fadeInUp" data-wow-delay="0.6s">
+{% for result in view.result %}
+  <li data-target="#banner-slider" data-slide-to="{{ loop.index-1 }}" class="{% if ( loop.index == 1 )  %}active{% endif %}">
+    <div class="thumbnail">
+      <img class="img-responsive" src="{{ file_url(view.field.uri.value(view.result[loop.index-1])) }}">
+    </div>
+  </li>
+{% endfor %}
+</ol>
+<div class="carousel-inner">
+ {% for result in view.result %}
+  <div class="item slides {% if ( loop.index == 1 )  %}active{% endif %}">
+    <div class="slide-1 wow fadeIn" style="background: url('{{ file_url(view.field.uri.value(view.result[loop.index-1])) }}');"></div>
+    <div class="container">
+      <div class="carousel-caption">
+        <p class="wow fadeInUp" data-wow-delay="0.6s">{{ view.field.body.value(view.result[loop.index-1]) |striptags }}</p>
+        <h1 class="wow fadeInUp" data-wow-delay="0.8s">{{ view.field.title.value(view.result[loop.index-1]) }}</h1>
+        <a href="#" class="enquiry-btn custom-btn wow fadeInLeft" data-wow-delay="1.2s">Read More <i class="fa fa-angle-right"></i></a>
+      </div>
+    </div>
+  </div>
+ {% endfor %}   
+</div>    

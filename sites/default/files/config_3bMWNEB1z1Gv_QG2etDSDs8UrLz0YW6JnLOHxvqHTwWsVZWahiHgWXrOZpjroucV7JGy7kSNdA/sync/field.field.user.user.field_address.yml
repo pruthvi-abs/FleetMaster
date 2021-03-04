@@ -1,0 +1,31 @@
+uuid: ebdb755e-e7af-4dc9-9d93-29b18436bbd5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_address
+  module:
+    - multiple_registration
+    - user
+third_party_settings:
+  multiple_registration:
+    user_additional_register_form:
+      company: company
+      data_entry: data_entry
+      authenticated: 0
+    user_additional_register_form_required:
+      company: company
+      data_entry: data_entry
+      authenticated: 0
+id: user.user.field_address
+field_name: field_address
+entity_type: user
+bundle: user
+label: ADDRESS
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

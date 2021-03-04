@@ -1,0 +1,78 @@
+{% if page.header and not logged_in %}
+{{ attach_library('fleet_management_theme/front-style') }}
+<header id="header" class="fixed-top" style="background: rgba(40, 58, 90)">
+  <div class="container-fluid px-5 d-flex align-items-center">
+    <h1 class="logo mr-auto"><a href="{{ url('<front>') }}">DIGIFLEET</a></h1>
+    {{ page.header }}
+  </div>
+</header>
+{% endif %} {% if page.content %}
+<div class="container" style="margin-top:8%">
+  {{ page.content }}
+</div>
+{% endif %}
+
+<footer id="footer">
+  {% if page.features_third and is_front %}
+  <div class="footer-newsletter">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <h4>Join Our Newsletter</h4>
+          <p>
+            Tamen quem nulla quae legam multos aute sint culpa legam noster
+            magna
+          </p>
+          {{ page.features_third }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+        {% if page.bottom_first %}
+        <div class="col-lg-4 col-md-6 footer-contact">
+          {{ page.bottom_first }}
+        </div>
+        {% endif %} {% if page.bottom_second %}
+        <div class="col-lg-4 col-md-6 footer-links">
+          <h4>Links</h4>
+          {{ page.bottom_second }}
+        </div>
+        {% endif %}
+
+        <div class="col-lg-4 col-md-6 footer-links">
+          <h4>Our Social Networks</h4>
+          <p>
+            Cras fermentum odio eu feugiat lide par naso tierra videa magna
+            derita valies
+          </p>
+          <div class="social-links mt-3">
+            <a href="{{ facebook_url }}" class="facebook"
+              ><i class="bx bxl-facebook"></i
+            ></a>
+            <a href="{{ instagram_url }}" class="instagram"
+              ><i class="bx bxl-instagram"></i
+            ></a>
+            <a href="{{ linkedin_url }}" class="linkedin"
+              ><i class="bx bxl-linkedin"></i
+            ></a>
+            <a href="{{ twitter_url }}" class="twitter"
+              ><i class="bx bxl-twitter"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom clearfix">
+    {% if page.footer_first %}
+    {{ page.footer_first }}
+    {% endif %} {% if page.footer_second %}
+    {{ page.footer_second }}
+    {% endif %}
+  </div>
+</footer>

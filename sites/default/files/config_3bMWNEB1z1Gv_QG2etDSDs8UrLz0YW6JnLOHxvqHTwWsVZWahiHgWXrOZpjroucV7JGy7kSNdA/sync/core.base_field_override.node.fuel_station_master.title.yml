@@ -1,0 +1,18 @@
+uuid: 362d129c-186c-466d-b810-1d841a18350c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.fuel_station_master
+id: node.fuel_station_master.title
+field_name: title
+entity_type: node
+bundle: fuel_station_master
+label: 'FUEL STATION NAME'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

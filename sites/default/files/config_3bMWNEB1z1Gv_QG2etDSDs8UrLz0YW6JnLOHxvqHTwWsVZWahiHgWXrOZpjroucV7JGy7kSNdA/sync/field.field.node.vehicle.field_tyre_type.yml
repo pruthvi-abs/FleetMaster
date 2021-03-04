@@ -1,0 +1,19 @@
+uuid: 9ea2ccd1-c663-41c3-bb61-c4489ded3928
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tyre_type
+    - node.type.vehicle
+id: node.vehicle.field_tyre_type
+field_name: field_tyre_type
+entity_type: node
+bundle: vehicle
+label: 'TYRE TYPE'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,33 @@
+uuid: f83d394e-1c75-40d2-9a72-b434310f2b90
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_fleet
+field_name: field_fleet
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: CAR
+      label: CAR
+    -
+      value: TRUCK
+      label: TRUCK
+    -
+      value: LORRY
+      label: LORRY
+    -
+      value: VAN
+      label: VAN
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

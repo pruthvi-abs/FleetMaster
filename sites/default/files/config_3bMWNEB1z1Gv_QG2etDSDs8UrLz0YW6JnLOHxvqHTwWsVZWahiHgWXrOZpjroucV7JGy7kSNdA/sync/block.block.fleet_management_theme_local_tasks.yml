@@ -1,0 +1,22 @@
+uuid: c690c3ae-0e82-4f73-a08a-d6b57553a916
+langcode: en
+status: false
+dependencies:
+  theme:
+    - fleet_management_theme
+_core:
+  default_config_hash: lSCMs48BvNzIEeDENQj2eLelJ6o9y5jzWKeuYEy6_y0
+id: fleet_management_theme_local_tasks
+theme: fleet_management_theme
+region: header
+weight: 1
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

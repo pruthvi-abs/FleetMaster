@@ -1,0 +1,22 @@
+uuid: 597097aa-450b-4692-8d8c-f8e9c4792bee
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vehicle_maintenance
+id: node.vehicle_maintenance.promote
+field_name: promote
+entity_type: node
+bundle: vehicle_maintenance
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

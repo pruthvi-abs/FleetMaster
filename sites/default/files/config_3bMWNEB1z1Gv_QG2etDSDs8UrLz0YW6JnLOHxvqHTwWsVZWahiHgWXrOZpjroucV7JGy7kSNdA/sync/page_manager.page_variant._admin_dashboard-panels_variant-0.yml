@@ -1,0 +1,43 @@
+uuid: 40375432-7dcb-40bf-bce9-1e2df2dd03f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page._admin_dashboard
+    - system.menu.digitec-navigation
+  module:
+    - panels
+    - system
+id: _admin_dashboard-panels_variant-0
+label: Panels
+variant: panels_variant
+variant_settings:
+  blocks:
+    4066ea30-5319-4b02-8456-1c862e9f113a:
+      id: 'system_menu_block:digitec-navigation'
+      label: 'Digitec Navigation'
+      provider: system
+      label_display: visible
+      level: 1
+      depth: 0
+      expand_all_items: false
+      region: top
+      weight: 0
+      uuid: 4066ea30-5319-4b02-8456-1c862e9f113a
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 04914ed7-37ad-4bf0-8578-82c5551b1d0f
+  label: null
+  weight: 0
+  layout: layout_threecol_33_34_33
+  layout_settings:
+    label: 'Super Admin Dashboard'
+  page_title: ''
+  storage_type: page_manager
+  storage_id: _admin_dashboard-panels_variant-0
+  builder: standard
+page: _admin_dashboard
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

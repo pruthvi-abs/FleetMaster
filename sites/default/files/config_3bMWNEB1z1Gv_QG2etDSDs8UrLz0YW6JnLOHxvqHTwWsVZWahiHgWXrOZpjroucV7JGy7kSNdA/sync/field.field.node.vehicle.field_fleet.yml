@@ -1,0 +1,21 @@
+uuid: 10f93c45-9358-406f-b14b-2d9eb860891e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fleet
+    - node.type.vehicle
+  module:
+    - options
+id: node.vehicle.field_fleet
+field_name: field_fleet
+entity_type: node
+bundle: vehicle
+label: 'FLEET TYPE'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

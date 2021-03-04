@@ -1,0 +1,14 @@
+uuid: df0ecf6b-413e-48dd-bd4b-605e64579f40
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.accident_monitering
+  module:
+    - user
+id: user_add_role_action.accident_monitering
+label: 'Add the Accident Monitering role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: accident_monitering

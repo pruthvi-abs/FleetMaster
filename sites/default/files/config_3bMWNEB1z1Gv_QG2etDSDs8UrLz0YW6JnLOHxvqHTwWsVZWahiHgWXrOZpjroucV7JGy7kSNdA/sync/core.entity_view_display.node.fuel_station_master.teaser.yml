@@ -1,0 +1,26 @@
+uuid: 13f7ef58-5d77-4c92-91a3-57cffd005b71
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.fuel_station_master.field_address
+    - field.field.node.fuel_station_master.field_contact_no
+    - field.field.node.fuel_station_master.field_deposit
+    - node.type.fuel_station_master
+  module:
+    - user
+id: node.fuel_station_master.teaser
+targetEntityType: node
+bundle: fuel_station_master
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_address: true
+  field_contact_no: true
+  field_deposit: true

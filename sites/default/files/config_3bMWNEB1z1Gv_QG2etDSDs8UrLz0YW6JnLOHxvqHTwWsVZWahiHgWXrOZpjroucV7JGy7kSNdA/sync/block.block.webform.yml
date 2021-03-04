@@ -1,0 +1,39 @@
+uuid: fef1c71a-5c29-4a45-be3f-b3a71d4beb19
+langcode: en
+status: true
+dependencies:
+  config:
+    - webform.webform.newsletter
+  module:
+    - system
+    - user
+    - webform
+  theme:
+    - fleet_management_theme
+id: webform
+theme: fleet_management_theme
+region: features_third
+weight: 0
+provider: null
+plugin: webform_block
+settings:
+  id: webform_block
+  label: Newsletter
+  provider: webform
+  label_display: '0'
+  webform_id: newsletter
+  default_data: ''
+  redirect: false
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

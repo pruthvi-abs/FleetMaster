@@ -1,0 +1,22 @@
+uuid: c9948b99-e9d7-4125-b5e2-55e768e5b336
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - lightship
+_core:
+  default_config_hash: WWu2OQswgCztl9OeXjD1stexIEMZsSgPMYIdC-JHx9c
+id: lightship_breadcrumbs
+theme: lightship
+region: header
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

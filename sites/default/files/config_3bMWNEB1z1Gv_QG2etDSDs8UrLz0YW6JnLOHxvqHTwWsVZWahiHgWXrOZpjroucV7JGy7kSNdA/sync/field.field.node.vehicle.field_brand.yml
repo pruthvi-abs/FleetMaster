@@ -1,0 +1,19 @@
+uuid: 3255547f-47d7-4d16-8890-62d8c19c3a2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_brand
+    - node.type.vehicle
+id: node.vehicle.field_brand
+field_name: field_brand
+entity_type: node
+bundle: vehicle
+label: BRAND
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

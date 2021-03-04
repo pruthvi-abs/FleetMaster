@@ -1,0 +1,8 @@
+uuid: 68d50b4f-9775-4931-a6f9-4e0516cdb914
+langcode: en
+status: true
+dependencies: {  }
+id: employee-navigation
+label: 'Operator Navigation'
+description: ''
+locked: false

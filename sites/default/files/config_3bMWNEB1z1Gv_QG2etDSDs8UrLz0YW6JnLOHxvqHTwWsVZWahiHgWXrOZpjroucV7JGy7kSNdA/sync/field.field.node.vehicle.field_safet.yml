@@ -1,0 +1,21 @@
+uuid: 5cf53998-1127-44e6-9cce-514df5d0f45e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_safet
+    - node.type.vehicle
+  module:
+    - datetime
+id: node.vehicle.field_safet
+field_name: field_safet
+entity_type: node
+bundle: vehicle
+label: 'SAFETY STICKER EXPIRY'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

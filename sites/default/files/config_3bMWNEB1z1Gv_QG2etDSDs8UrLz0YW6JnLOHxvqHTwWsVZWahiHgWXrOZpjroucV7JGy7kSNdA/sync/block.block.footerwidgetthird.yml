@@ -1,0 +1,49 @@
+uuid: 82c696cb-6d04-43ed-8577-d9325b6c9b35
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:0aeda786-3562-49d3-a3b8-1e9561b2fca4'
+  module:
+    - block_content
+    - system
+    - user
+  theme:
+    - fleet_management_theme
+id: footerwidgetthird
+theme: fleet_management_theme
+region: bottom_third
+weight: -10
+provider: null
+plugin: 'block_content:0aeda786-3562-49d3-a3b8-1e9561b2fca4'
+settings:
+  id: 'block_content:0aeda786-3562-49d3-a3b8-1e9561b2fca4'
+  label: 'Footer Widget Third'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+      authenticated: authenticated
+      administrator: administrator
+      company: company
+      data_entry: data_entry
+      vehicle_: vehicle_
+      employee: employee
+      fuel_filling: fuel_filling
+      vehicle_allotment: vehicle_allotment
+      accident_monitering: accident_monitering
+      vehicle_maintenance: vehicle_maintenance
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false

@@ -1,0 +1,18 @@
+uuid: 81123619-1dc4-42b0-b4e3-b8be9249b5c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vehicle
+id: node.vehicle.title
+field_name: title
+entity_type: node
+bundle: vehicle
+label: 'Registration No'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

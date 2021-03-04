@@ -1,0 +1,21 @@
+uuid: 31f65eb9-b51a-47c0-9c81-d059efb6b0a2
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+    - unique_entity_title
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+  unique_entity_title:
+    enabled: false
+name: 'Fuel Station Name'
+type: fuel_station_master
+description: 'fuel station details'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

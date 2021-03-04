@@ -1,0 +1,36 @@
+uuid: b9c5858f-cbc2-4f55-bc0f-3a24dd9a3957
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.vehicle_maintenance.field_driver_name
+    - field.field.node.vehicle_maintenance.field_expenses_incurred
+    - field.field.node.vehicle_maintenance.field_maintenance
+    - field.field.node.vehicle_maintenance.field_metre_reading
+    - field.field.node.vehicle_maintenance.field_payment_voucher_no
+    - field.field.node.vehicle_maintenance.field_remarks
+    - field.field.node.vehicle_maintenance.field_system_date
+    - field.field.node.vehicle_maintenance.field_vehicle_no
+    - node.type.vehicle_maintenance
+  module:
+    - user
+id: node.vehicle_maintenance.teaser
+targetEntityType: node
+bundle: vehicle_maintenance
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_driver_name: true
+  field_expenses_incurred: true
+  field_maintenance: true
+  field_metre_reading: true
+  field_payment_voucher_no: true
+  field_remarks: true
+  field_system_date: true
+  field_vehicle_no: true

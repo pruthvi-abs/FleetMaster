@@ -1,0 +1,20 @@
+uuid: f05312f4-ec52-4ea0-8230-5302d7af6a18
+langcode: en
+status: true
+dependencies:
+  theme:
+    - yg_logistics
+_core:
+  default_config_hash: ZSpc3IoSaLd0PkB02nxjVPBMztIdsTdHek9SiGaqZ_c
+id: yg_logistics_page_title
+theme: yg_logistics
+region: header
+weight: -30
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,35 @@
+uuid: c2b2d143-1b0a-440e-b202-c24e5076e25a
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.employee-navigation
+  module:
+    - system
+    - user
+  theme:
+    - fleet_management_theme
+id: operatornavigation
+theme: fleet_management_theme
+region: header
+weight: 0
+provider: null
+plugin: 'system_menu_block:employee-navigation'
+settings:
+  id: 'system_menu_block:employee-navigation'
+  label: 'Operator Navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+      data_entry: data_entry
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

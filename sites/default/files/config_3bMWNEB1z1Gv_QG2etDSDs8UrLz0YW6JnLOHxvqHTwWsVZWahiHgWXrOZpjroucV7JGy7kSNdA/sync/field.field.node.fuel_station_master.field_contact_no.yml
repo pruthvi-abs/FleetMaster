@@ -1,0 +1,19 @@
+uuid: b65fa7dd-445a-4645-b00f-80c1dbb3c7e3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_contact_no
+    - node.type.fuel_station_master
+id: node.fuel_station_master.field_contact_no
+field_name: field_contact_no
+entity_type: node
+bundle: fuel_station_master
+label: 'CONTACT NO'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

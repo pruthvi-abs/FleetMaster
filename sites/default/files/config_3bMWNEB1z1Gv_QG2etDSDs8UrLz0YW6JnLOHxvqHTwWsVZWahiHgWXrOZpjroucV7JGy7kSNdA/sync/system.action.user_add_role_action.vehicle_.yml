@@ -1,0 +1,14 @@
+uuid: 1486e053-0aff-4696-b72c-6a21c7806ac2
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.vehicle_
+  module:
+    - user
+id: user_add_role_action.vehicle_
+label: 'Add the Vehicle role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: vehicle_

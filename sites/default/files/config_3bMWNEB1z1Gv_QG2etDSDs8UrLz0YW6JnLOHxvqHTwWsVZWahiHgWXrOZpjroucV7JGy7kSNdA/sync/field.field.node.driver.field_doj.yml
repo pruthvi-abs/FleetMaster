@@ -1,0 +1,21 @@
+uuid: 52a5545a-c4f1-4ec9-9cde-ee610f4dbcc7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_doj
+    - node.type.driver
+  module:
+    - datetime
+id: node.driver.field_doj
+field_name: field_doj
+entity_type: node
+bundle: driver
+label: DOJ
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

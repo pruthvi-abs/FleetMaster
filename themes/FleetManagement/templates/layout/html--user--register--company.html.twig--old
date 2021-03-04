@@ -1,0 +1,467 @@
+{% if logged_in %}
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/ajax-progress.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/align.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/autocomplete-loading.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/fieldgroup.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/container-inline.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/clearfix.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/details.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/hidden.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/item-list.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/js.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/nowrap.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/position-container.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/progress.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/reset-appearance.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/resize.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/sticky-header.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/system-status-counter.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/system-status-report-counters.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/system-status-report-general-info.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/tabledrag.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/tablesort.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/tree-child.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/contextual/css/contextual.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/assets/vendor/jquery.ui/themes/base/core.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/assets/vendor/jquery.ui/themes/base/resizable.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/assets/vendor/jquery.ui/themes/base/checkboxradio.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/assets/vendor/jquery.ui/themes/base/controlgroup.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/assets/vendor/jquery.ui/themes/base/button.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/assets/vendor/jquery.ui/themes/base/dialog.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/quickedit/css/quickedit.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/toolbar/css/toolbar.module.css" />
+    <link rel="stylesheet" media="screen" href="/AWFleetManagement/core/modules/tour/css/tour.module.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/contextual/css/contextual.toolbar.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/toolbar/css/toolbar.menu.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/contextual/css/contextual.theme.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/contextual/css/contextual.icons.theme.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/assets/vendor/jquery.ui/themes/base/theme.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/quickedit/css/quickedit.theme.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/quickedit/css/quickedit.icons.theme.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/themes/seven/css/components/quickedit.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/layout_discovery/layouts/threecol_33_34_33/threecol_33_34_33.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/toolbar/css/toolbar.theme.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/toolbar/css/toolbar.icons.theme.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/user/css/user.icons.admin.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/modules/contrib/admin_toolbar/admin_toolbar_tools/css/tools.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/shortcut/css/shortcut.theme.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/shortcut/css/shortcut.icons.theme.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/modules/contrib/admin_toolbar/css/admin.toolbar.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/back/css/bootstrap.min.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/back/css/themify-icons.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/back/css/animate.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/back/css/styles.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/back/css/red.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/back/css/responsive.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/back/css/jquery-jvectormap.css" />
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/css/backdesign.css" />
+
+    <script src="/AWFleetManagement/core/assets/vendor/modernizr/modernizr.min.js?v=3.8.0"></script>
+    <script src="/AWFleetManagement/core/misc/modernizr-additional-tests.js?v=3.8.0"></script>
+    <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" defer crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/releases/v5.13.1/js/v4-shims.js" defer crossorigin="anonymous"></script>
+  </head>
+  <body{{ attributes }}>
+    {#
+      Keyboard navigation/accessibility link to main content section in
+      page.html.twig.
+    #}
+<!-- Pre Loader -->
+{# <div class="loading">
+  <div class="spinner">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  </div>
+</div> #}
+<!--/Pre Loader -->
+<div class="wrapper">
+  <!-- Sidebar -->
+  <nav id="sidebar" class="lorvens-bg">
+    <div class="sidebar-header">
+      <a href="../admin/dashboard"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
+    </div>
+    {% if expiry_status != 'expired' %}
+    <ul class="list-unstyled components">
+      {{
+        page.header
+      }}
+    </ul>
+    {% endif %}
+  </nav>
+  <!-- /Sidebar -->
+  <!-- Page Content -->
+  <div id="content">
+    <!-- Top Navigation -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header"></div>
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <a
+              class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              href="#"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span class="ti-user"></span>
+            </a>
+            <div
+              class="dropdown-menu lorvens-box-shadow profile animated flipInY"
+            >
+              <h5>{{ username }}</h5>
+              <a class="dropdown-item" href="#">
+                <span class="ti-settings"></span> Settings</a
+              >
+              <a class="dropdown-item" href="#">
+                <span class="ti-help-alt"></span> Help</a
+              >
+              <a class="dropdown-item" href="{{ base_url }}/user/logout">
+                <span class="ti-power-off"></span> Logout</a
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- /Top Navigation -->
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="index.html">
+          <span class="ti-home"></span>
+        </a>
+      </li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <!-- /Breadcrumb -->
+    <!-- Main Content -->
+    {{ page.content }}
+    <!-- /Main Content -->
+  </div>
+  <!-- /Page Content -->
+</div>
+<!-- Back to Top -->
+
+<!-- 
+File Include
+-->
+<a id="back-to-top" href="#" class="back-to-top fenil">
+  <span class="ti-angle-up"></span>
+</a>
+<script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/AWFleetManagement\/","scriptPath":null,"pathPrefix":"","currentPath":"admin\/dashboard","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"admin_toolbar\/toolbar.tree,admin_toolbar_tools\/toolbar.icon,big_pipe\/big_pipe,contextual\/drupal.contextual-links,contextual\/drupal.contextual-toolbar,core\/drupal.active-link,fleet_management_theme\/back-style,fontawesome\/fontawesome.svg.shim,layout_discovery\/threecol_33_34_33,quickedit\/quickedit,shortcut\/drupal.shortcut,system\/base,toolbar\/toolbar,toolbar\/toolbar.escapeAdmin,tour\/tour,user\/drupal.user.icons","theme":"fleet_management_theme","theme_token":null},"ajaxTrustedUrl":[],"bigPipePlaceholderIds":{"callback=Drupal%5CCore%5CRender%5CElement%5CStatusMessages%3A%3ArenderMessages\u0026args%5B0%5D\u0026token=_HAdUpwWmet0TOTe2PSiJuMntExoshbm1kh2wQzzzAA":true,"callback=user.toolbar_link_builder%3ArenderToolbarLinks\u0026\u0026token=38ZEv7DsmadZ0MrkabgabVvBAVAyea29NgmrHf335ak":true,"callback=user.toolbar_link_builder%3ArenderDisplayName\u0026\u0026token=-MH2NzEnTzbzMk0ZGfGgoiw7G3j_-Q1ILWBRVhIOKLI":true,"callback=shortcut.lazy_builders%3AlazyLinks\u0026\u0026token=N1997Wch59v-LxHku3-dD44wjkSNmhegNzlZ8jS0L5I":true},"toolbar":{"breakpoints":{"toolbar.narrow":"only screen and (min-width: 16.5em)","toolbar.standard":"only screen and (min-width: 38.125em)","toolbar.wide":"only screen and (min-width: 61em)"},"subtreesHash":"D2FlJqRur4cj2JRw6ceuZLiiNjQrszipanpH_fXqa9I"},"user":{"uid":"1","permissionsHash":"091471e3845ac7d3ba15a25fc96ba6031288e3fef6562052e140576866337856"}}</script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery/jquery.min.js?v=3.5.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/underscore/underscore-min.js?v=1.9.1"></script>
+<script src="/AWFleetManagement/core/misc/polyfills/array.find.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/assets/vendor/es6-promise/es6-promise.auto.min.js?v=4.2.8"></script>
+<script src="/AWFleetManagement/core/misc/polyfills/object.assign.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery-once/jquery.once.min.js?v=2.2.3"></script>
+<script src="/AWFleetManagement/core/assets/vendor/backbone/backbone-min.js?v=1.4.0"></script>
+<script src="/AWFleetManagement/core/misc/drupalSettingsLoader.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/drupal.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/drupal.init.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/data-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/disable-selection-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/form-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/labels-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/jquery-1-7-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/scroll-parent-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/tabbable-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/unique-id-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/version-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/escape-selector-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/focusable-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/keycode-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/plugin-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/safe-active-element-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/safe-blur-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/widget-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/contextual.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/models/StateModel.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/views/AuralView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/views/KeyboardView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/views/RegionView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/views/VisualView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/progress.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/ajax.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery-form/jquery.form.min.js?v=4.22"></script>
+<script src="/AWFleetManagement/core/misc/debounce.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/displace.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/form.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/ie-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/widgets/mouse-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/widgets/draggable-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/position-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/widgets/resizable-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/form-reset-mixin-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/widgets/checkboxradio-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/widgets/controlgroup-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/widgets/button-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery.ui/ui/widgets/dialog-min.js?v=1.12.1"></script>
+<script src="/AWFleetManagement/core/misc/dialog/dialog.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/dialog/dialog.position.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/dialog/dialog.jquery-ui.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/assets/vendor/popperjs/popper.min.js?v=2.0.6"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/quickedit.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/util.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/models/BaseModel.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/models/AppModel.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/models/EntityModel.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/models/FieldModel.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/models/EditorModel.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/views/AppView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/views/FieldDecorationView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/views/EntityDecorationView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/views/EntityToolbarView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/views/ContextualLinkView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/views/FieldToolbarView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/views/EditorView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/quickedit/js/theme.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/active-link.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/announce.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/toolbar/js/toolbar.menu.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/toolbar/js/toolbar.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/toolbar/js/models/MenuModel.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/toolbar/js/models/ToolbarModel.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/toolbar/js/views/BodyVisualView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/toolbar/js/views/MenuVisualView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/toolbar/js/views/ToolbarAuralView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/toolbar/js/views/ToolbarVisualView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery-joyride/jquery.joyride-2.1.js?v=2.1.0.1"></script>
+<script src="/AWFleetManagement/core/modules/tour/js/tour.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/tabbingmanager.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/contextual.toolbar.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/toolbar/models/StateModel.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/toolbar/views/AuralView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/contextual/js/toolbar/views/VisualView.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/modules/contrib/admin_toolbar/js/jquery.hoverIntent.js"></script>
+<script src="/AWFleetManagement/modules/contrib/admin_toolbar/js/admin_toolbar.js"></script>
+<script src="/AWFleetManagement/core/modules/toolbar/js/escapeAdmin.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/big_pipe/js/big_pipe.js?v=9.0.7"></script>
+
+<script type="application/vnd.drupal-ajax" data-big-pipe-event="start"></script>
+<script type="application/vnd.drupal-ajax" data-big-pipe-replacement-for-placeholder-with-id="callback=shortcut.lazy_builders%3AlazyLinks&amp;&amp;token=N1997Wch59v-LxHku3-dD44wjkSNmhegNzlZ8jS0L5I">
+[{"command":"insert","method":"replaceWith","selector":"[data-big-pipe-placeholder-id=\u0022callback=shortcut.lazy_builders%3AlazyLinks\u0026\u0026token=N1997Wch59v-LxHku3-dD44wjkSNmhegNzlZ8jS0L5I\u0022]","data":"\n\n\u003C!-- THEME DEBUG --\u003E\n\u003C!-- THEME HOOK: \u0027links__toolbar_shortcuts\u0027 --\u003E\n\u003C!-- FILE NAME SUGGESTIONS:\n   * links--toolbar-shortcuts.html.twig\n   x links.html.twig\n--\u003E\n\u003C!-- BEGIN OUTPUT from \u0027core\/modules\/system\/templates\/links.html.twig\u0027 --\u003E\n\u003Cul class=\u0022toolbar-menu\u0022\u003E\u003Cli\u003E\u003Ca href=\u0022\/AWFleetManagement\/node\/add\/vehicle_maintenance\u0022\u003ECreate vehicle maintenance\u003C\/a\u003E\u003C\/li\u003E\u003Cli\u003E\u003Ca href=\u0022\/AWFleetManagement\/node\/add\u0022\u003EAdd content\u003C\/a\u003E\u003C\/li\u003E\u003Cli\u003E\u003Ca href=\u0022\/AWFleetManagement\/admin\/content\u0022\u003EAll content\u003C\/a\u003E\u003C\/li\u003E\u003C\/ul\u003E\n\u003C!-- END OUTPUT from \u0027core\/modules\/system\/templates\/links.html.twig\u0027 --\u003E\n\n\u003Ca href=\u0022\/AWFleetManagement\/admin\/config\/user-interface\/shortcut\/manage\/default\/customize\u0022 class=\u0022edit-shortcuts\u0022\u003EEdit shortcuts\u003C\/a\u003E","settings":null}]
+</script>    <script type="application/vnd.drupal-ajax" data-big-pipe-replacement-for-placeholder-with-id="callback=user.toolbar_link_builder%3ArenderDisplayName&amp;&amp;token=-MH2NzEnTzbzMk0ZGfGgoiw7G3j_-Q1ILWBRVhIOKLI">
+[{"command":"insert","method":"replaceWith","selector":"[data-big-pipe-placeholder-id=\u0022callback=user.toolbar_link_builder%3ArenderDisplayName\u0026\u0026token=-MH2NzEnTzbzMk0ZGfGgoiw7G3j_-Q1ILWBRVhIOKLI\u0022]","data":"superadmin","settings":null}]
+</script>    <script type="application/vnd.drupal-ajax" data-big-pipe-replacement-for-placeholder-with-id="callback=user.toolbar_link_builder%3ArenderToolbarLinks&amp;&amp;token=38ZEv7DsmadZ0MrkabgabVvBAVAyea29NgmrHf335ak">
+[{"command":"insert","method":"replaceWith","selector":"[data-big-pipe-placeholder-id=\u0022callback=user.toolbar_link_builder%3ArenderToolbarLinks\u0026\u0026token=38ZEv7DsmadZ0MrkabgabVvBAVAyea29NgmrHf335ak\u0022]","data":"\n\n\u003C!-- THEME DEBUG --\u003E\n\u003C!-- THEME HOOK: \u0027links__toolbar_user\u0027 --\u003E\n\u003C!-- FILE NAME SUGGESTIONS:\n   * links--toolbar-user.html.twig\n   x links.html.twig\n--\u003E\n\u003C!-- BEGIN OUTPUT from \u0027core\/modules\/system\/templates\/links.html.twig\u0027 --\u003E\n\u003Cul class=\u0022toolbar-menu\u0022\u003E\u003Cli\u003E\u003Ca href=\u0022\/AWFleetManagement\/user\u0022 title=\u0022User account\u0022\u003EView profile\u003C\/a\u003E\u003C\/li\u003E\u003Cli\u003E\u003Ca href=\u0022\/AWFleetManagement\/user\/1\/edit\u0022 title=\u0022Edit user account\u0022\u003EEdit profile\u003C\/a\u003E\u003C\/li\u003E\u003Cli\u003E\u003Ca href=\u0022\/AWFleetManagement\/user\/logout?current=\/admin\/dashboard\u0022\u003ELog out\u003C\/a\u003E\u003C\/li\u003E\u003C\/ul\u003E\n\u003C!-- END OUTPUT from \u0027core\/modules\/system\/templates\/links.html.twig\u0027 --\u003E\n\n","settings":null}]
+</script>    <script type="application/vnd.drupal-ajax" data-big-pipe-replacement-for-placeholder-with-id="callback=Drupal%5CCore%5CRender%5CElement%5CStatusMessages%3A%3ArenderMessages&amp;args%5B0%5D&amp;token=_HAdUpwWmet0TOTe2PSiJuMntExoshbm1kh2wQzzzAA">
+[{"command":"insert","method":"replaceWith","selector":"[data-big-pipe-placeholder-id=\u0022callback=Drupal%5CCore%5CRender%5CElement%5CStatusMessages%3A%3ArenderMessages\u0026args%5B0%5D\u0026token=_HAdUpwWmet0TOTe2PSiJuMntExoshbm1kh2wQzzzAA\u0022]","data":"","settings":null}]
+</script>
+<script type="application/vnd.drupal-ajax" data-big-pipe-event="stop"></script>
+
+<script>
+  var package = document.getElementById("package").value;
+  // console.log(package);
+  if (package == "expired") {
+    swal(
+      {
+        title: "package Expired!",
+        text: "Please Renew your package!",
+        icon: "error",
+        button: "Renew!",
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        dangerMode: true,
+      });
+      $('.swal-button').on('click',function(){
+        window.location.href = 'https://www.google.com/';
+      });
+  }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/custom.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/js/main.js"></script>
+  </body>
+</html>
+
+{% else %}
+
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/ajax-progress.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/align.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/autocomplete-loading.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/fieldgroup.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/container-inline.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/clearfix.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/details.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/hidden.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/item-list.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/js.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/nowrap.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/position-container.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/progress.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/reset-appearance.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/resize.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/sticky-header.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/system-status-counter.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/system-status-report-counters.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/system-status-report-general-info.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/tabledrag.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/tablesort.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/system/css/components/tree-child.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/modules/custom/helloworld/css/company.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/user/css/user.module.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/core/modules/layout_discovery/layouts/onecol/onecol.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/icofont/icofont.min.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/boxicons/css/boxicons.min.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/remixicon/remixicon.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/venobox/venobox.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/owl.carousel/../assets/owl.carousel.min.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/aos/aos.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/css/flexslider.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/css/style.css" />
+<link rel="stylesheet" media="all" href="/AWFleetManagement/themes/FleetManagement/assets/front/css/frontdesign.css" />
+
+    <script src="/AWFleetManagement/core/assets/vendor/modernizr/modernizr.min.js?v=3.8.0"></script>
+<script src="/AWFleetManagement/core/misc/modernizr-additional-tests.js?v=3.8.0"></script>
+<script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" defer crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.13.1/js/v4-shims.js" defer crossorigin="anonymous"></script>
+</head>
+<body>
+{% if page.header %}
+<header id="header" class="fixed-top" style="background: rgba(40, 58, 90)">
+  <div class="container-fluid px-5 d-flex align-items-center">
+    <h1 class="logo mr-auto"><a href="{{ url('<front>') }}">DIGIFLEET</a></h1>
+    {{ page.header }}
+  </div>
+</header>
+{% endif %} {% if page.content %}
+<div class="container" style="margin-top:8%">
+  {{ page.content }}
+</div>
+{% endif %}
+
+<footer id="footer">
+  {% if page.features_third and is_front %}
+  <div class="footer-newsletter">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <h4>Join Our Newsletter</h4>
+          <p>
+            Tamen quem nulla quae legam multos aute sint culpa legam noster
+            magna
+          </p>
+          {{ page.features_third }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+        {% if page.bottom_first %}
+        <div class="col-lg-4 col-md-6 footer-contact">
+          {{ page.bottom_first }}
+        </div>
+        {% endif %} {% if page.bottom_second %}
+        <div class="col-lg-4 col-md-6 footer-links">
+          <h4>Links</h4>
+          {{ page.bottom_second }}
+        </div>
+        {% endif %}
+
+        <div class="col-lg-4 col-md-6 footer-links">
+          <h4>Our Social Networks</h4>
+          <p>
+            Cras fermentum odio eu feugiat lide par naso tierra videa magna
+            derita valies
+          </p>
+          <div class="social-links mt-3">
+            <a href="{{ facebook_url }}" class="facebook"
+              ><i class="bx bxl-facebook"></i
+            ></a>
+            <a href="{{ instagram_url }}" class="instagram"
+              ><i class="bx bxl-instagram"></i
+            ></a>
+            <a href="{{ linkedin_url }}" class="linkedin"
+              ><i class="bx bxl-linkedin"></i
+            ></a>
+            <a href="{{ twitter_url }}" class="twitter"
+              ><i class="bx bxl-twitter"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom clearfix">
+    {% if page.footer_first %}
+    {{ page.footer_first }}
+    {% endif %} {% if page.footer_second %}
+    {{ page.footer_second }}
+    {% endif %}
+  </div>
+</footer>
+
+<!-- End Footer -->
+
+<a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+<div id="preloader"></div> 
+
+<script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/AWFleetManagement\/","scriptPath":null,"pathPrefix":"","currentPath":"user\/register\/company","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"core\/drupal.ajax,core\/drupal.date,core\/drupal.form,core\/jquery.form,file\/drupal.file,fleet_management_theme\/front-style,fontawesome\/fontawesome.svg.shim,helloworld\/company-lib,layout_discovery\/onecol,system\/base,user\/drupal.user","theme":"fleet_management_theme","theme_token":null},"ajaxTrustedUrl":{"form_action_p_pvdeGsVG5zNF_XLGPTvYSKCf43t8qZYSwcfZl2uzM":true,"\/AWFleetManagement\/register\/company?element_parents=user_picture\/widget\/0\u0026ajax_form=1":true},"ajax":{"edit-user-picture-0-upload-button":{"callback":["Drupal\\file\\Element\\ManagedFile","uploadAjaxCallback"],"wrapper":"ajax-wrapper","effect":"fade","progress":{"type":"throbber","message":null},"event":"mousedown","keypress":true,"prevent":"click","url":"\/AWFleetManagement\/register\/company?element_parents=user_picture\/widget\/0\u0026ajax_form=1","dialogType":"ajax","submit":{"_triggering_element_name":"user_picture_0_upload_button","_triggering_element_value":"Upload"}}},"file":{"elements":{"#edit-user-picture-0-upload":"png,gif,jpg,jpeg"}},"password":{"confirmTitle":"Passwords match:","confirmSuccess":"yes","confirmFailure":"no","showStrengthIndicator":true,"strengthTitle":"Password strength:","hasWeaknesses":"Recommendations to make your password stronger:","tooShort":"Make it at least 12 characters","addLowerCase":"Add lowercase letters","addUpperCase":"Add uppercase letters","addNumbers":"Add numbers","addPunctuation":"Add punctuation","sameAsUsername":"Make it different from your username","weak":"Weak","fair":"Fair","good":"Good","strong":"Strong","username":""},"user":{"uid":0,"permissionsHash":"6e5546bfc8bee41868eff1937ed412a8853a05b1e4e362351960e17132b39499"}}</script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery/jquery.min.js?v=3.5.1"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery-once/jquery.once.min.js?v=2.2.3"></script>
+<script src="/AWFleetManagement/core/misc/drupalSettingsLoader.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/drupal.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/drupal.init.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/debounce.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/form.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/date.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/file/file.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/assets/vendor/jquery-form/jquery.form.min.js?v=4.22"></script>
+<script src="/AWFleetManagement/core/misc/progress.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/misc/ajax.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/user/user.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/core/modules/user/user.theme.js?v=9.0.7"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/jquery/jquery.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/jquery.easing/jquery.easing.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/php-email-form/validate.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/waypoints/jquery.waypoints.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/venobox/venobox.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/owl.carousel/owl.carousel.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/vendor/aos/aos.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/js/jquery.flexslider-min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/front/js/main.js"></script>
+<script>
+  var package = document.getElementById("package").value;
+  // console.log(package);
+  if (package == "expired") {
+    swal(
+      {
+        title: "package Expired!",
+        text: "Please Renew your package!",
+        icon: "error",
+        button: "Renew!",
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        dangerMode: true,
+      });
+      $('.swal-button').on('click',function(){
+        window.location.href = 'https://www.google.com/';
+      });
+  }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/custom.js"></script>
+</body>
+</html>
+{% endif %}

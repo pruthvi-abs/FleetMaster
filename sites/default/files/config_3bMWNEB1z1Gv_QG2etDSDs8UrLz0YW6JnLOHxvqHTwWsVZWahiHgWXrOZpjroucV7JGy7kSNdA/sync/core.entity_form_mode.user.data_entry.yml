@@ -1,0 +1,10 @@
+uuid: 1ab64e8e-7415-4d19-968f-241c35cac708
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.data_entry
+label: 'DATA ENTRY'
+targetEntityType: user
+cache: true

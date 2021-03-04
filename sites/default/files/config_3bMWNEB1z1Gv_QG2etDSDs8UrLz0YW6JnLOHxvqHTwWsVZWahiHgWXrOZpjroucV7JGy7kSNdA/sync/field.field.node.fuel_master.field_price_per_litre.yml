@@ -1,0 +1,23 @@
+uuid: 6b6cd1b7-57cb-4ce6-914d-5f6d9deb72e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_per_litre
+    - node.type.fuel_master
+id: node.fuel_master.field_price_per_litre
+field_name: field_price_per_litre
+entity_type: node
+bundle: fuel_master
+label: 'PRICE PER LITRE'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

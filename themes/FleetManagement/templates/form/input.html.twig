@@ -1,0 +1,64 @@
+{# /** * @file * Default theme implementation for an 'input' #type form element.
+* * Available variables: * - attributes: A list of HTML attributes for the input
+element. * - children: Optional additional rendered elements. * * @see
+template_preprocess_input() * * @ingroup themeable */ #} {# {% if
+attributes.type != 'submit' %}
+<div class="form-group row">
+  <div class="col-sm-12">
+    <input{{ attributes.addClass("form-control") }} />{{ children }}
+  </div>
+</div>
+{% elseif attributes.type == 'submit' %}
+<div>
+  {{ children }}
+</div>
+{% endif %} #} 
+
+{% if attributes.type == 'hidden' %} <input{{
+  attributes.addClass("form-control")
+}}
+/>{{ children }}
+{% elseif attributes.type == 'submit' %}
+<div class="lorvens-widget">
+  <div class="col-sm-12">
+    <input{{ attributes.addClass("btn btn-primary btn-lg btn-block") }}/>
+  </div>
+</div>
+{{ children }}
+{% elseif attributes.type == 'checkbox' %}
+<span class="">
+  <span class="col-sm-3">
+    <input{{ attributes.addClass("pd-0") }}/>{{
+      children
+    }}
+  </span>
+</span>
+{% elseif attributes.type == 'date' %}
+<div class="form-group">
+  <div class="">
+    <input{{ attributes.addClass("form-control col-sm-8 datesystem") }}/>{{
+      children
+    }}
+  </div>
+</div>
+{% elseif attributes.type == 'time' %}
+<div class="">
+  <div class="">
+    <input{{ attributes.addClass("form-control col-sm-8 timesystem") }}/>{{
+      children
+    }}
+  </div>
+</div>
+{% elseif attributes.type == 'number' %}
+<div class="form-group">
+  <div class="">
+    <input{{ attributes.addClass("form-control col-sm-8 ml-1") }} />{{ children }}
+  </div>
+</div>
+{% else %}
+<div class="form-group">
+  <div class="">
+    <input{{ attributes.addClass("form-control col-sm-8") }} />{{ children }}
+  </div>
+</div>
+{% endif %}

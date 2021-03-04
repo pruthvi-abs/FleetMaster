@@ -1,0 +1,20 @@
+uuid: bd40c099-802e-40b7-bdfa-8f1c3233e2ad
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+id: node.field_fuel_card_expiry_date
+field_name: field_fuel_card_expiry_date
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,19 @@
+uuid: 6a64b298-1ab4-48bd-ba4b-8880d6f146b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mobil
+    - node.type.driver
+id: node.driver.field_mobil
+field_name: field_mobil
+entity_type: node
+bundle: driver
+label: 'MOBILE NO'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

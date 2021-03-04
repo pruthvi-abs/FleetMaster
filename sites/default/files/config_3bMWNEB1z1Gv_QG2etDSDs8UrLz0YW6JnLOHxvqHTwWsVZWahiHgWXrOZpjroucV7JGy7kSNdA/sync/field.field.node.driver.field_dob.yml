@@ -1,0 +1,21 @@
+uuid: 09dd66c5-cf9b-485d-b2db-eb8287381df7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_dob
+    - node.type.driver
+  module:
+    - datetime
+id: node.driver.field_dob
+field_name: field_dob
+entity_type: node
+bundle: driver
+label: DOB
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

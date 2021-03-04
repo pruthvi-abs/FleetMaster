@@ -1,0 +1,35 @@
+features:
+  comment_user_picture: 1
+  comment_user_verification: 1
+  favicon: 1
+  logo: true
+  name: true
+  node_user_picture: 1
+  slogan: true
+facebook_url: 'https://www.facebook.com/zymphonies'
+twitter_url: 'https://twitter.com/zymphonies'
+linkedin_url: 'http://www.linkedin.com/company/zymphonies'
+instagram_url: 'https://www.instagram.com/'
+rss_url: rss.xml
+show_social_icon: 1
+show_credit_link: 1
+show_slideshow: 1
+no_of_slides: '2'
+slide_title_1: 'The Easiest Way to Manage Fleet'
+slide_description_1: 'Manage Vehicles at low cost'
+slide_url_1: '#'
+slide_image_path_1: /images/slider/slide_01.jpg
+slide_title_2: 'Make a Difference in Your Vehicle Management'
+slide_description_2: 'vehicle management at Finger Tips'
+slide_url_2: '#'
+slide_image_path_2: /images/slider/slide_02.jpg
+_core:
+  default_config_hash: 1P0VLN7lO4LwpTkeXff-to2owTLMTrAq01Drc7nVxZA
+logo:
+  use_default: 1
+  path: 'public://download_0_0.png'
+favicon:
+  use_default: 1
+slide_image_path1:
+  - '82'
+slide_image_path2: {  }

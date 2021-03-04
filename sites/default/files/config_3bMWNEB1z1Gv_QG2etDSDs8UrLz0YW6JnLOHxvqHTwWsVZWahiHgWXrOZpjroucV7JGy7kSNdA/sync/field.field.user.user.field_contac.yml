@@ -1,0 +1,31 @@
+uuid: 1f7e4e1c-cd0e-4dc1-967b-95e0933aea66
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_contac
+  module:
+    - multiple_registration
+    - user
+third_party_settings:
+  multiple_registration:
+    user_additional_register_form:
+      company: company
+      data_entry: data_entry
+      authenticated: 0
+    user_additional_register_form_required:
+      company: company
+      data_entry: data_entry
+      authenticated: 0
+id: user.user.field_contac
+field_name: field_contac
+entity_type: user
+bundle: user
+label: 'CONTACT NO'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

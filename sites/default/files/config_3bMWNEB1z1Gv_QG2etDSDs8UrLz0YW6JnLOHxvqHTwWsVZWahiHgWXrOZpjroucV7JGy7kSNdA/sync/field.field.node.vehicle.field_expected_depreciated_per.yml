@@ -1,0 +1,23 @@
+uuid: 1d7cc42f-6b88-4255-a582-69367f571475
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_expected_depreciated_per
+    - node.type.vehicle
+id: node.vehicle.field_expected_depreciated_per
+field_name: field_expected_depreciated_per
+entity_type: node
+bundle: vehicle
+label: 'EXPECTED DEPRECIATED PER'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

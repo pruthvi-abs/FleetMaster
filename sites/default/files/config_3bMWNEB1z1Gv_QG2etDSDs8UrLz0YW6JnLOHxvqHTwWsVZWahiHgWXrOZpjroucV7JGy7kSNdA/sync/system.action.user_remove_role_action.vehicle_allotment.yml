@@ -1,0 +1,14 @@
+uuid: 75b0c1fc-5f23-45b5-8eaf-4ea10936d253
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.vehicle_allotment
+  module:
+    - user
+id: user_remove_role_action.vehicle_allotment
+label: 'Remove the Vehicle Allotment role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: vehicle_allotment

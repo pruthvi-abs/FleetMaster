@@ -1,0 +1,18 @@
+uuid: e6faa0c9-1d32-4c12-b5e4-c78bea725fe8
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.fuel_master
+id: node.fuel_master.title
+field_name: title
+entity_type: node
+bundle: fuel_master
+label: 'LITRES PUMPED'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+{% for row in rows %}
+  {%
+    set row_classes = [
+      default_row_class ? 'views-row',
+    ]
+  %}
+  <div{{ row.attributes.addClass(row_classes) }}>
+    {{ row.content }}
+  </div>
+{% endfor %}
+
+<!--Payment configuration Start-->
+<!-- <add key="BaseAddress" value="https://ipg-wpp.testbsp.com.pg" />
+<add key="MethodURL" value=" /api/payment/register" />
+<add key="merchant_account_id" value="494f3a2e-03c3-459f-b1ac-5b4228c2a0c4" />
+<add key="payment_method" value="creditcard" />
+<add key="currency" value="PGK" />
+<add key="transaction_type" value="purchase" />
+<add key="Auth" value="ZGlnaXRlYzouaHpqNG9hY0g1" /> -->
+<!--Payment configuration End-->

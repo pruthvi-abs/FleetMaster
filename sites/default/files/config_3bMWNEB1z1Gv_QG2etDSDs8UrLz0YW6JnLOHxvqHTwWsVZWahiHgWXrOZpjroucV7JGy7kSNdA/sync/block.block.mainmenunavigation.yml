@@ -1,0 +1,43 @@
+uuid: 64051af6-0924-4161-bab7-a948f4046bd1
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+    - user
+  theme:
+    - fleet_management_theme
+id: mainmenunavigation
+theme: fleet_management_theme
+region: header
+weight: 0
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main Menu Navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+      administrator: administrator
+      company: company
+      data_entry: data_entry
+      vehicle_: vehicle_
+      employee: employee
+      fuel_filling: fuel_filling
+      vehicle_allotment: vehicle_allotment
+      accident_monitering: accident_monitering
+      vehicle_maintenance: vehicle_maintenance
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

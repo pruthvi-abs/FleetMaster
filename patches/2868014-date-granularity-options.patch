@@ -1,0 +1,66 @@
+From a5d5e4d719166e475ae92232eb66b8b0f5712167 Mon Sep 17 00:00:00 2001
+From: Daniel McDermott <dmcdermott@forumone.com>
+Date: Sat, 8 Apr 2017 11:54:36 -0700
+Subject: [PATCH] Date granularity limiting
+
+---
+ core/modules/datetime/src/Plugin/views/filter/Date.php | 13 +++++++++----
+ core/modules/views/src/Plugin/views/filter/Date.php    | 13 +++++++++++++
+ 2 files changed, 22 insertions(+), 4 deletions(-)
+
+diff --git a/core/modules/datetime/src/Plugin/views/filter/Date.php b/core/modules/datetime/src/Plugin/views/filter/Date.php
+index afd629a74..346a034ea 100644
+--- a/core/modules/datetime/src/Plugin/views/filter/Date.php
++++ b/core/modules/datetime/src/Plugin/views/filter/Date.php
+@@ -115,11 +115,16 @@ protected function opSimple($field) {
+     $origin = (!empty($this->value['type']) && $this->value['type'] == 'offset') ? $this->requestStack->getCurrentRequest()->server->get('REQUEST_TIME') : 0;
+     $value = intval(strtotime($this->value['value'], $origin));
+ 
+-    // Convert to ISO. UTC is used since dates are stored in UTC.
+-    $value = $this->query->getDateFormat("'" . $this->dateFormatter->format($value, 'custom', DATETIME_DATETIME_STORAGE_FORMAT, DATETIME_STORAGE_TIMEZONE) . "'", $this->dateFormat, TRUE);
+-
++    // Using the 'date_search_range' granularity option we can limit the range allowing the user to be able to search as broad or focused as necessary
++    if (!empty($this->options['value']['date_search_range'])) {
++      $value = $this->query->getDateFormat("'" . $this->dateFormatter->format($value, 'custom', DATETIME_DATETIME_STORAGE_FORMAT, DATETIME_STORAGE_TIMEZONE) . "'", $this->options['value']['date_search_range'], TRUE);
++      $field = $this->query->getDateFormat($field, $this->options['value']['date_search_range'], TRUE);
++    } else {
++      // Convert to ISO. UTC is used since dates are stored in UTC.
++      $value = $this->query->getDateFormat("'" . $this->dateFormatter->format($value, 'custom', DATETIME_DATETIME_STORAGE_FORMAT, DATETIME_STORAGE_TIMEZONE) . "'", $this->dateFormat, TRUE);
++      $field = $this->query->getDateFormat($field, $this->dateFormat, TRUE);
++    }
+     // This is safe because we are manually scrubbing the value.
+-    $field = $this->query->getDateFormat($field, $this->dateFormat, TRUE);
+     $this->query->addWhereExpression($this->options['group'], "$field $this->operator $value");
+   }
+ 
+diff --git a/core/modules/views/src/Plugin/views/filter/Date.php b/core/modules/views/src/Plugin/views/filter/Date.php
+index 84a1c421c..fdc1dd114 100644
+--- a/core/modules/views/src/Plugin/views/filter/Date.php
++++ b/core/modules/views/src/Plugin/views/filter/Date.php
+@@ -18,6 +18,7 @@ protected function defineOptions() {
+ 
+     // value is already set up properly, we're just adding our new field to it.
+     $options['value']['contains']['type']['default'] = 'date';
++    $options['value']['contains']['date_search_range']['default'] = 'date_search_granularity';
+ 
+     return $options;
+   }
+@@ -37,6 +38,18 @@ protected function valueForm(&$form, FormStateInterface $form_state) {
+         '#default_value' => !empty($this->value['type']) ? $this->value['type'] : 'date',
+       );
+     }
++    $form['value']['date_search_range'] = array(
++        '#type' => 'select',
++        '#options' => [
++            'Y' => 'Year',
++            'Y-m' => 'Year/Month',
++            'Y-m-d' => 'Year/Month/Day',
++            'Y-m-d\TH' => 'Year/Month/Day/Hour',
++        ],
++        '#title' => $this->t('Search Granularity Limit'),
++        '#description' => 'Select the highest granularity setting for limiting your date filter searches',
++        '#default_value' => !empty($this->value['date_search_range']) ? $this->value['date_search_range'] : '',
++    );
+     parent::valueForm($form, $form_state);
+   }
+ 

@@ -1,0 +1,100 @@
+{% set block = css_name ? css_name : 'views' %}
+{%
+  set modifiers = [
+    block == 'views' ? id,
+    display_id,
+  ]
+%}
+{%
+  set classes = [
+    bem(block, null, modifiers),
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+
+  {% if title %}
+    {% block title %}
+      {{ title }}
+    {% endblock %}
+  {% endif %}
+
+  {{ title_suffix }}
+
+  {% if header %}
+    <div class="{{ bem(block, 'header') }}">
+      {% block header %}
+        {{ header }}
+      {% endblock %}
+    </div>
+  {% endif %}
+
+  {% if exposed %}
+    <div class="{{ bem(block, 'filters') }}">
+      {% block filters %}
+        {{ exposed }}
+      {% endblock %}
+    </div>
+  {% endif %}
+
+  {% if attachment_before %}
+    <div class="{{ bem(block, 'attachment', ['before']) }}">
+      {% block attachment_before %}
+        {{ attachment_before }}
+      {% endblock attachment_before %}
+    </div>
+  {% endif %}
+
+  {% if rows %}
+    <div class="{{ bem(block, 'content') }}">
+      {% block content %}
+        {{ rows }}
+      {% endblock %}
+    </div>
+  {% elseif empty %}
+    <div class="{{ bem(block, 'content', ['empty']) }}">
+      {% block content_empty %}
+        {{ empty }}
+      {% endblock %}
+    </div>
+  {% endif %}
+
+  {% if pager %}
+    <div class="{{ bem(block, 'pager') }}">
+      {% block pager %}
+        {{ pager }}
+      {% endblock %}
+    </div>
+  {% endif %}
+
+  {% if attachment_after %}
+    <div class={{ bem(block, 'attachment', ['after']) }}>
+      {% block attachment_after %}
+        {{ attachment_after }}
+      {% endblock %}
+    </div>
+  {% endif %}
+
+  {% if more %}
+    {% block more %}
+      {{ more }}
+    {% endblock %}
+  {% endif %}
+
+  {% if footer %}
+    <div class="{{ bem(block, 'footer') }}">
+      {% block footer %}
+        {{ footer }}
+      {% endblock %}
+    </div>
+  {% endif %}
+
+  {% if feed_icons %}
+    <div class="{{ bem(block, 'feed-icons') }}">
+      {% block feed %}
+        {{ feed_icons }}
+      {% endblock %}
+    </div>
+  {% endif %}
+</div>

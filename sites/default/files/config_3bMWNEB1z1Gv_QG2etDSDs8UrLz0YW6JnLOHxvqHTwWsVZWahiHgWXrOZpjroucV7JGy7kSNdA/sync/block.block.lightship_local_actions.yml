@@ -1,0 +1,20 @@
+uuid: 661f7b90-5b59-4899-8ae7-0650f8a9e64c
+langcode: en
+status: true
+dependencies:
+  theme:
+    - lightship
+_core:
+  default_config_hash: HHryZVJbeKi9WnuBGC8FOhBZmBnk2G1H6KxFuy-rC9A
+id: lightship_local_actions
+theme: lightship
+region: content
+weight: -10
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

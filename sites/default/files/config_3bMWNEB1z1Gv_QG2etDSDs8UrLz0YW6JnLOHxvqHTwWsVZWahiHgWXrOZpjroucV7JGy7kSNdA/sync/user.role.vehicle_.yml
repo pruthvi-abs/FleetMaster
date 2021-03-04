@@ -1,0 +1,14 @@
+uuid: d8755f40-eb78-4c9f-8d49-4b84998d9ada
+langcode: en
+status: true
+dependencies: {  }
+id: vehicle_
+label: Vehicle
+weight: 8
+is_admin: null
+permissions:
+  - 'create vehicle content'
+  - 'delete any vehicle content'
+  - 'delete own vehicle content'
+  - 'edit any vehicle content'
+  - 'edit own vehicle content'

@@ -1,0 +1,14 @@
+uuid: 136b55a9-a8c7-4db1-874d-83b05926849a
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.vehicle_maintenance
+  module:
+    - user
+id: user_remove_role_action.vehicle_maintenance
+label: 'Remove the Vehicle Maintenance role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: vehicle_maintenance

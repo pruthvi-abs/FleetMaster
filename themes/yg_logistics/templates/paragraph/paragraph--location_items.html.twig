@@ -1,0 +1,21 @@
+{% if content.field_layout == 1 %}
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="col-md-3 col-sm-4 col-xs-12 wow fadeInUp" data-wow-delay="0.3s">
+        <p><strong>{{ content.field_title.0 }}</strong></p>
+      </div>
+      <div class="col-md-9 col-sm-8 col-xs-12 location wow fadeInUp" data-wow-delay="0.3s">
+        {{ content.field_description.0 }}
+        <p><strong>Phone:</strong>{{ content.field_service_title_slogan.0 }}</p>
+      </div>    
+    </div>
+  {% else %}
+    <div class="col-md-6 col-sm-6 col-xs-12">  
+      <div class="col-md-3 col-sm-4 col-xs-12 wow fadeInUp" data-wow-delay="0.3s">
+        <p><strong>{{ content.field_title.0 }}</strong></p>
+      </div>
+      <div class="col-md-9 col-sm-8 col-xs-12 location wow fadeInUp" data-wow-delay="0.3s">
+        {{ content.field_description.0 }}
+        <p><strong>Phone:</strong>{{ content.field_service_title_slogan.0 }}</p>
+      </div>
+    </div>  
+{% endif %}

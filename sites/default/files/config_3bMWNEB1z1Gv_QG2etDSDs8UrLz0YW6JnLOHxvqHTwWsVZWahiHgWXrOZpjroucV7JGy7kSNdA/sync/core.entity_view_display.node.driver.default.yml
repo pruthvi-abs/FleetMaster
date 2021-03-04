@@ -1,0 +1,141 @@
+uuid: 984ca9ef-5ec5-448a-bc84-9460b191f120
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.driver.field_altern
+    - field.field.node.driver.field_branch_name
+    - field.field.node.driver.field_de
+    - field.field.node.driver.field_dob
+    - field.field.node.driver.field_doj
+    - field.field.node.driver.field_driver_id
+    - field.field.node.driver.field_email
+    - field.field.node.driver.field_employee_type
+    - field.field.node.driver.field_image
+    - field.field.node.driver.field_licence_expiry_date
+    - field.field.node.driver.field_licence_no
+    - field.field.node.driver.field_mobil
+    - field.field.node.driver.field_name
+    - node.type.driver
+  module:
+    - datetime
+    - image
+    - options
+    - user
+id: node.driver.default
+targetEntityType: node
+bundle: driver
+mode: default
+content:
+  field_altern:
+    weight: 7
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_branch_name:
+    weight: 10
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_de:
+    weight: 11
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_dob:
+    weight: 2
+    label: inline
+    settings:
+      timezone_override: ''
+      date_format: Y-m-d
+    third_party_settings: {  }
+    type: datetime_custom
+    region: content
+  field_doj:
+    weight: 3
+    label: inline
+    settings:
+      timezone_override: ''
+      date_format: Y-m-d
+    third_party_settings: {  }
+    type: datetime_custom
+    region: content
+  field_driver_id:
+    weight: 8
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_email:
+    weight: 5
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_employee_type:
+    weight: 9
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_image:
+    weight: 4
+    label: inline
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_licence_expiry_date:
+    weight: 13
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_licence_no:
+    weight: 12
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mobil:
+    weight: 6
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_name:
+    weight: 1
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

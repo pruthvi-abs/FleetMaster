@@ -1,0 +1,20 @@
+uuid: 7b33a93e-77d1-423e-ba5f-886da0ed55ac
+langcode: en
+status: true
+dependencies:
+  theme:
+    - editorial_html5_up
+_core:
+  default_config_hash: ZSpc3IoSaLd0PkB02nxjVPBMztIdsTdHek9SiGaqZ_c
+id: editorial_html5_up_page_title
+theme: editorial_html5_up
+region: header
+weight: -30
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

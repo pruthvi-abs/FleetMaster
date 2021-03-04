@@ -1,0 +1,44 @@
+uuid: fc183158-39ad-4bca-958b-92801c113a93
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:41e83d0d-c1d1-41ad-9a6a-b70ec60d64e6'
+  module:
+    - block_content
+    - user
+  theme:
+    - construction_zymphonies_theme
+id: footer_title
+theme: construction_zymphonies_theme
+region: footer_first
+weight: -6
+provider: null
+plugin: 'block_content:41e83d0d-c1d1-41ad-9a6a-b70ec60d64e6'
+settings:
+  id: 'block_content:41e83d0d-c1d1-41ad-9a6a-b70ec60d64e6'
+  label: footer_title
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+      authenticated: authenticated
+      administrator: administrator
+      company: company
+      data_entry: data_entry
+      vehicle_: vehicle_
+      employee: employee
+      fuel_filling: fuel_filling
+      vehicle_allotment: vehicle_allotment
+      accident_monitering: accident_monitering
+      vehicle_maintenance: vehicle_maintenance
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

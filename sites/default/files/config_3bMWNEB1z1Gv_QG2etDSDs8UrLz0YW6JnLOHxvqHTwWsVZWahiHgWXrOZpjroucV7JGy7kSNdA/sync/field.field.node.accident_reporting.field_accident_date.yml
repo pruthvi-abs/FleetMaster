@@ -1,0 +1,21 @@
+uuid: 6f8d749f-7049-4433-bfd8-da19da133af9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_accident_date
+    - node.type.accident_reporting
+  module:
+    - datetime
+id: node.accident_reporting.field_accident_date
+field_name: field_accident_date
+entity_type: node
+bundle: accident_reporting
+label: 'ACCIDENT DATE'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

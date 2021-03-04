@@ -1,0 +1,31 @@
+uuid: fc7289da-6f9f-473f-88bc-a32c4736ee67
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_company_registration
+  module:
+    - multiple_registration
+    - user
+third_party_settings:
+  multiple_registration:
+    user_additional_register_form:
+      company: company
+      authenticated: 0
+      data_entry: 0
+    user_additional_register_form_required:
+      company: company
+      authenticated: 0
+      data_entry: 0
+id: user.user.field_company_registration
+field_name: field_company_registration
+entity_type: user
+bundle: user
+label: 'COMPANY REGISTRATION'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

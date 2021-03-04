@@ -1,0 +1,140 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block.
+ *
+ * Available variables:
+ * - plugin_id: The ID of the block implementation.
+ * - label: The configured label of the block if visible.
+ * - configuration: A list of the block's configuration values.
+ *   - label: The configured label for the block.
+ *   - label_display: The display settings for the label.
+ *   - provider: The module or other provider that provided this block plugin.
+ *   - Block plugin specific settings will also be stored here.
+ * - content: The content of this block.
+ * - attributes: array of HTML attributes populated by modules, intended to
+ *   be added to the main container tag of this template.
+ *   - id: A valid HTML ID and guaranteed unique.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ *
+ * @see template_preprocess_block()
+ *
+ * @ingroup themeable
+ */
+#}
+{#
+{{ attach_library("fleet_management_theme/Charts-header") }}
+#}
+{% if label == 'Vehicle Allotment' %}
+<div{{ attributes }}>
+  <h2{{ title_attributes.addClass('col-md-12') }}>Company Graphs</h2>
+  {{ title_prefix }}
+  {{ title_suffix }}
+  {% block vehicle_allotment %}
+  <div class="container-fluid">
+    <div class="col-md-6">
+      <div class="widget-area-2 lorvens-box-shadow widget-morris">
+        <h3 class="widget-title">Vehicle Allotment Chart</h3>
+        <div id="donutMorris_vehicle" class="chart-one"></div>
+        {%  set g_data = content['#markup'] %}
+        <input type="hidden" id="vehicle" name="vehicle" value="{{ g_data }}">
+      </div>
+    </div>
+  </div>
+   <script>
+      var graphdata = $("#vehicle").val();
+      if ($("#donutMorris_vehicle").length == 1) {
+        var $donutData = JSON.parse(graphdata);
+        // console.log($donutData);
+    Morris.Donut({
+      element: "donutMorris_vehicle",
+      data: $donutData,
+      barSize: 0.1,
+      labelColor: "#3e5569",
+      resize: true, //defaulted to true
+      colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+    });
+  }
+  </script>
+  {% endblock %}
+</div>
+{% elseif label == 'Employee Status' %}
+<div{{ attributes }}>
+  {% block employee_status %}
+  <div class="container-fluid">
+    <div class="col-md-6">
+      <div class="widget-area-2 lorvens-box-shadow widget-morris">
+        <h3 class="widget-title">Employee Status Chart</h3>
+        <div id="donutMorris1_emp" class="chart-one"></div>
+        {%  set g_data = content['#markup'] %}
+        <input type="hidden" id="empstatus" name="empstatus" value="{{ g_data }}">
+      </div>
+    </div>
+  </div>
+   <script>
+      var graphdata1 = $("#empstatus").val();
+      if ($("#donutMorris1_emp").length == 1) {
+        var $donutData = JSON.parse(graphdata1);
+    Morris.Donut({
+      element: "donutMorris1_emp",
+      data: $donutData,
+      barSize: 0.1,
+      labelColor: "#3e5569",
+      resize: true, //defaulted to true
+      colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+    });
+  }
+  </script>
+  {% endblock %}
+</div>
+{% elseif label == 'Trip Analysis' %}
+<div{{ attributes }}>
+  {% block trip_analysis %}
+  <div class="container-fluid">
+    <div class="col-md-6">
+      <div class="widget-area-2 lorvens-box-shadow widget-morris">
+        <h3 class="widget-title">Trip Logging Chart</h3>
+        <div id="barMorris" class="chart-one"></div>
+        {%  set g_data = content['#markup'] %}
+        <input type="hidden" id="tripanalysis" name="tripanalysis" value="{{ g_data }}">
+      </div>
+    </div>
+  </div>
+   <script>
+    var ctx = document.getElementById("barMorris");
+    var graphdata = $("#tripanalysis").val();
+    var $donutData = JSON.parse(graphdata);
+    console.log($donutData);
+    var chart = Morris.Bar({
+      element: "barMorris",
+      data: $donutData,
+      xkey: "y",
+      ykeys: ["x"],
+      labels: ["Clients"],
+      barColors: ["#86C417"],
+      barOpacity: 1,
+      barSizeRatio: 0.5,
+      hideHover: "auto",
+      gridLineColor: "#eef0f2",
+      resize: true,
+    });
+  </script>
+  {% endblock %}
+</div>
+{% else %}
+<div{{ attributes }}>
+  {{ title_prefix }}
+  {% if label %}
+  <h2{{ title_attributes.addClass('col-md-12') }}>{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+  {% block content %}
+  {{ content }}
+  {% endblock %}
+</div>
+{% endif %}

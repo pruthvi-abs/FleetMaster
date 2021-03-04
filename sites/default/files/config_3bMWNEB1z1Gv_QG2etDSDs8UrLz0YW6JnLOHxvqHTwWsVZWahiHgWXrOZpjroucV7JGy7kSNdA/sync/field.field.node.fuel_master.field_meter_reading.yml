@@ -1,0 +1,23 @@
+uuid: 04ab0508-9428-4bf9-8cff-c1684825a482
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_meter_reading
+    - node.type.fuel_master
+id: node.fuel_master.field_meter_reading
+field_name: field_meter_reading
+entity_type: node
+bundle: fuel_master
+label: 'METER READING'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

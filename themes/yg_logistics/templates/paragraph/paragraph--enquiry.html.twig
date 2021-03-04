@@ -1,0 +1,26 @@
+<!-- Enquiry Section -->
+<section id="enquiry_section">
+  <div class="container">    
+    <div class="row">
+    <div class="col-md-7 col-sm-12 wow fadeInUp" data-wow-delay="0.3s">
+       <div class="fl_right">
+         <div class="enquiry_section_header">
+          <h3 class="title">{{ content.field_title.0 }}</h3>
+          <span>{{ content.field_service_title_slogan.0 }}</span>
+        </div>
+          {{ content.field_description.0 }}    
+        <a href="{{ content.field_url[0]['#url']|render }}" class="enquiry-btn custom-btn pull-right">
+        {{ content.field_url[0]['#title'] }}<i class="fa fa-angle-right"></i></a>
+       </div> 
+      </div>
+      <div class="col-md-5 col-sm-12 enquiry-bg">
+        <div class="fl_left wow fadeInUp" data-wow-delay="0.6s">
+          <h3 class="title">{{ content.field_telephone_no.0 }}</h3>
+            {{ content.field_enquiry_form1.0 }}
+       </div> 
+      </div>   
+    </div>
+  </div>
+</section>  
+<!-- Enquiry Section End -->
+     

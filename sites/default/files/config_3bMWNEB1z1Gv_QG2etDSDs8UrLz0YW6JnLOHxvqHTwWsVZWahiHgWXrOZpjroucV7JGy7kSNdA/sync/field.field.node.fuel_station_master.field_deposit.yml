@@ -1,0 +1,23 @@
+uuid: 31147dd2-f184-4ef1-95cf-065dd75404a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_deposit
+    - node.type.fuel_station_master
+id: node.fuel_station_master.field_deposit
+field_name: field_deposit
+entity_type: node
+bundle: fuel_station_master
+label: DEPOSIT
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

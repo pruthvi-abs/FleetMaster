@@ -1,0 +1,21 @@
+uuid: 3647f184-9fff-4687-a06a-7641f6e14472
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fleet
+    - node.type.fuel_master
+  module:
+    - options
+id: node.fuel_master.field_fleet
+field_name: field_fleet
+entity_type: node
+bundle: fuel_master
+label: 'FLEET TYPE'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

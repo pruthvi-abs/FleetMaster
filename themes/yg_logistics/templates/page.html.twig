@@ -1,0 +1,155 @@
+<!-- HEADER -->
+<header id="topbar">
+  <div id="header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                </div>  
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                  <ul class="social-links">
+                    {% if facebook_url|render is not empty %}
+                      <li><a href="{{ facebook_url }}"><i class="fa fa-facebook"></i></a></li>
+                    {% endif %}  
+                    {% if twitter_url|render is not empty %}  
+                      <li><a href="{{ twitter_url }}"><i class="fa fa-twitter"></i></a></li>
+                    {% endif %}  
+                    {% if google_plus_url|render is not empty %}
+                      <li><a href="{{ google_plus_url }}"><i class="fa fa-google-plus"></i></a></li>
+                    {% endif %}    
+                  </ul>                       
+                    <ul class="user-links">
+                        <li class="username"><a href="{{ basepath }}/user"><i class="fa fa-user"></i> {{ user_name }}</a></li>
+                        <li class="login"><a href="{{ basepath }}/user/login"><i class="fa fa-sign-in"></i> Login</a></li>
+                    </ul>                
+                </div>        
+            </div>
+        </div>
+    </div>  
+  <div class="container">
+   <div class="row">
+    <div id="header-main">      
+        <div class="col-md-5 col-sm-5 col-xs-12 header-main-left wow fadeInUp" data-wow-delay="0.2s">
+          <a href="{{ path('<front>') }}" class="logo">
+            <img src="{{ logopath }}" alt="{{ site_name }}" title="{{ 'Home'|t }}" class="img-responsive">
+          </a>
+	<span>Fleet Management</span>
+        </div>
+        <div class="col-md-7 col-sm-7 col-xs-12 header-main-right wow fadeInUp" data-wow-delay="0.4s">
+          <div class="col-md-6 col-sm-6 col-xs-6 mail-us">
+            <i class="fa fa-envelope"></i>
+            <ul>
+            <li>Mail Us</li>
+              <li><strong>
+                {% if email|render is not empty %}<a href="mailto:{{ email }}">{{ email }}</a>{% endif %}
+              </strong></li>
+            </ul>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6 call-us">
+            <i class="fa fa-phone"></i>
+            <ul>
+            <li>Call Us</li>
+              <li><strong>{% if phone|render is not empty %}{{ phone }}{% endif %}</strong></li>
+            </ul>
+          </div>          
+        </div>
+     </div>
+   </div> 
+  </div>
+</header>
+<!-- HEADER END -->
+<!-- MENU -->
+<section class="main_menu">  
+ <nav id="menu" class="navbar navbar-inverse">
+  <div class="container"> 
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#logistics-navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>   
+        {{ page.primary_menu }}
+    </div>
+  </nav>
+</section>
+<!-- MENU END -->
+<!-- Banner Section -->
+{% if page.banner|render|striptags %}
+  {{ page.banner }}
+  {% else %}
+  <section id="banner_section" style="background-image: url('/images/banner.jpg'); background-repeat: no-repeat;background-size: cover;background-attachment: fixed;padding: 115px 0 130px;">
+    <div class="container">
+      <div class="row">    
+      <div class="col-md-5">
+       <p class="wow fadeInLeft" data-wow-delay="0.3s">{{ site_name }}</p>  
+        <h1 class="wow fadeInLeft" data-wow-delay="0.6s">{{ page['#title'] }}</h1>
+      </div> 
+      </div> 
+    </div>
+  </section>
+{% endif %}
+<!-- Banner-Section-End-->
+<!-- ABOUT SECTION -->
+<div id="main_content">
+  {{ page.content }}
+   {% if page.sidebar_first %}
+      <div id="sidebar-first" class="column sidebar">
+        <aside class="section" role="complementary">
+          {{ page.sidebar_first }}
+        </aside>
+      </div>
+    {% endif %}
+    {% if page.sidebar_second %}
+      <div id="sidebar-second" class="column sidebar">
+        <aside class="section" role="complementary">
+          {{ page.sidebar_second }}
+        </aside>
+      </div>
+    {% endif %}
+</div>
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.2s">
+        {{ page.footer_logo }}
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.4s">
+        <h3>{{ contact_title }}</h3>
+          <ul class="contact">
+          <li class="location"><span>
+            {% if address %}
+              {% autoescape 'html' %}
+                {{ address|raw }}
+              {% endautoescape %}
+            {% endif %}
+          </span></li>
+          <li class="phone"><span>{% if phone|render is not empty %}{{ phone }}{% endif %}</span></li>
+          <li class="mail">
+            {% if email|render is not empty %}<a href="mailto:{{ email }}">{{ email }}</a>{% endif %}
+          </li>
+         </ul>
+      </div>
+      <div class="col-md-2 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.6s">
+        {{ page.footer_our_service }}
+      </div>
+      <div class="col-md-2 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.8s">
+        <h3>{{ social_title }}</h3>
+        <ul class="social">
+          {% if facebook_url|render is not empty %}
+            <li><a href="{{ facebook_url }}"><i class="fa fa-facebook"></i></a></li>
+          {% endif %}  
+          {% if google_plus_url|render is not empty %}
+            <li><a href="{{ google_plus_url }}"><i class="fa fa-google-plus"></i></a></li>
+          {% endif %}
+          {% if twitter_url|render is not empty %}  
+            <li><a href="{{ twitter_url }}"><i class="fa fa-twitter"></i></a></li>
+          {% endif %}  
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>  
+<div class="copyright text-center">
+  <p>Copyrights 2018.<a href="#"> YG Logistics Theme</a>. All Rights Reserved.<br></p>
+   <p>Theme By<a href="https://www.drupaldevelopersstudio.com"> Drupal Developers Studio</a>,  A Division of <a href="https://www.youngglobes.com/">Young Globes</a></p>
+</div> 
+</section>  
+<!-- FOOTER END -->
+
+<a id="back_to_top"></a>

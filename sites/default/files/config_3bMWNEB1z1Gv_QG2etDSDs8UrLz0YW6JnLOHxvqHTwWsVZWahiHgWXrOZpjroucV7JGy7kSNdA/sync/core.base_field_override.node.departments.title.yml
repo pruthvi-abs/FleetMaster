@@ -1,0 +1,18 @@
+uuid: 587c88f9-7db0-4c70-bc76-f4e9232f71b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.departments
+id: node.departments.title
+field_name: title
+entity_type: node
+bundle: departments
+label: 'DEPARTMENT NAME'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

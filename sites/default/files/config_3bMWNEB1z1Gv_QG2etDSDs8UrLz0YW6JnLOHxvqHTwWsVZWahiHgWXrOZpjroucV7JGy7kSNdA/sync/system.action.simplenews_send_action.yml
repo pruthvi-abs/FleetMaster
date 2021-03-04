@@ -1,0 +1,13 @@
+uuid: 4c1a19e3-6179-47d6-a753-1d1b278a644f
+langcode: en
+status: true
+dependencies:
+  module:
+    - simplenews
+_core:
+  default_config_hash: _80qceRjNVCStX2wbyle-6zMazNn3VsvHpwLRV3Gr5M
+id: simplenews_send_action
+label: 'Send newsletter issue'
+type: node
+plugin: simplenews_send_action
+configuration: {  }

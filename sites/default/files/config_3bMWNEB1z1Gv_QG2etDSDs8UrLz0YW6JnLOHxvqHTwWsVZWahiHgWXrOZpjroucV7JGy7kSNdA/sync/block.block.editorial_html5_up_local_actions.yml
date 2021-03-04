@@ -1,0 +1,20 @@
+uuid: 822d95ef-9232-42ba-858c-89247c616283
+langcode: en
+status: true
+dependencies:
+  theme:
+    - editorial_html5_up
+_core:
+  default_config_hash: HHryZVJbeKi9WnuBGC8FOhBZmBnk2G1H6KxFuy-rC9A
+id: editorial_html5_up_local_actions
+theme: editorial_html5_up
+region: content
+weight: -10
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

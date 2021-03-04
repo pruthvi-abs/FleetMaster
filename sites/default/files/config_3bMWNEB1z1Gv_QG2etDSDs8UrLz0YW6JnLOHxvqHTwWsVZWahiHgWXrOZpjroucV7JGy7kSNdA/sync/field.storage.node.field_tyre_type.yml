@@ -1,0 +1,21 @@
+uuid: 2ba85b0e-92bf-4b18-a3c0-dccc7d9c776f
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_tyre_type
+field_name: field_tyre_type
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

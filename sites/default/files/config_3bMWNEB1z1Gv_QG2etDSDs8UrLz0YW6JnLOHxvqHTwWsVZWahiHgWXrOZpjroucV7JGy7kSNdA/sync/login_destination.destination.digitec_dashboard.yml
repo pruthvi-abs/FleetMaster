@@ -1,0 +1,16 @@
+uuid: 9e0a9311-74f6-4fd2-95d3-af9f07be8ebc
+langcode: en
+status: true
+dependencies: {  }
+name: digitec_dashboard
+label: 'Digitec Dashboard'
+triggers:
+  login: login
+roles:
+  digitec_super_admin: digitec_super_admin
+pages_type: 0
+pages: ''
+language: ''
+enabled: true
+destination_path: 'internal:/digitec/dashboard'
+weight: 0

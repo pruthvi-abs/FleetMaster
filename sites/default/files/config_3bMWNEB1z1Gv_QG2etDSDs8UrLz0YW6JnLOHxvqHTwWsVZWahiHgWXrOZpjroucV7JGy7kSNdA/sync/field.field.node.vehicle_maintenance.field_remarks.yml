@@ -1,0 +1,19 @@
+uuid: efe0e993-9f8a-4b83-89a9-737160c54964
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_remarks
+    - node.type.vehicle_maintenance
+id: node.vehicle_maintenance.field_remarks
+field_name: field_remarks
+entity_type: node
+bundle: vehicle_maintenance
+label: REMARKS
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

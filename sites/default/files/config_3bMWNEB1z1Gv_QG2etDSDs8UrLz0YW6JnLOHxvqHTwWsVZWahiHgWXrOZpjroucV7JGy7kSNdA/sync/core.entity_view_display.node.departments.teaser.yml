@@ -1,0 +1,22 @@
+uuid: db49dd35-c047-4b00-9d13-270e71ad8045
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.departments.field_branch_name
+    - node.type.departments
+  module:
+    - user
+id: node.departments.teaser
+targetEntityType: node
+bundle: departments
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_branch_name: true

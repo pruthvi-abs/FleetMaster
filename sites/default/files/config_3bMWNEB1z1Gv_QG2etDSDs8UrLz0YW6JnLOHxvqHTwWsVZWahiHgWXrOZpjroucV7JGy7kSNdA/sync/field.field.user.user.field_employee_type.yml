@@ -1,0 +1,32 @@
+uuid: 62f36e78-ff8c-4cf5-9dae-9a11ef2715e6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_employee_type
+  module:
+    - multiple_registration
+    - options
+    - user
+third_party_settings:
+  multiple_registration:
+    user_additional_register_form:
+      data_entry: data_entry
+      authenticated: 0
+      company: 0
+    user_additional_register_form_required:
+      data_entry: data_entry
+      authenticated: 0
+      company: 0
+id: user.user.field_employee_type
+field_name: field_employee_type
+entity_type: user
+bundle: user
+label: 'EMPLOYEE TYPE'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

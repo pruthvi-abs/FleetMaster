@@ -1,0 +1,14 @@
+uuid: ad17207d-8378-4a7b-b8d6-ea87ff09a113
+langcode: en
+status: true
+dependencies: {  }
+id: accident_monitering
+label: 'Accident Monitering'
+weight: 12
+is_admin: null
+permissions:
+  - 'create accident_reporting content'
+  - 'delete any accident_reporting content'
+  - 'delete own accident_reporting content'
+  - 'edit any accident_reporting content'
+  - 'edit own accident_reporting content'

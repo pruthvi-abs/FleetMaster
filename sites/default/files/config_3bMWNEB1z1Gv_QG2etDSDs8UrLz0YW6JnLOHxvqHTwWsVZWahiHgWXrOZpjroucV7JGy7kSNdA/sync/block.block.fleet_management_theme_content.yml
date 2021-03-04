@@ -1,0 +1,22 @@
+uuid: 0023b147-d8a9-4896-8bbb-d45a59cf4332
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - fleet_management_theme
+_core:
+  default_config_hash: fZxUGBXg-4JcdpJ0ZSWzehmMrI9qfEws2KWPuEz_RC0
+id: fleet_management_theme_content
+theme: fleet_management_theme
+region: header
+weight: 2
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

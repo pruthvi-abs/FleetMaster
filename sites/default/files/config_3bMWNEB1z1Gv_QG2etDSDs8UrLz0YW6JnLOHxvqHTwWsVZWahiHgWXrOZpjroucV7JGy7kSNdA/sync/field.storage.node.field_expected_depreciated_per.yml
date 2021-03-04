@@ -1,0 +1,18 @@
+uuid: 5bf306f7-8dfc-4073-9863-1a38faa4f106
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_expected_depreciated_per
+field_name: field_expected_depreciated_per
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

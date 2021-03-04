@@ -1,0 +1,77 @@
+uuid: 85ae43d1-766d-426f-9416-f1341b0622e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.operator_navigation
+    - system.menu.employee-navigation
+    - views.view.operator_dashboard
+  module:
+    - panels
+    - system
+    - views
+id: operator_navigation-panels_variant-0
+label: Panels
+variant: panels_variant
+variant_settings:
+  blocks:
+    f97f6b79-b4e9-4257-ada5-1b8c638fc4a7:
+      id: 'system_menu_block:employee-navigation'
+      label: 'Operator Navigation'
+      provider: system
+      label_display: visible
+      level: 1
+      depth: 0
+      expand_all_items: false
+      region: first_above
+      weight: 0
+      uuid: f97f6b79-b4e9-4257-ada5-1b8c638fc4a7
+      context_mapping: {  }
+    e0f63619-8a80-44b5-b474-a9e6c996026f:
+      id: 'views_block:operator_dashboard-block_2'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: '10'
+      region: second_above
+      weight: -10
+      uuid: e0f63619-8a80-44b5-b474-a9e6c996026f
+      context_mapping: {  }
+    4aef7bb0-0ce6-4744-b412-e41b868f14ae:
+      id: 'views_block:operator_dashboard-block_1'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: second_below
+      weight: -1
+      uuid: 4aef7bb0-0ce6-4744-b412-e41b868f14ae
+      context_mapping: {  }
+    2d9aae59-c9dc-4860-addc-51d7adeae35a:
+      id: 'views_block:operator_dashboard-block_3'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: middle
+      weight: -1
+      uuid: 2d9aae59-c9dc-4860-addc-51d7adeae35a
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 9e983655-b9b8-40b7-a011-711cde30bb37
+  label: null
+  weight: 0
+  layout: layout_twocol_bricks
+  layout_settings: {  }
+  page_title: 'Operator Dashboard'
+  storage_type: page_manager
+  storage_id: operator_navigation-panels_variant-0
+  builder: standard
+page: operator_navigation
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

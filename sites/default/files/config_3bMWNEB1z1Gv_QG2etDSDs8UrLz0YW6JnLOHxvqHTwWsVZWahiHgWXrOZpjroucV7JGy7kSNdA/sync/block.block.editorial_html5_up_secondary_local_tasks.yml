@@ -1,0 +1,22 @@
+uuid: 917c4fb0-fb25-448a-9da2-a683752d8a7f
+langcode: en
+status: true
+dependencies:
+  theme:
+    - editorial_html5_up
+_core:
+  default_config_hash: QeZBeCilQfeET3GeW6ZtJkEiwROADTZktFgKWwPieD4
+id: editorial_html5_up_secondary_local_tasks
+theme: editorial_html5_up
+region: header
+weight: 0
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Secondary tabs'
+  provider: core
+  label_display: '0'
+  primary: false
+  secondary: true
+visibility: {  }

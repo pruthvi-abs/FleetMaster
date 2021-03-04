@@ -1,0 +1,116 @@
+uuid: ca7ea271-4869-4b90-aafd-272666d5dc65
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.accident_reporting.field_accident_date
+    - field.field.node.accident_reporting.field_accident_location
+    - field.field.node.accident_reporting.field_damage_
+    - field.field.node.accident_reporting.field_deaths
+    - field.field.node.accident_reporting.field_driver_name
+    - field.field.node.accident_reporting.field_images
+    - field.field.node.accident_reporting.field_injured_persons
+    - field.field.node.accident_reporting.field_sys
+    - field.field.node.accident_reporting.field_third_party_damages
+    - field.field.node.accident_reporting.field_vehicle_no
+    - node.type.accident_reporting
+  module:
+    - datetime
+    - image
+    - user
+id: node.accident_reporting.default
+targetEntityType: node
+bundle: accident_reporting
+mode: default
+content:
+  field_accident_date:
+    weight: 103
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_accident_location:
+    weight: 110
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_damage_:
+    weight: 111
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_deaths:
+    weight: 109
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_driver_name:
+    weight: 104
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_images:
+    weight: 106
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_injured_persons:
+    weight: 105
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_sys:
+    weight: 101
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_third_party_damages:
+    weight: 108
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_vehicle_no:
+    weight: 102
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

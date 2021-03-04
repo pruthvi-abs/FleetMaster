@@ -1,0 +1,109 @@
+{{ attach_library("fleet_management_theme/back-style") }}
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/modernizr.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/jquery-3.2.1.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/popper.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/bootstrap.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/jquery-jvectormap.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/jquery-jvectormap-world-mill.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/custom-vector.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/charts/js/raphael-min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/charts/js/morris.min.js"></script>
+<link rel="stylesheet" href="/AWFleetManagement/themes/FleetManagement/assets/back/charts/css/morris.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="lorvens-bg">
+      <div class="sidebar-header">
+        <a href="../admin/dashboard"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
+      </div>
+      {% if expiry_status != 'expired' %}
+      <ul class="list-unstyled components">
+        {{
+          page.header
+        }}
+      </ul>
+      {% endif %}
+    </nav>
+    <!-- /Sidebar -->
+    <!-- Page Content -->
+    <div id="content">
+      <!-- Top Navigation -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header"></div>
+          <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                href="#"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="ti-user"></span>
+              </a>
+              <div
+                class="dropdown-menu lorvens-box-shadow profile animated flipInY"
+              >
+                <h5>{{ username }}</h5>
+                <a class="dropdown-item" href="#">
+                  <span class="ti-settings"></span> Settings</a
+                >
+                <a class="dropdown-item" href="#">
+                  <span class="ti-help-alt"></span> Help</a
+                >
+                <a class="dropdown-item" href="{{ base_url }}/user/logout">
+                  <span class="ti-power-off"></span> Logout</a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- /Top Navigation -->
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">
+            <span class="ti-home"></span>
+          </a>
+        </li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+      <!-- /Breadcrumb -->
+      <!-- Main Content -->
+      {{ page.content }}
+      <!-- /Main Content -->
+    </div>
+    <!-- /Page Content -->
+  </div>
+  <!-- Back to Top -->
+  
+  <!-- 
+  File Include
+  -->
+  <a id="back-to-top" href="#" class="back-to-top fenil">
+    <span class="ti-angle-up"></span>
+  </a>
+  <script>
+  var package = document.getElementById("package").value;
+  // console.log(package);
+  if (package == "expired") {
+    swal(
+      {
+        title: "package Expired!",
+        text: "Please Renew your package!",
+        icon: "error",
+        button: "Renew!",
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        dangerMode: true,
+      });
+      $('.swal-button').on('click',function(){
+        window.location.href = 'https://www.google.com/';
+      });
+  }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/custom.js"></script>

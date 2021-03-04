@@ -1,0 +1,46 @@
+uuid: dc7c0a3d-db4c-4e42-97dd-e2e76cb92dbe
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.driver.field_altern
+    - field.field.node.driver.field_branch_name
+    - field.field.node.driver.field_de
+    - field.field.node.driver.field_dob
+    - field.field.node.driver.field_doj
+    - field.field.node.driver.field_driver_id
+    - field.field.node.driver.field_email
+    - field.field.node.driver.field_employee_type
+    - field.field.node.driver.field_image
+    - field.field.node.driver.field_licence_expiry_date
+    - field.field.node.driver.field_licence_no
+    - field.field.node.driver.field_mobil
+    - field.field.node.driver.field_name
+    - node.type.driver
+  module:
+    - user
+id: node.driver.teaser
+targetEntityType: node
+bundle: driver
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_altern: true
+  field_branch_name: true
+  field_de: true
+  field_dob: true
+  field_doj: true
+  field_driver_id: true
+  field_email: true
+  field_employee_type: true
+  field_image: true
+  field_licence_expiry_date: true
+  field_licence_no: true
+  field_mobil: true
+  field_name: true

@@ -1,0 +1,22 @@
+uuid: 53f3f5e1-4f44-4d8f-8f1c-465b80243698
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.branches
+id: node.branches.promote
+field_name: promote
+entity_type: node
+bundle: branches
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

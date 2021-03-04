@@ -1,0 +1,21 @@
+uuid: 3b464a5b-a9b2-489a-87fc-5d25843e9277
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_color
+    - node.type.vehicle
+  module:
+    - options
+id: node.vehicle.field_color
+field_name: field_color
+entity_type: node
+bundle: vehicle
+label: COLOR
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

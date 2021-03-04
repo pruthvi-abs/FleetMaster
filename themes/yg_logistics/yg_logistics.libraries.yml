@@ -1,0 +1,32 @@
+global-style: # Libraries needed in all pages.
+  css:
+    theme:
+      'https://fonts.googleapis.com/css?family=Open+Sans:400,600,800': { type: external }
+      css/bootstrap.css: {}
+      fonts/css/font-awesome.css: {}
+      lib/magnific-popup/magnific-popup.css: {}
+      css/carousel.css: {}
+      css/animate.css: {}
+      css/custom.css: {}  
+      css/style.css: {} 
+      css/main.css: {} 
+  js:
+    js/bootstrap.js: {}
+    js/scroll.js: {}
+    js/wow.min.js: {}
+    js/carousel.js: {} 
+    lib/owlcarousel/owl.carousel.min.js: {}
+    lib/magnific-popup/magnific-popup.min.js: {}
+    js/gallery.js: {}
+    js/script.js: {}
+
+  dependencies:
+    - core/drupalSettings
+    - core/drupal
+    - core/jquery
+
+fontawesome:
+  version: 1.x
+  css:
+    theme:
+      lib/fonts/css/font-awesome.css: {}

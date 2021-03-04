@@ -1,0 +1,22 @@
+uuid: ed053edb-a4b8-4382-8b80-fa4b725900d4
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 6wgXMbTWVfjhYZ3wFXLy3vAISxQeKEJz9SdNqt9SLMY
+name: Newsletter
+id: default
+description: 'This is our newsletter module.'
+format: html
+priority: 1
+receipt: true
+from_name: Digitec
+subject: '[[simplenews-newsletter:name]] [node:title]'
+from_address: pruthvi.abs@gmail.com
+hyperlinks: false
+allowed_handlers:
+  0: '0'
+  simplenews_all: '0'
+new_account: none
+access: default
+weight: 0

@@ -1,0 +1,49 @@
+uuid: de282b3d-ba73-4739-bdf9-b9d36e1b44cb
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:db2fef5d-917a-46be-804c-9e56cc227c4e'
+  module:
+    - block_content
+    - system
+    - user
+  theme:
+    - fleet_management_theme
+id: services
+theme: fleet_management_theme
+region: features_first
+weight: -9
+provider: null
+plugin: 'block_content:db2fef5d-917a-46be-804c-9e56cc227c4e'
+settings:
+  id: 'block_content:db2fef5d-917a-46be-804c-9e56cc227c4e'
+  label: Services
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+      authenticated: authenticated
+      administrator: administrator
+      company: company
+      data_entry: data_entry
+      vehicle_: vehicle_
+      employee: employee
+      fuel_filling: fuel_filling
+      vehicle_allotment: vehicle_allotment
+      accident_monitering: accident_monitering
+      vehicle_maintenance: vehicle_maintenance
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

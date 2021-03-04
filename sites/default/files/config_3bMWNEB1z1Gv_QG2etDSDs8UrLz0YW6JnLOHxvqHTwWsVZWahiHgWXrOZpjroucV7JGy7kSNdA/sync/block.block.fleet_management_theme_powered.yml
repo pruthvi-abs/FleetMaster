@@ -1,0 +1,41 @@
+uuid: 46880760-2ebd-4409-a9cb-04e46a0138e9
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+    - user
+  theme:
+    - fleet_management_theme
+_core:
+  default_config_hash: twO3XL5N1Ma9cBWTB_5DKqZcnUbIls9oOHgaW9_jy6g
+id: fleet_management_theme_powered
+theme: fleet_management_theme
+region: footer_first
+weight: -7
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+      authenticated: authenticated
+      administrator: administrator
+      company: company
+      data_entry: data_entry
+      vehicle_: vehicle_
+      employee: employee
+      fuel_filling: fuel_filling
+      vehicle_allotment: vehicle_allotment
+      accident_monitering: accident_monitering
+      vehicle_maintenance: vehicle_maintenance
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

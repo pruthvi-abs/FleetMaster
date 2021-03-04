@@ -1,0 +1,122 @@
+uuid: de06561d-8d56-4a07-9744-6ab6425247b9
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.company_dashboard
+    - system.menu.company-navigation
+    - views.view.company_dashboard
+    - views.view.company_operators_
+  module:
+    - graphs
+    - panels
+    - system
+    - views
+id: company_dashboard-panels_variant-0
+label: Panels
+variant: panels_variant
+variant_settings:
+  blocks:
+    38286b16-bd7d-436e-9ee9-382ba05dc7c7:
+      id: 'system_menu_block:company-navigation'
+      label: 'Company Navigation'
+      provider: system
+      label_display: visible
+      level: 1
+      depth: 0
+      expand_all_items: false
+      region: first
+      weight: -3
+      uuid: 38286b16-bd7d-436e-9ee9-382ba05dc7c7
+      context_mapping: {  }
+    62494f53-5a9d-425f-9d01-50ddb08275fa:
+      id: 'views_block:company_dashboard-block_1'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: '5'
+      region: second
+      weight: -2
+      uuid: 62494f53-5a9d-425f-9d01-50ddb08275fa
+      context_mapping: {  }
+    fcd145ba-760f-41ae-953e-3623e021e8ff:
+      id: 'views_block:company_dashboard-block_2'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: '3'
+      region: third
+      weight: -1
+      uuid: fcd145ba-760f-41ae-953e-3623e021e8ff
+      context_mapping: {  }
+    8973571f-5a23-4ee3-91d8-63c2f62b3442:
+      id: 'views_block:company_dashboard-block_3'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: first
+      weight: -2
+      uuid: 8973571f-5a23-4ee3-91d8-63c2f62b3442
+      context_mapping: {  }
+    8be6d960-380c-426b-b2ff-5f3f87fb66c3:
+      id: 'views_block:company_dashboard-block_4'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: '5'
+      region: second
+      weight: -1
+      uuid: 8be6d960-380c-426b-b2ff-5f3f87fb66c3
+      context_mapping: {  }
+    7e4876d8-7df1-4328-adea-31c908ab686e:
+      id: 'views_block:company_operators_-block_1'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: '3'
+      region: third
+      weight: -2
+      uuid: 7e4876d8-7df1-4328-adea-31c908ab686e
+      context_mapping: {  }
+    e0afdd43-d908-4251-b6d1-9fccb3314332:
+      id: 'views_block:company_dashboard-block_5'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: first
+      weight: -1
+      uuid: e0afdd43-d908-4251-b6d1-9fccb3314332
+      context_mapping: {  }
+    143e024e-3650-4fae-b70a-685f251a6f05:
+      id: company_graphs
+      label: 'Company Graphs'
+      provider: graphs
+      label_display: visible
+      region: top
+      weight: 0
+      uuid: 143e024e-3650-4fae-b70a-685f251a6f05
+      context_mapping: {  }
+  id: panels_variant
+  uuid: d8a91e6d-8c18-42e4-85f5-71bd99de357e
+  label: null
+  weight: 0
+  layout: layout_threecol_33_34_33
+  layout_settings:
+    label: 'Company Dashboard'
+  page_title: Dashboard
+  storage_type: page_manager
+  storage_id: company_dashboard-panels_variant-0
+  builder: standard
+page: company_dashboard
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

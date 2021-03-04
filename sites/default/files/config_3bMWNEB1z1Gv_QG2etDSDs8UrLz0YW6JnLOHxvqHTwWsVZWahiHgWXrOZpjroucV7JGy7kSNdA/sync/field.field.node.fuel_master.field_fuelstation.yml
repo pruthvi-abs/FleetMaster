@@ -1,0 +1,28 @@
+uuid: 0be839f9-c9a6-4f7f-a42c-d38f8443935e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fuelstation
+    - node.type.fuel_master
+    - node.type.fuel_station_master
+id: node.fuel_master.field_fuelstation
+field_name: field_fuelstation
+entity_type: node
+bundle: fuel_master
+label: FUELSTATION
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      fuel_station_master: fuel_station_master
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: fuel_station_master
+field_type: entity_reference

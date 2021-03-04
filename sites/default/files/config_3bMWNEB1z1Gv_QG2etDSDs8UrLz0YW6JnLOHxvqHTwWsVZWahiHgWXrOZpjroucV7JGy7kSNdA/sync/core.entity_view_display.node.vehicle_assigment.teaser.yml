@@ -1,0 +1,38 @@
+uuid: 9249798b-517e-4bdd-b83f-8856111af556
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.vehicle_assigment.body
+    - field.field.node.vehicle_assigment.field_driver_name
+    - field.field.node.vehicle_assigment.field_end_date
+    - field.field.node.vehicle_assigment.field_start_date
+    - field.field.node.vehicle_assigment.field_vehicle
+    - node.type.vehicle_assigment
+  module:
+    - text
+    - user
+id: node.vehicle_assigment.teaser
+targetEntityType: node
+bundle: vehicle_assigment
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_driver_name: true
+  field_end_date: true
+  field_start_date: true
+  field_vehicle: true

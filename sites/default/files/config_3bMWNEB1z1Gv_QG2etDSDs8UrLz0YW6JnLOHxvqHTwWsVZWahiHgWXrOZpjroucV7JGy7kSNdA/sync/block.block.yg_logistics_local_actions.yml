@@ -1,0 +1,20 @@
+uuid: 54d3d56e-01fd-47d3-808e-4cb9d281eb2f
+langcode: en
+status: true
+dependencies:
+  theme:
+    - yg_logistics
+_core:
+  default_config_hash: HHryZVJbeKi9WnuBGC8FOhBZmBnk2G1H6KxFuy-rC9A
+id: yg_logistics_local_actions
+theme: yg_logistics
+region: content
+weight: -10
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

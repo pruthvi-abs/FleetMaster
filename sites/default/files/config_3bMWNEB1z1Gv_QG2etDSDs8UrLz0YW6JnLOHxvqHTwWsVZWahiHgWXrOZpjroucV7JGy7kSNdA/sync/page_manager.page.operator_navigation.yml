@@ -1,0 +1,21 @@
+uuid: e9004243-6510-4f09-8544-49ae2c195e53
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: operator_navigation
+label: 'Operator Navigation'
+description: ''
+use_admin_theme: false
+path: /operator/dashboard
+access_logic: and
+access_conditions:
+  -
+    id: user_role
+    roles:
+      data_entry: data_entry
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+parameters: {  }

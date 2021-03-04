@@ -1,0 +1,18 @@
+uuid: 7935edfc-34d2-4a06-af1b-d81f96eff200
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vehicle_maintenance
+id: node.vehicle_maintenance.title
+field_name: title
+entity_type: node
+bundle: vehicle_maintenance
+label: DATE
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

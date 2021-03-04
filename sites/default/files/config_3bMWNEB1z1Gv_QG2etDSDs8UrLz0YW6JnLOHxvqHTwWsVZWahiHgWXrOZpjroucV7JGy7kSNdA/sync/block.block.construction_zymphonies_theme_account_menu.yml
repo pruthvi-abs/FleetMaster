@@ -1,0 +1,27 @@
+uuid: 7a516393-8e08-4037-86d3-8bed956472a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - construction_zymphonies_theme
+_core:
+  default_config_hash: vWETkvJMdP8RnhQAyvRISJgaec0ctBkBys6twWz_Wqc
+id: construction_zymphonies_theme_account_menu
+theme: construction_zymphonies_theme
+region: primary_menu
+weight: -5
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'User account menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 2
+  expand_all_items: false
+visibility: {  }

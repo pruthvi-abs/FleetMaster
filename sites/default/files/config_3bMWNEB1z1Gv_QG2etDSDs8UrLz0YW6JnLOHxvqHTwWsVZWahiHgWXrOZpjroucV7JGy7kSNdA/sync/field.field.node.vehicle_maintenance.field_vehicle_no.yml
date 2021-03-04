@@ -1,0 +1,28 @@
+uuid: 46868013-3846-4ece-9001-c02ea5c77392
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vehicle_no
+    - node.type.vehicle
+    - node.type.vehicle_maintenance
+id: node.vehicle_maintenance.field_vehicle_no
+field_name: field_vehicle_no
+entity_type: node
+bundle: vehicle_maintenance
+label: 'VEHICLE NO'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      vehicle: vehicle
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

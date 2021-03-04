@@ -1,0 +1,22 @@
+uuid: cdf667b6-fe77-4e8d-af59-3bc00fb92cbf
+langcode: en
+status: true
+dependencies:
+  theme:
+    - yg_logistics
+_core:
+  default_config_hash: ddy1OsBbWxjwEI8VL1viD4I69qcLHOkul4BxbTqLBTs
+id: yg_logistics_primary_local_tasks
+theme: yg_logistics
+region: header
+weight: 0
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: false
+visibility: {  }

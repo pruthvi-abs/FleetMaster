@@ -1,0 +1,20 @@
+uuid: 0fcacebd-6628-495b-ad4b-3191741dd5fa
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+id: node.field_safet
+field_name: field_safet
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

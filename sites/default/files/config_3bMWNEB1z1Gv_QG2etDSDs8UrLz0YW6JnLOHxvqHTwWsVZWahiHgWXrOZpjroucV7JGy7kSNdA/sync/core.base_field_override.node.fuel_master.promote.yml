@@ -1,0 +1,22 @@
+uuid: a471dacc-7a5c-4f38-a87b-30f1f42f7741
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.fuel_master
+id: node.fuel_master.promote
+field_name: promote
+entity_type: node
+bundle: fuel_master
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

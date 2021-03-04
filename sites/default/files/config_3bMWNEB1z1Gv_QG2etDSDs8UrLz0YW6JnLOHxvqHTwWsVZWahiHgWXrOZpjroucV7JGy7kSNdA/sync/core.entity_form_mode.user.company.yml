@@ -1,0 +1,10 @@
+uuid: 91989c45-755b-4f01-90e0-6e9d36a91ba5
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.company
+label: company
+targetEntityType: user
+cache: true

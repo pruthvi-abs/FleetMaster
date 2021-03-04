@@ -1,0 +1,14 @@
+uuid: 1c471299-c6e2-4880-a8a2-db4523c826bc
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.digitec_super_admin
+  module:
+    - user
+id: user_remove_role_action.digitec_super_admin
+label: 'Remove the Digitec Super Admin role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: digitec_super_admin

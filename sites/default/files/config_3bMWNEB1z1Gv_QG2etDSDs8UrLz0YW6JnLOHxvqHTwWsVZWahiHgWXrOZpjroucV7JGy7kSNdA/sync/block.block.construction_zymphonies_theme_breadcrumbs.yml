@@ -1,0 +1,22 @@
+uuid: 8512d993-ee83-4932-9de5-e963f011b394
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - construction_zymphonies_theme
+_core:
+  default_config_hash: FYN9DTTnf2YaUvezjZMDzfNbx5WDzkjFN7wUFSHOQs8
+id: construction_zymphonies_theme_breadcrumbs
+theme: construction_zymphonies_theme
+region: breadcrumb
+weight: -100
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: f7b93bf9-ded1-4b34-952d-f9a7700ca359
+langcode: en
+status: true
+dependencies:
+  theme:
+    - lightship
+_core:
+  default_config_hash: QeZBeCilQfeET3GeW6ZtJkEiwROADTZktFgKWwPieD4
+id: lightship_secondary_local_tasks
+theme: lightship
+region: header
+weight: 0
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Secondary tabs'
+  provider: core
+  label_display: '0'
+  primary: false
+  secondary: true
+visibility: {  }

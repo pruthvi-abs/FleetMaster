@@ -1,0 +1,22 @@
+uuid: f43d8a3f-a95f-4e15-89fd-09b4b94fe2c5
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - fleet_management_theme
+_core:
+  default_config_hash: fOBrOP6B4zp3LATdmkJFnPY1jPA7QfnHPakDL-R5U5k
+id: fleet_management_theme_messages
+theme: fleet_management_theme
+region: header
+weight: -6
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

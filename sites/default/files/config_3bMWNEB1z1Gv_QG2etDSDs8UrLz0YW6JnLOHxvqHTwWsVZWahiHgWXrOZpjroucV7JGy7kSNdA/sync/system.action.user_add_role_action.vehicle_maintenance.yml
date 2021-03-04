@@ -1,0 +1,14 @@
+uuid: 2e64c63f-e2df-4c58-8a2d-a8c64687dc31
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.vehicle_maintenance
+  module:
+    - user
+id: user_add_role_action.vehicle_maintenance
+label: 'Add the Vehicle Maintenance role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: vehicle_maintenance

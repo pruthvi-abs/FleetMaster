@@ -1,0 +1,19 @@
+uuid: 3fa08efd-4362-4f9c-9a47-d45d50fa3f82
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_branch_
+    - node.type.branches
+id: node.branches.field_branch_
+field_name: field_branch_
+entity_type: node
+bundle: branches
+label: 'BRANCH ADDRESS'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

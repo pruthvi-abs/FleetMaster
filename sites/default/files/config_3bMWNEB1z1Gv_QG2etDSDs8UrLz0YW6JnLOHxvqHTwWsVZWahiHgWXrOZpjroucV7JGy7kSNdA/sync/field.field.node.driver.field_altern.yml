@@ -1,0 +1,19 @@
+uuid: e55f79cc-1c20-4fb9-9e90-f3c962faaa4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_altern
+    - node.type.driver
+id: node.driver.field_altern
+field_name: field_altern
+entity_type: node
+bundle: driver
+label: 'ALTERNATE NO'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

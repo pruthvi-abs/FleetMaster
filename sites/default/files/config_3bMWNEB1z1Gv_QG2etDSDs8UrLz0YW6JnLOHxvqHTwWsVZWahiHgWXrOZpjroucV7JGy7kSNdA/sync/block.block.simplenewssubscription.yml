@@ -1,0 +1,48 @@
+uuid: c8cd8a22-09d9-4362-9b53-e38ba7abdcd1
+langcode: en
+status: false
+dependencies:
+  module:
+    - simplenews
+    - system
+    - user
+  theme:
+    - fleet_management_theme
+id: simplenewssubscription
+theme: fleet_management_theme
+region: features_third
+weight: 0
+provider: null
+plugin: simplenews_subscription_block
+settings:
+  id: simplenews_subscription_block
+  label: 'Join Our Newsletter'
+  provider: simplenews
+  label_display: '0'
+  newsletters:
+    default: default
+  message: 'Stay informed - subscribe to our newsletter.'
+  unique_id: 27c2f674-5365-43b0-bc15-9f4bbdc83057
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+      authenticated: authenticated
+      administrator: administrator
+      company: company
+      data_entry: data_entry
+      vehicle_: vehicle_
+      employee: employee
+      fuel_filling: fuel_filling
+      vehicle_allotment: vehicle_allotment
+      accident_monitering: accident_monitering
+      vehicle_maintenance: vehicle_maintenance
+      digitec_super_admin: digitec_super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

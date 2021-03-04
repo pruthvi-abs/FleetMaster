@@ -1,0 +1,22 @@
+uuid: 0cbeea8c-0bd2-4bbc-9958-5eb93a4f1d4b
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - yg_logistics
+_core:
+  default_config_hash: WWu2OQswgCztl9OeXjD1stexIEMZsSgPMYIdC-JHx9c
+id: yg_logistics_breadcrumbs
+theme: yg_logistics
+region: header
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

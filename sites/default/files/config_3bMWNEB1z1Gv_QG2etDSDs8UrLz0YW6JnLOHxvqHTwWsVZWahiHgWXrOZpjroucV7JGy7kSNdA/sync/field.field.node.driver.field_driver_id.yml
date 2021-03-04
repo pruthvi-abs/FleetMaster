@@ -1,0 +1,19 @@
+uuid: 9f7b38e3-026f-4575-b99d-e6ae3ebe1262
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_driver_id
+    - node.type.driver
+id: node.driver.field_driver_id
+field_name: field_driver_id
+entity_type: node
+bundle: driver
+label: 'EMPLOYEE ID'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

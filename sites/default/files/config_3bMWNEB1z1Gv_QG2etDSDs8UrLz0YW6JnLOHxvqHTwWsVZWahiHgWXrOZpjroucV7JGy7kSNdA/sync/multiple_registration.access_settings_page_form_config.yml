@@ -1,0 +1,12 @@
+multiple_registration_pages_white_list:
+  company: company
+  data_entry: data_entry
+  anonymous: 0
+  authenticated: 0
+  administrator: 0
+  vehicle_: 0
+  employee: 0
+  fuel_filling: 0
+  vehicle_allotment: 0
+  accident_monitering: 0
+  vehicle_maintenance: 0

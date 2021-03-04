@@ -1,0 +1,273 @@
+{% if not logged_in %}
+{{ attach_library("fleet_management_theme/front-style") }}
+{% if page.header %}
+<header id="header" class="fixed-top" style="background: #37517e">
+  <div class="container-fluid px-5 d-flex align-items-center">
+    <h1 class="logo mr-auto"><a href="{{ url('<front>') }}">DIGIFLEET</a></h1>
+    {{ page.header }}
+    <div style="margin-left: 50px">
+      <a href="{{ url('<front>') }}user/login" class="btn btn-success">login</a>
+      <a href="{{ url('<front>') }}register/company" class="btn btn-primary"
+        >Register</a
+      >
+    </div>
+    <!-- <a href="/user/logout" class="btn btn-outline-danger">Logout</a> -->
+  </div>
+</header>
+{% endif %}
+<!-- End Header -->
+{% if is_front and show_slideshow %}
+<section id="hero" class="d-flex align-items-center">
+  <div class="container">
+    <div class="row">
+      {% for slider_contents in slider_content %}
+      {{ slider_contents | raw }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+<!-- End Hero -->
+
+<main id="main">
+  <!-- ======= content Section ======= -->
+  {% if page.content and not is_front %}
+  <section id="content" class="section-bg">
+    <div class="container" data-aos="fade-up">
+      {{ page.content }}
+    </div>
+  </section>
+  {% endif %}
+  <!-- ======= content Section ======= -->
+
+  <!-- ======= Services Section ======= -->
+
+  {% if page.features_first and is_front %}
+  <section id="services" class="services section-bg">
+    <div class="container" data-aos="fade-up">
+      {{ page.features_first }}
+    </div>
+  </section>
+  {% endif %}
+  <!-- End Services Section -->
+  <!-- ======= Cta Section ======= -->
+  {% if page.features_second and is_front %}
+  <section id="cta" class="cta">
+    <div class="container" data-aos="zoom-in">
+      <div class="row">
+        {{ page.features_second }}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+  <!-- End Cta Section -->
+</main>
+<!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+  {% if page.features_third and is_front %}
+  <div class="footer-newsletter">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <h4>Join Our Newsletter</h4>
+          <p>
+            Tamen quem nulla quae legam multos aute sint culpa legam noster
+            magna
+          </p>
+          {{ page.features_third }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+        {% if page.bottom_first %}
+        <div class="col-lg-4 col-md-6 footer-contact">
+          {{ page.bottom_first }}
+        </div>
+        {% endif %} {% if page.bottom_second %}
+        <div class="col-lg-4 col-md-6 footer-links">
+          <h4>Links</h4>
+          {{ page.bottom_second }}
+        </div>
+        {% endif %}
+
+        <div class="col-lg-4 col-md-6 footer-links">
+          <h4>Our Social Networks</h4>
+          <p>
+            Cras fermentum odio eu feugiat lide par naso tierra videa magna
+            derita valies
+          </p>
+          <div class="social-links mt-3">
+            <a href="{{ facebook_url }}" class="facebook"
+              ><i class="bx bxl-facebook"></i
+            ></a>
+            <a href="{{ instagram_url }}" class="instagram"
+              ><i class="bx bxl-instagram"></i
+            ></a>
+            <a href="{{ linkedin_url }}" class="linkedin"
+              ><i class="bx bxl-linkedin"></i
+            ></a>
+            <a href="{{ twitter_url }}" class="twitter"
+              ><i class="bx bxl-twitter"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom clearfix">
+    {% if page.footer_first %}
+    {{ page.footer_first }}
+    {% endif %} {% if page.footer_second %}
+    {{ page.footer_second }}
+    {% endif %}
+  </div>
+</footer>
+
+<!-- End Footer -->
+
+<a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+<div id="preloader"></div>
+
+{% else %}
+
+{{ attach_library("fleet_management_theme/back-style") }}
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/modernizr.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/jquery-3.2.1.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/popper.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/bootstrap.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/jquery-jvectormap.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/jquery-jvectormap-world-mill.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/custom-vector.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/charts/js/raphael-min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/charts/js/morris.min.js"></script>
+<link rel="stylesheet" href="/AWFleetManagement/themes/FleetManagement/assets/back/charts/css/morris.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- Pre Loader -->
+<div class="loading">
+  <div class="spinner">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  </div>
+</div>
+<!--/Pre Loader -->
+<div class="wrapper">
+  <!-- Sidebar -->
+  <nav id="sidebar" class="lorvens-bg">
+    <div class="sidebar-header">
+      {% if role == 'company' %} 
+        {% set home_url = base_url ~ '/company/dashboard' %} 
+      {% elseif role == 'operator' %}
+        {% set home_url = base_url ~ '/operator/dashboard' %} 
+      {% elseif role == 'administrator' %}
+        {% set home_url = base_url ~ '/admin/dashboard' %}
+      {% endif %}
+      <a href="{{ home_url }}"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
+    </div>
+    {% if expiry_status != 'expired' %}
+    <ul class="list-unstyled components">
+      {{
+        page.header
+      }}
+    </ul>
+    {% endif %}
+  </nav>
+  <!-- /Sidebar -->
+  <!-- Page Content -->
+  <div id="content">
+    <!-- Top Navigation -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header"></div>
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <a
+              class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              href="#"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span class="ti-user"></span>
+            </a>
+            <div
+              class="dropdown-menu lorvens-box-shadow profile animated flipInY"
+            >
+              <h5>{{ username }}</h5>
+              <a class="dropdown-item" href="#">
+                <span class="ti-settings"></span> Settings</a
+              >
+              <a class="dropdown-item" href="#">
+                <span class="ti-help-alt"></span> Help</a
+              >
+              <a class="dropdown-item" href="{{ base_url }}/user/logout">
+                <span class="ti-power-off"></span> Logout</a
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- /Top Navigation -->
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="index.html">
+          <span class="ti-home"></span>
+        </a>
+      </li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <!-- /Breadcrumb -->
+    <!-- Main Content -->
+    <input
+      id="package"
+      name="package"
+      type="hidden"
+      value="{{ expiry_status }}"
+    />
+    {% if expiry_status != 'expired' %}
+    {{ page.content }}
+    {% endif %}
+    <!-- /Main Content -->
+  </div>
+  <!-- /Page Content -->
+</div>
+<!-- Back to Top -->
+
+<!-- 
+File Include
+-->
+<a id="back-to-top" href="#" class="back-to-top fenil">
+  <span class="ti-angle-up"></span>
+</a>
+<script>
+  var package = document.getElementById("package").value;
+  // console.log(package);
+  if (package == "expired") {
+    swal(
+      {
+        title: "package Expired!",
+        text: "Please Renew your package!",
+        icon: "error",
+        button: "Renew!",
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        dangerMode: true,
+      });
+      $('.swal-button').on('click',function(){
+        window.location.href = 'https://www.google.com/';
+      });
+  }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/AWFleetManagement/themes/FleetManagement/assets/back/js/custom.js"></script>
+
+{% endif %}

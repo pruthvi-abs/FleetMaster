@@ -1,0 +1,28 @@
+uuid: 04c99941-981f-4b3e-b59f-ea38b0a0ae14
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vehicle_regno
+    - node.type.fuel_master
+    - node.type.vehicle
+id: node.fuel_master.field_vehicle_regno
+field_name: field_vehicle_regno
+entity_type: node
+bundle: fuel_master
+label: 'VEHICLE REGNO'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      vehicle: vehicle
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

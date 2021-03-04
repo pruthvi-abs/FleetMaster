@@ -1,0 +1,21 @@
+uuid: b777b9a0-aa23-43b7-8118-1b6242c7d7b0
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_chassis_no
+field_name: field_chassis_no
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

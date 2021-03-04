@@ -1,0 +1,6 @@
+status: 1
+pattern: '[node:field_vehicle_no]'
+escape: false
+dependencies:
+  config:
+    - node.type.vehicle_maintenance

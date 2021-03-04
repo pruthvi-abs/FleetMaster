@@ -1,0 +1,27 @@
+uuid: 820305a8-a6ca-4a76-ad85-698510924d50
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - fleet_management_theme
+_core:
+  default_config_hash: SRFjdk6lDaU2MFTWNGkywFrWIKqPXrQKEhHsY9UV4UQ
+id: fleet_management_theme_main_menu
+theme: fleet_management_theme
+region: header
+weight: 3
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 2
+  expand_all_items: false
+visibility: {  }

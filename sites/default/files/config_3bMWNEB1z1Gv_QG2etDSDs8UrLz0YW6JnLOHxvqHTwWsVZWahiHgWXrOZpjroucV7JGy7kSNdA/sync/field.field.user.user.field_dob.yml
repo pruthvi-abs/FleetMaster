@@ -1,0 +1,32 @@
+uuid: 68954eef-4e1f-42a7-a6bd-787b4a4f877d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_dob
+  module:
+    - datetime
+    - multiple_registration
+    - user
+third_party_settings:
+  multiple_registration:
+    user_additional_register_form:
+      data_entry: data_entry
+      authenticated: 0
+      company: 0
+    user_additional_register_form_required:
+      data_entry: data_entry
+      authenticated: 0
+      company: 0
+id: user.user.field_dob
+field_name: field_dob
+entity_type: user
+bundle: user
+label: DOB
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

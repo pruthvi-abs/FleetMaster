@@ -1,0 +1,27 @@
+features:
+  node_user_picture: 1
+  comment_user_picture: 1
+  comment_user_verification: 1
+  favicon: 1
+logo:
+  use_default: 1
+favicon:
+  use_default: 1
+show_social_icon: 1
+facebook_url: www.facebook.com/test1
+twitter_url: www.facebook.com/test2
+linkedin_url: www.facebook.com/test3
+instagram_url: www.facebook.com/test4
+rss_url: www.facebook.com/test5
+show_credit_link: 0
+no_of_slides: '1'
+show_slideshow: 1
+slide_image_path1:
+  - '83'
+slide_title_1: 'Better Solutions For Your Business'
+slide_description_1: 'We are a team of talented designers making websites with Bootstrap'
+slide_url_1: '#'
+slide_image_path2: {  }
+slide_title_2: ''
+slide_description_2: ''
+slide_url_2: ''

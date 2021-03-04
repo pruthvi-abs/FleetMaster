@@ -1,0 +1,21 @@
+uuid: 5ab42752-9b95-4f6a-9337-c2126731275b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_metre_reading
+field_name: field_metre_reading
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

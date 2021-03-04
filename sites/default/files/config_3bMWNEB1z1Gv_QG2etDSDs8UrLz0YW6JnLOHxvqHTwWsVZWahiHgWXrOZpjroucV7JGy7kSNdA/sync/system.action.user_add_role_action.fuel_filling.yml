@@ -1,0 +1,14 @@
+uuid: e19cbb8a-8791-49fd-92c8-675c231a8710
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.fuel_filling
+  module:
+    - user
+id: user_add_role_action.fuel_filling
+label: 'Add the Fuel Filling role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: fuel_filling

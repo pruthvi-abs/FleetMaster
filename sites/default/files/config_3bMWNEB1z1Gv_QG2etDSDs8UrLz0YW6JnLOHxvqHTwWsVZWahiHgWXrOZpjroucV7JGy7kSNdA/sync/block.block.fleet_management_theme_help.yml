@@ -1,0 +1,22 @@
+uuid: 25d94487-f49d-4a9e-9401-6fca8695e1b7
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+  theme:
+    - fleet_management_theme
+_core:
+  default_config_hash: 0BbJN29_duim0xYv20GX0Mv_WisJu-3jxSJ04LW-7Js
+id: fleet_management_theme_help
+theme: fleet_management_theme
+region: header
+weight: -5
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

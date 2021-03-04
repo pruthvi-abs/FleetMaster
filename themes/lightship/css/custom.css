@@ -1,0 +1,191 @@
+/**
+ * Convert font-size from px to rem with px fallback
+ *
+ * @param $size - the value in pixels (without px suffix) that you want to convert
+ *
+ * e.g. p {@include fontSize(12);}
+ *
+ */
+.skip-link {
+  margin: 0;
+}
+
+.skip-link a,
+.skip-link a:visited {
+  display: block;
+  width: 100%;
+  padding: 2px 0 3px;
+  text-align: center;
+  color: #fff;
+}
+
+.main-content {
+  outline: none;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  font-size: 100%;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+
+img,
+picture,
+object,
+figure,
+input,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+p,
+pre {
+  margin: 0;
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+blockquote {
+  font-style: italic;
+}
+
+strong,
+b {
+  font-weight: bold;
+}
+
+sup {
+  vertical-align: super;
+  font-size: 50%;
+  line-height: 0;
+}
+
+sub {
+  vertical-align: sub;
+  font-size: 50%;
+  line-height: 0;
+}
+
+ul.tabs {
+  border-bottom: 1px solid #ccc;
+}
+
+ul.contextual-links li {
+  position: relative !important;
+  display: block !important;
+  float: none !important;
+}
+
+.contextual-links a {
+  color: #000 !important;
+}
+
+.contextual-links a:hover {
+  text-decoration: underline !important;
+  color: #000 !important;
+}
+
+.menu-item--expanded,
+.menu-item--collapsed {
+  list-style-type: none;
+  list-style-image: none;
+}
+
+.node--unpublished {
+  background-color: #fff4f4;
+}
+
+.layout-container {
+  margin: 2rem 0;
+}
+
+.container {
+  max-width: 68.75em;
+  margin: 0 auto;
+}
+
+.region {
+  padding: 1rem 0;
+  outline: 1px dotted blue;
+}
+
+@media (max-width: 68.75em) {
+  .container {
+    margin: 0 1.25rem;
+  }
+}
+
+/**
+ * @file
+ * Print styling
+ */
+/**
+ * By importing this CSS file as media "all", we allow this print file to be
+ * aggregated with other stylesheets, for improved front-end performance.
+ */
+@media print {
+  body {
+    padding-top: 0 !important;
+    color: #000;
+  }
+  /* Underline all links. */
+  a,
+  a:link,
+  a:visited {
+    text-decoration: underline !important;
+    color: #000 !important;
+  }
+  main a[href]:after {
+    content: " (" attr(href) ")" !important;
+    color: #000 !important;
+  }
+  main a[href^="javascript:"]:after,
+  main a[href^="#"]:after {
+    content: "";
+  }
+  main abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  /* Turn off any background colors or images. */
+  header,
+  body,
+  #main-content {
+    color: #000;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+  /* Hide sidebars and nav elements. */
+  .skip-link,
+  #toolbar-administration,
+  .toolbar,
+  nav,
+  footer,
+  iframe,
+  .trigger,
+  .breadcrumb,
+  .tabs,
+  .pager,
+  .feed-icons {
+    display: none;
+    visibility: hidden;
+  }
+}

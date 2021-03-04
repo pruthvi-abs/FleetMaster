@@ -1,0 +1,14 @@
+uuid: 1d8f23a5-85b5-4204-a017-9e3ab0c81245
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.accident_monitering
+  module:
+    - user
+id: user_remove_role_action.accident_monitering
+label: 'Remove the Accident Monitering role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: accident_monitering

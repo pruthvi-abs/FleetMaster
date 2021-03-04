@@ -1,0 +1,9 @@
+uuid: d39a1e34-e8e7-4303-bb22-2278efe01dbf
+langcode: en
+status: true
+dependencies: {  }
+id: digitec_super_admin
+label: 'Digitec Super Admin'
+weight: 14
+is_admin: null
+permissions: {  }

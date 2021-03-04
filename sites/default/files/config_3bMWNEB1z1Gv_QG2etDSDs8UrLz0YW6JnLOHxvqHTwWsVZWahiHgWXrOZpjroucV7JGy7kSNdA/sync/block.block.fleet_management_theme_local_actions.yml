@@ -1,0 +1,20 @@
+uuid: 9cfeddb6-b880-4daf-9043-7d3f4ed8e689
+langcode: en
+status: false
+dependencies:
+  theme:
+    - fleet_management_theme
+_core:
+  default_config_hash: cd7-aUtGdMLsKxlzhHdyJfaJs4bkDj1neF5PmP-j-Bc
+id: fleet_management_theme_local_actions
+theme: fleet_management_theme
+region: header
+weight: 5
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

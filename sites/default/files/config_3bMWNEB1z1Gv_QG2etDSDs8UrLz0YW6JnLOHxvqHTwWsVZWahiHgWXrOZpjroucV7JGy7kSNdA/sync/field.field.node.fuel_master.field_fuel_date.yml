@@ -1,0 +1,24 @@
+uuid: 7d870136-3d15-4fb9-b345-15a76d9ac919
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fuel_date
+    - node.type.fuel_master
+  module:
+    - datetime
+id: node.fuel_master.field_fuel_date
+field_name: field_fuel_date
+entity_type: node
+bundle: fuel_master
+label: 'FUEL DATE'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,22 @@
+facebook_url: 'https://www.facebook.com'
+twitter_url: 'https://www.twitter.com'
+google_plus_url: 'https://plus.google.com/'
+social_title: Social
+contact_title: Contact
+phone: '(+91) 123-456-7890'
+email: info@example.com
+address:
+  value: "<p>M</p>\r\n"
+  format: basic_html
+_core:
+  default_config_hash: KzLqAipAZDS43J-83IYVRFgRoSi6DW2up4v7VBVtLrc
+features:
+  node_user_picture: 1
+  comment_user_picture: 1
+  comment_user_verification: 1
+  favicon: 1
+logo:
+  use_default: 0
+  path: 'public://download_1.png'
+favicon:
+  use_default: 1

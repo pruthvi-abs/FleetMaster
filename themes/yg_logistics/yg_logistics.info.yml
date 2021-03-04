@@ -1,0 +1,31 @@
+name : YG Logistics  
+description: 'Designed & Developed by <a href=https://www.youngglobes.com/>Young Globes</a><br/>Contact us for any kind of Drupal services <a href=mailto:youngglobes@gmail.com>youngglobes@gmail.com</a>'
+core_version_requirement: ^8 || ^9 
+type: theme 
+screenshot: screenshot.png
+base theme: classy
+
+#Libraries
+libraries:
+  - yg_logistics/global-style
+  - yg_logistics/fontawesome
+
+#Regions
+regions:
+  header: 'Header'
+  primary_menu: 'Primary Menu'
+  content: 'Content'
+  slider: 'Slider'
+  banner: 'Banner'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer_logo: 'Footer Logo'
+  footer_our_service: 'Footer Our Service'
+
+
+  
+
+# Information added by Drupal.org packaging script on 2020-08-24
+version: '2.0.0'
+project: 'yg_logistics'
+datestamp: 1598278796

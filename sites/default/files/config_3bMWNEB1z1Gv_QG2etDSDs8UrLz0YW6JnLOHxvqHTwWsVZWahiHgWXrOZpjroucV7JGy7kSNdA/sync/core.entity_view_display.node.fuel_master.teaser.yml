@@ -1,0 +1,32 @@
+uuid: de4d0fb1-8030-47d3-a68c-5030bababc32
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.fuel_master.field_fleet
+    - field.field.node.fuel_master.field_fuel_date
+    - field.field.node.fuel_master.field_fuelstation
+    - field.field.node.fuel_master.field_meter_reading
+    - field.field.node.fuel_master.field_price_per_litre
+    - field.field.node.fuel_master.field_vehicle_regno
+    - node.type.fuel_master
+  module:
+    - user
+id: node.fuel_master.teaser
+targetEntityType: node
+bundle: fuel_master
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_fleet: true
+  field_fuel_date: true
+  field_fuelstation: true
+  field_meter_reading: true
+  field_price_per_litre: true
+  field_vehicle_regno: true

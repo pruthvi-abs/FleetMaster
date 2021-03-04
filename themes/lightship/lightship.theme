@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the lightship theme.
+ */
+
+/**
+ * Implements template_preprocess_HOOK() for the HTML template.
+ */
+function lightship_preprocess_html(&$variables) {
+
+  // Add x-ua-compatibility tags.
+  $x_ua_compatible = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'http-equiv' => 'x-ua-compatible',
+      'content' => 'ie=11',
+    ],
+  ];
+  $variables['page']['#attached']['html_head'][] = [$x_ua_compatible, 'x-ua-compatible'];
+
+  // Add node id as a class.
+  $request = \Drupal::request();
+  $node = ($request->attributes->get('_route') == 'entity.node.canonical'
+            ? $request->attributes->get('node')
+            : NULL
+          );
+
+  if ($node) {
+    $variables['attributes']['class'][] = 'page-node-' . $node->id();
+  }
+
+  /* Add information about presence of sidebars.
+  .sidebar-first.sidebar-second means class for two sidebars. */
+
+  $has_first_sidebar = !empty($variables['page']['sidebar_first']);
+  $has_second_sidebar = !empty($variables['page']['sidebar_second']);
+
+  if ($has_first_sidebar) {
+    $variables['attributes']['class'][] = 'layout-sidebar-first';
+  }
+  elseif ($has_second_sidebar) {
+    $variables['attributes']['class'][] = 'layout-sidebar-second';
+  }
+  else {
+    $variables['attributes']['class'][] = 'layout-no-sidebars';
+  }
+}

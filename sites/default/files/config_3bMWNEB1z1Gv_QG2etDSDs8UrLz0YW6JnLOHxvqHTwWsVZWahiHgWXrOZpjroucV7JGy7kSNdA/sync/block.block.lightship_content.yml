@@ -1,0 +1,22 @@
+uuid: 1783f091-d177-41d0-aefa-382ffbcac03b
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - lightship
+_core:
+  default_config_hash: YRY68JWkaUiGeZlWMv1nzeIgDm0ZZwXYgpqUpLFzwAY
+id: lightship_content
+theme: lightship
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

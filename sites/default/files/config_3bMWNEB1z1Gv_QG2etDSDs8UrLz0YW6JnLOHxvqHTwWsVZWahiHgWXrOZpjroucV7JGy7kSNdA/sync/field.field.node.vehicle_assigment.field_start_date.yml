@@ -1,0 +1,24 @@
+uuid: eb67b1bc-456a-4817-9cd3-f42f67b45d00
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_start_date
+    - node.type.vehicle_assigment
+  module:
+    - datetime
+id: node.vehicle_assigment.field_start_date
+field_name: field_start_date
+entity_type: node
+bundle: vehicle_assigment
+label: 'START DATE'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

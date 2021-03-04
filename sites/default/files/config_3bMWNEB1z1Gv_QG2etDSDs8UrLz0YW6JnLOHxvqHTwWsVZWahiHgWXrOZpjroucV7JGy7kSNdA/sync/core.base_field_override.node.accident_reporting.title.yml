@@ -1,0 +1,18 @@
+uuid: 99c0ef60-6c71-4dc0-ad73-972bcabab0f3
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.accident_reporting
+id: node.accident_reporting.title
+field_name: title
+entity_type: node
+bundle: accident_reporting
+label: 'Accident Date'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

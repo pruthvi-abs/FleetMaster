@@ -1,0 +1,14 @@
+uuid: db7d2e19-17e5-45e3-b7ec-2a0cb88af52f
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.digitec_super_admin
+  module:
+    - user
+id: user_add_role_action.digitec_super_admin
+label: 'Add the Digitec Super Admin role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: digitec_super_admin

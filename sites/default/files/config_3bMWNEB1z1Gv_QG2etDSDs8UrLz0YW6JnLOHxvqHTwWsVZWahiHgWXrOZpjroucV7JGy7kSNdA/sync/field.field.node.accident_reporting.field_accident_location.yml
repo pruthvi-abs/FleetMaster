@@ -1,0 +1,19 @@
+uuid: f5c3669b-2e28-4cff-a4d6-0f7b89f191af
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_accident_location
+    - node.type.accident_reporting
+id: node.accident_reporting.field_accident_location
+field_name: field_accident_location
+entity_type: node
+bundle: accident_reporting
+label: 'ACCIDENT LOCATION'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

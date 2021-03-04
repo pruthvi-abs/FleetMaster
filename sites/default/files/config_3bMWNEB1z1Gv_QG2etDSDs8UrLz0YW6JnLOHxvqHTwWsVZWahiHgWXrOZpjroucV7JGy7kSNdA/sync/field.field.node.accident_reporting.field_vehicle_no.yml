@@ -1,0 +1,28 @@
+uuid: 61525721-128c-4924-94df-521484af8e90
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vehicle_no
+    - node.type.accident_reporting
+    - node.type.vehicle
+id: node.accident_reporting.field_vehicle_no
+field_name: field_vehicle_no
+entity_type: node
+bundle: accident_reporting
+label: 'VEHICLE NO'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      vehicle: vehicle
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

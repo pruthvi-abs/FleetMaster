@@ -1,0 +1,63 @@
+{#
+/**
+ * @file
+ * Default theme implementation for status messages.
+ *
+ * Displays status, error, and warning messages, grouped by type.
+ *
+ * An invisible heading identifies the messages for assistive technology.
+ * Sighted users see a colored box. See http://www.w3.org/TR/WCAG-TECHS/H69.html
+ * for info.
+ *
+ * Add an ARIA label to the contentinfo area so that assistive technology
+ * user agents will better describe this landmark.
+ *
+ * Available variables:
+ * - message_list: List of messages to be displayed, grouped by type.
+ * - status_headings: List of all status types.
+ * - display: (optional) May have a value of 'status' or 'error' when only
+ *   displaying messages of that specific type.
+ */
+#}
+{% set block = 'messages' %}
+{%
+  set header_classes = [
+    bem(block, 'header'),
+  ]
+%}
+{% block messages %}
+  {% for type, messages in message_list %}
+    {%
+      set modifiers = [
+        type,
+      ]
+    %}
+    {%
+      set classes = [
+        bem(block, null, modifiers),
+      ]
+    %}
+    <div role="contentinfo" aria-label="{{ status_headings[type] }}"{{ attributes.addClass(classes)|without('role', 'aria-label') }}>
+      {% if status_headings[type] %}
+        {% set header_attributes = create_attribute() %}
+        {% if type == 'error' %}
+          {% do header_attributes.setAttribute('role', 'alert') %}
+        {% endif %}
+        <div{{ header_attributes.addClass(header_classes) }}>
+          <h2 class="{{ bem(block, 'title') }}">{{ status_headings[type] }}</h2>
+        </div>
+      {% endif %}
+      <div class="{{ bem(block, 'content') }}">
+        {% if messages|length > 1 %}
+          <ul class="{{ bem(block, 'list') }}">
+            {% for message in messages %}
+              <li class="{{ bem(block, 'item') }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          {{ messages|first }}
+        {% endif %}
+      </div>
+  </div>
+  {% endfor %}
+{% endblock messages %}

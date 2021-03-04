@@ -1,0 +1,14 @@
+uuid: d2540cc0-bb41-4e48-90d6-69ccf747831d
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.vehicle_allotment
+  module:
+    - user
+id: user_add_role_action.vehicle_allotment
+label: 'Add the Vehicle Allotment role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: vehicle_allotment

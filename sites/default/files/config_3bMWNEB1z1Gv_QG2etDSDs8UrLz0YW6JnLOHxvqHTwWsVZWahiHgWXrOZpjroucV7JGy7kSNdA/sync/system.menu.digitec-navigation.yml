@@ -1,0 +1,8 @@
+uuid: 8e1f084f-287a-411b-ab92-3c268f7e3741
+langcode: en
+status: true
+dependencies: {  }
+id: digitec-navigation
+label: 'Digitec Navigation'
+description: 'super admin dashboard'
+locked: false

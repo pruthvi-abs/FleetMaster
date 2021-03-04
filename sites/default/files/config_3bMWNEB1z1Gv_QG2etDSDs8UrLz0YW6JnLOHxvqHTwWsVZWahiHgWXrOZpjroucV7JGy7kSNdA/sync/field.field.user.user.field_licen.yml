@@ -1,0 +1,32 @@
+uuid: 98f3ea4e-0192-4fd6-b287-e27b453d4469
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_licen
+  module:
+    - datetime
+    - multiple_registration
+    - user
+third_party_settings:
+  multiple_registration:
+    user_additional_register_form:
+      data_entry: data_entry
+      authenticated: 0
+      company: 0
+    user_additional_register_form_required:
+      data_entry: data_entry
+      authenticated: 0
+      company: 0
+id: user.user.field_licen
+field_name: field_licen
+entity_type: user
+bundle: user
+label: 'LICENCE EXPIRY DATE'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

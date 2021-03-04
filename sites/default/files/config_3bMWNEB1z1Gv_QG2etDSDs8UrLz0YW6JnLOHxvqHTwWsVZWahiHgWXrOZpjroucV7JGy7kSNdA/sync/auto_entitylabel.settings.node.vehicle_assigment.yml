@@ -1,0 +1,6 @@
+status: 1
+pattern: '[node:field_driver_name]-[node:field_vehicle]-[node:field_start_date]'
+escape: false
+dependencies:
+  config:
+    - node.type.vehicle_assigment

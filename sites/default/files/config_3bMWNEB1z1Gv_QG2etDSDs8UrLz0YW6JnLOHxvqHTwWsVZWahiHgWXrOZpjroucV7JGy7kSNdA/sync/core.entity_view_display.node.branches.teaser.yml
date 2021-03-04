@@ -1,0 +1,24 @@
+uuid: 1ef1fc43-4365-4e72-bfe6-cedcaac40e10
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.branches.field_branch_
+    - field.field.node.branches.field_city
+    - node.type.branches
+  module:
+    - user
+id: node.branches.teaser
+targetEntityType: node
+bundle: branches
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_branch_: true
+  field_city: true
