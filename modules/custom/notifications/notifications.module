@@ -1,0 +1,13 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+
+function preprocess_notifications(&$variables) {
+	$variables['test'] = 'testVariable from notification modules';
+  }
+
+?>

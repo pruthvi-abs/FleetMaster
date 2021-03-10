@@ -105,7 +105,8 @@ function fleet_management_theme_preprocess_page(&$variables)
   }
   $roles = $current_user->getRoles();
   // dump($roles);
-  // dump($current_path);
+  // $key = array_search('vehicle_allotment',$roles);
+  // dump($key);
   if (!empty($roles[1])) {
     $variables['role'] = $roles[1];
     if ($roles[1] == 'company' && $current_path == '/node') {
@@ -121,7 +122,50 @@ function fleet_management_theme_preprocess_page(&$variables)
       $response->send();
       return;
     }
+    if($roles[1] == 'administrator'){
+      $userStorage = \Drupal::entityTypeManager()->getStorage('user');
+      $query = $userStorage->getQuery();
+      $uids = $query->condition('status', '1')->condition('roles', 'company')->execute();
+      $users = $userStorage->loadMultiple($uids);
+      $keys = array_keys($users);
+      $current_date =  date("Y-m-d");
+      $end_date = date("Y-m-d", strtotime($current_date . ' + 1 month'));
+      $start_date = date("Y-m-d", strtotime($current_date));
+      // dump($users);
+      // array_push($user_ids,$current_user->id());
+      for($i=0,$j=0;$i<count($users);$i++){
+        $field_package_expiry_date = $users[$keys[$i]]->get('field_package_expiry_date')->getValue()[0]['value'];
+        $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
+        if($field_package_expiry_date >= $start_date && $field_package_expiry_date <= $end_date){
+          $notifications[$j]['icon'] = 'ti-alert';
+          $notifications[$j]['title'] = $name . ' is going to be expired on '.$field_package_expiry_date;
+          $j++;
+        }
+      }
+      
+      $userStorage = \Drupal::entityTypeManager()->getStorage('user');
+      $query = $userStorage->getQuery();
+      $uids = $query->condition('status', '0')->condition('roles', 'company')->execute();
+      $users = $userStorage->loadMultiple($uids);
+      $keys = array_keys($users);
+      $current_date =  date("Y-m-d");
+      $end_date = date("Y-m-d", strtotime($current_date . ' + 1 month'));
+      $start_date = date("Y-m-d", strtotime($current_date));
+      // dump($users);
+      // array_push($user_ids,$current_user->id());
+      for($i=0,$j=count($notifications);$i<count($users);$i++){
+        $field_package_expiry_date = $users[$keys[$i]]->get('field_package_expiry_date')->getValue()[0]['value'];
+        $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
+        if($field_package_expiry_date <= $current_date){
+          $notifications[$j]['icon'] = 'ti-alert';
+          $notifications[$j]['title'] = $name . ' is already expired on '.$field_package_expiry_date;
+          $j++;
+        }
+      }
+    }
+    // dump($notifications);
   }
+  $variables['notifications'] = json_encode($notifications);
   // dump($roles);
   // dump($current_path);
   // if ($current_path == '/company/dashboard') {

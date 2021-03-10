@@ -1,0 +1,410 @@
+<?php
+
+/**
+ * @file Wirecard integration using WPP (Wirecard Payment Page v2) seamless mode.
+ *
+ * Docs: https://doc.wirecard.com/PPv2.html#WPP_Seamless
+ * Example code: https://github.com/wirecard/wpp-integration-demo-php/blob/master/src/payment/seamless.php
+ */
+
+define('WIRECARD_WPP_ENDPOINT_TEST', 'https://wpp-test.wirecard.com');
+define('WIRECARD_WPP_ENDPOINT_PROD', 'https://wpp.wirecard.com');
+
+/**
+ * Implements hook_commerce_payment_method_info().
+ */
+function wirecard_commerce_payment_method_info() {
+  $payment_methods['wirecard_wpp'] = array(
+    'base' => 'wirecard_wpp',
+    'title' => t('Wirecard WPP v2 seamless'),
+    'display_title' => t('Credit card payment'),
+    'short_title' => t('Wirecard WPP'),
+    'description' => t('Wirecard integration using WPP (Wirecard Payment Page v2) seamless mode.'),
+    'terminal' => FALSE,
+    'offsite' => FALSE,
+  );
+  return $payment_methods;
+}
+
+/**
+ * Payment method settings form.
+ *
+ * @param array $settings
+ *   Default settings provided from rules.
+ *
+ * @return array
+ *   Settings form array.
+ */
+function wirecard_wpp_settings_form(array $settings) {
+  $form['operation_mode'] = array(
+    '#type' => 'select',
+    '#title' => t('Operation mode'),
+    '#options' => array(
+      'test' => t('Test'),
+      'prod' => t('Production'),
+    ),
+    '#default_value' => !empty($settings['operation_mode']) ? $settings['operation_mode'] : 'test',
+    '#description' => t('Chose the operation mode between test and production.'),
+    '#required' => TRUE,
+  );
+
+  $form['username'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Username'),
+    '#default_value' => !empty($settings['username']) ? $settings['username'] : '70000-APIDEMO-CARD',
+    '#required' => TRUE,
+  );
+
+  $form['password'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Password'),
+    '#default_value' => !empty($settings['password']) ? $settings['password'] : 'ohysS0-dvfMx',
+    '#required' => TRUE,
+  );
+
+  $form['merchant_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Merchant ID (MAID)'),
+    '#default_value' => !empty($settings['merchant_id']) ? $settings['merchant_id'] : '7a6dd74f-06ab-4f3f-a864-adc52687270a',
+    '#required' => TRUE,
+  );
+
+  $form['secret_key'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Secret Key'),
+    '#default_value' => !empty($settings['secret_key']) ? $settings['secret_key'] : 'a8c3fce6-8df7-4fd6-a1fd-62fa229c5e55',
+    '#required' => TRUE,
+  );
+
+  $form['attempt_3d'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Attempt 3D'),
+    '#default_value' => !empty($settings['attempt_3d']) ? $settings['attempt_3d'] : FALSE,
+    '#description' => t('Indicates whether the transaction should use the 3D Secure workflow.'),
+  );
+
+  return $form;
+}
+
+/**
+ * Payment form callback for Wirecard WPP.
+ */
+function wirecard_wpp_submit_form($payment_method, $pane_values, $checkout_pane, $order) {
+  // Creates payment session.
+  $redirect_url = wirecard_wpp_init_session($payment_method, $order);
+
+  $form = [];
+  if ($redirect_url) {
+    $endpoint = wirecard_wpp_get_endpoint($payment_method['settings']);
+
+    // Attach external JS.
+    $form['#attached']['js'][] = array(
+      'data' => $endpoint . '/loader/paymentPage.js',
+      'type' => 'external',
+    );
+    // Attach internal javascript.
+    $form['#attached']['js'][] = array(
+      'data' => drupal_get_path('module', 'wirecard') . '/wirecard.js',
+      'type' => 'file',
+    );
+    // Attach JS settings.
+    $form['#attached']['js'][] = array(
+      'data' => array('wirecard' => array('redirect_url' => $redirect_url)),
+      'type' => 'setting',
+    );
+
+    // Adds markup placeholder to inject wirecard form via JS.
+    $form['payment_form'] = array(
+      '#type' => 'markup',
+      '#markup' => "<div id='commerce-wirecard-wpp-form'></div>",
+    );
+
+    // Add containers for outputing the payment result to the user.
+    $form['payment_result'] = array(
+      '#type' => 'markup',
+      '#markup' => "<div id='commerce-wirecard-wpp-payment-result'>
+                  <div id='commerce-wirecard-wpp-payment-result-title'></div>
+                  <div id='commerce-wirecard-wpp-payment-result-description'></div>
+                  </div>",
+    );
+
+    // Adds hidden elements where we store the encrypted return values from
+    // wirecard. We will use this in the validate callback to actually verify
+    // and create the transaction.
+    $form['payment_response'] = array(
+      '#type' => 'hidden',
+      '#attributes' => array('id' => 'commerce-wirecard-wpp-payment-response'),
+    );
+    $form['payment_response_signature'] = array(
+      '#type' => 'hidden',
+      '#attributes' => array('id' => 'commerce-wirecard-wpp-payment-response-signature'),
+    );
+  }
+  else {
+    $form['error'] = array(
+      '#type' => 'markup',
+      '#markup' => t('Unable to load payment form, please try again later.'),
+    );
+  }
+  return $form;
+}
+
+/**
+ * Payment method callback: checkout form submission.
+ */
+function wirecard_wpp_submit_form_submit($payment_method, $pane_form, $pane_values, $order, $charge) {
+  $payment_response = $pane_form['payment_response']['#value'];
+  $payment_response_signature = $pane_form['payment_response_signature']['#value'];
+  $check_response = wirecard_wpp_check_response($payment_method, $payment_response, $payment_response_signature, $order, $charge);
+  // In case of successful payment.
+  if ($check_response['success'] === TRUE) {
+    return TRUE;
+  }
+  else {
+    drupal_set_message($check_response['error_msg'], 'error');
+    return FALSE;
+  }
+}
+
+/**
+ * Initializes a WPP session with the order details. The WPP session returns
+ * a URL which we need for rendering the payment form.
+ *
+ * @param array $payment_method
+ *   Payment method details.
+ * @param object $order
+ *   Order details.
+ *
+ * @return mixed
+ *   Url for payment form rendering or FALSE.
+ */
+function wirecard_wpp_init_session(array $payment_method, stdClass $order) {
+  if (isset($payment_method['settings'])) {
+    $settings = $payment_method['settings'];
+    $order_total = $order->commerce_order_total[LANGUAGE_NONE][0];
+    $endpoint = wirecard_wpp_get_endpoint($settings);
+    global $base_url;
+    global $language;
+    $order->data['order_unique_id'] = $order->order_id . '_' . drupal_random_key(8);
+    commerce_order_save($order);
+
+    $payload = [
+      'payment' => [
+        'merchant-account-id' => [
+          'value' => $settings['merchant_id'],
+        ],
+        'request-id' => $order->data['order_unique_id'],
+        'transaction-type' => 'purchase',
+        'order-number' => $order->order_id,
+        'requested-amount' => [
+          'value' => commerce_currency_amount_to_decimal($order_total['amount'], $order_total['currency_code']),
+          'currency' => $order_total['currency_code'],
+        ],
+        'payment-methods' => [
+          'payment-method' => [['name' => 'creditcard']],
+        ],
+        'locale' => $language->language,
+        'three-d' => [
+          'attempt-three-d' => $settings['attempt_3d'],
+        ],
+        // Use custom path to handle the redirect callbacks.
+        'success-redirect-url' => url('wirecard_wpp/payment/' . $order->order_id . '/success', ['absolute' => TRUE]),
+        'fail-redirect-url' => url('wirecard_wpp/payment/' . $order->order_id . '/fail', ['absolute' => TRUE]),
+        'cancel-redirect-url' => url('wirecard_wpp/payment/' . $order->order_id . '/cancel', ['absolute' => TRUE]),
+      ],
+      'options' => [
+        'mode' => 'seamless',
+        'frame-ancestor' => $base_url,
+      ],
+    ];
+    drupal_alter('wirecard_wpp_payload', $payload, $order);
+
+    $client = new GuzzleHttp\Client();
+    try {
+      $response = $client->request('POST', $endpoint . '/api/payment/register', [
+        'headers' => [
+          'Content-type' => 'application/json; charset=utf-8',
+          'Accept' => 'application/json',
+          'Authorization' => 'Basic ' . base64_encode($settings['username'] . ':' . $settings['password']),
+        ],
+        'body' => json_encode($payload),
+      ]);
+    }
+    catch (Exception $e) {
+      watchdog('wirecard', 'Unable to get redirect iframe: @message', ['@message' => $e->getMessage()], WATCHDOG_ERROR);
+    }
+
+    if (is_object($response) &&
+      $response->getStatusCode() > 199 && $response->getStatusCode() < 300) {
+      try {
+        $contents = $response->getBody()->getContents();
+        $wpp_data = json_decode($contents, TRUE);
+        $redirect_url = $wpp_data['payment-redirect-url'];
+        return $redirect_url;
+      }
+      catch (Exception $e) {
+        watchdog('wirecard', 'Unable to get body from response: @message', ['@message' => $e->getMessage()], WATCHDOG_ERROR);
+      }
+    }
+    elseif (is_object($response)) {
+      watchdog('wirecard', 'Wrong status code received: @message', ['@message' => $response->getStatusCode()], WATCHDOG_ERROR);
+    }
+  }
+
+  watchdog('wirecard', 'Could not load the payment settings', [], WATCHDOG_ERROR);
+  return FALSE;
+}
+
+/**
+ * Return the WPP endpoint based on the payment settings.
+ *
+ * @param array $settings
+ *   Default settings provided from rules.
+ *
+ * @return string
+ *   Endpoint URL.
+ */
+function wirecard_wpp_get_endpoint(array $settings) {
+  $endpoint = WIRECARD_WPP_ENDPOINT_TEST;
+  if (isset($settings['operation_mode']) && $settings['operation_mode'] == 'prod') {
+    $endpoint = WIRECARD_WPP_ENDPOINT_PROD;
+  }
+  return $endpoint;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function wirecard_menu() {
+  $items['wirecard_wpp/payment/%commerce_order/%'] = array(
+    'title' => 'Wirecard payment status',
+    'page arguments' => array(2, 3),
+    'page callback' => 'wirecard_wpp_payment_status_page',
+    'access callback' => 'commerce_order_access',
+    'access arguments' => array('view', 2),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Page callback for Wirecard payment status page.
+ */
+function wirecard_wpp_payment_status_page($order, $status) {
+  if ($status == 'success') {
+    $charge = [
+      'amount' => $order->commerce_order_total[LANGUAGE_NONE][0]['amount'],
+      'currency_code' => $order->commerce_order_total[LANGUAGE_NONE][0]['currency_code'],
+    ];
+    $payment_method = commerce_payment_method_instance_load('wirecard_wpp|commerce_payment_wirecard_wpp');
+    if (isset($_POST['response-base64']) && isset($_POST['response-signature-base64'])) {
+      $payment_response = $_POST['response-base64'];
+      $payment_response_signature = $_POST['response-signature-base64'];
+
+      $check_response = wirecard_wpp_check_response($payment_method, $payment_response, $payment_response_signature, $order, $charge);
+      // In case of successful payment.
+      if ($check_response['success'] === TRUE) {
+        commerce_order_status_update($order, 'checkout_payment', FALSE, NULL, t('Wirecard WPP payment confirmation.'));
+        commerce_payment_redirect_pane_next_page($order, t('Customer successfully submitted payment at the payment gateway.'));
+      }
+      else {
+        commerce_payment_redirect_pane_previous_page($order, $check_response['error_msg']);
+        drupal_set_message($check_response['error_msg'], 'error');
+      }
+    }
+    else {
+      commerce_payment_redirect_pane_previous_page($order, t('Missing payment data.'));
+      drupal_set_message(t('Missing payment data.'), 'error');
+    }
+  }
+  else {
+    commerce_payment_redirect_pane_previous_page($order, t('Customer canceled payment at the payment gateway.'));
+    drupal_set_message(t('Customer canceled payment at the payment gateway.'), 'error');
+  }
+
+  drupal_goto(commerce_checkout_order_uri($order));
+}
+
+/**
+ * Check the response received from the payment provider and create a commerce
+ * transactions if response is valid and payment succeeded.
+ *
+ * @param array $payment_method
+ *   Payment method details.
+ * @param string $payment_response
+ *   Payment response received from payment provider.
+ * @param string $payment_response_signature
+ *   Payment response signature received from payment provider.
+ * @param object $order
+ *   Order details.
+ * @param array $charge
+ *   Order charge details.
+ *
+ * @return array
+ *   Array containing: bool success, string error_msg, mixed transaction.
+ */
+function wirecard_wpp_check_response(array $payment_method, string $payment_response, string $payment_response_signature, stdClass $order, array $charge) {
+  $result = [
+    'success' => FALSE,
+    'error_msg' => '',
+    'transaction' => NULL,
+  ];
+  // Load the payment settings.
+  $settings = $payment_method['settings'];
+  // Validate the response got from Wirecard using the secret_key.
+  $signature = hash_hmac('sha256', $payment_response, $settings['secret_key'], TRUE);
+  if (hash_equals($signature, base64_decode($payment_response_signature))) {
+    // Decode the response.
+    $payment_response = json_decode(base64_decode($payment_response), TRUE);
+    if ($payment_response) {
+      if ($payment_response['payment']['request-id'] !== $order->data['order_unique_id']) {
+        watchdog('wirecard', 'Unique id of the order: @order_id and payment: @payment_id does not match', ['@order_id' => $order->data['order_unique_id'], '@payment_id' => $payment_response['payment']['request-id']], WATCHDOG_ERROR);
+        $result['error_msg'] = t('Unique id of the order and payment does not match.');
+      }
+      else {
+        // Create the tranaction.
+        $transaction = commerce_payment_transaction_new('wirecard_wpp', $order->order_id);
+        $transaction->instance_id = $payment_method['instance_id'];
+        $transaction->amount = $charge['amount'];
+        $transaction->currency_code = $charge['currency_code'];
+        $transaction->status = COMMERCE_PAYMENT_STATUS_PENDING;
+        // Check if the payment amount is the right one.
+        if ($payment_response['payment']['requested-amount']['currency'] == $charge['currency_code'] &&
+          $payment_response['payment']['requested-amount']['value'] == commerce_currency_amount_to_decimal($charge['amount'], $charge['currency_code'])) {
+          // Check if the payment transaction state is the right one.
+          if ($payment_response['payment']['transaction-state'] != 'success') {
+            $transaction->message = t('Transaction state error: @state', ['@state' => $payment_response['payment']['transaction-state']]);
+            $transaction->status = COMMERCE_PAYMENT_STATUS_FAILURE;
+            watchdog('wirecard', 'Transaction state error: @error', ['@error' => serialize($payment_response)], WATCHDOG_ERROR);
+            commerce_payment_transaction_save($transaction);
+            $result['error_msg'] = t('Transaction state error.');
+          }
+          else {
+            $transaction->status = COMMERCE_PAYMENT_STATUS_SUCCESS;
+            commerce_payment_transaction_save($transaction);
+            $result['success'] = TRUE;
+          }
+        }
+        else {
+          $transaction->message = t('Value of order and payment does not match.');
+          $transaction->status = COMMERCE_PAYMENT_STATUS_FAILURE;
+          commerce_payment_transaction_save($transaction);
+          $result['error_msg'] = t('Value of order and payment does not match.');
+        }
+      }
+    }
+    else {
+      watchdog('wirecard', 'Response decoding failure.', [], WATCHDOG_ERROR);
+      $result['error_msg'] = t('Form validation error.');
+    }
+  }
+  else {
+    watchdog('wirecard', 'Hash validation error, hash received: @hash_received.', ['@hash_received' => $payment_response_signature], WATCHDOG_ERROR);
+    $result['error_msg'] = t('Form validation error.');
+  }
+
+  if (!empty($transaction)) {
+    $result['transaction'] = $transaction;
+  }
+  return $result;
+}
