@@ -453,3 +453,22 @@ span.cexpand {
 a.menu_lvl_0_link.is-active{	
   background-color: #464646;	
 }
+.table_link a{
+  color: #0071b3;
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 1px dotted;
+}
+.table_link a:hover{
+  color: #018fe2;
+  text-decoration: none;
+  border-bottom-style: solid;
+}
+.table_heading a{
+  text-decoration: none;
+  border-bottom: 1px dotted;
+}
+.table_heading a:hover{
+  text-decoration: none;
+  border-bottom-style: solid;
+}

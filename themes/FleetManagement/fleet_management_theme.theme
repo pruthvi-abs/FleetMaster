@@ -162,6 +162,56 @@ function fleet_management_theme_preprocess_page(&$variables)
           $j++;
         }
       }
+    } elseif($roles[1] == 'company'){
+      $database = \Drupal::database();
+      $current_user = \Drupal::currentUser();
+      $role = $current_user->getRoles();
+      // dump($role);
+      $user_ids = array();
+      $user_id = '';
+
+  
+
+      if($role[1] == 'company'){
+        $userStorage = \Drupal::entityTypeManager()->getStorage('user');
+        $query = $userStorage->getQuery();
+        $uids = $query->condition('status', '1')->condition('roles', 'data_entry')->execute();
+        $users = $userStorage->loadMultiple($uids);
+        $keys = array_keys($users);
+      
+        array_push($user_ids,$current_user->id());
+        $user_id = $current_user->id();
+        for($i=0;$i<count($users);$i++){
+          $company_id = $users[$keys[$i]]->get('field_operatorcompany')->target_id;
+          if($current_user->id() == $company_id){
+            array_push($user_ids,$users[$keys[$i]]->id());
+            $user_id .= ',' . $users[$keys[$i]]->id();
+          }
+        }
+      }
+      elseif($role[1] == 'data_entry'){
+          $user_id = $current_user->id();
+          $user = \Drupal\user\Entity\User::load($current_user->id());
+          $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];
+          array_push($user_ids,$parent_company_id);
+          $user_id .= ',' . $parent_company_id;
+        }
+        $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ")");
+        $result = $query->fetchAll();
+        // dump($query);
+
+      for($i=0,$j=0;$i<count($result);$i++){
+        $field_insurance_expiry_date_value = $result[$i]->field_insurance_expiry_date_value;
+        $title = $result[$i]->title;
+        // $nid = $result[$i]->nid;
+        if($field_insurance_expiry_date_value <= $current_date){
+          $notifications[$j]['icon'] = 'ti-alert';
+          $notifications[$j]['title'] = $title . '\'s insurance is already expired on '.$field_insurance_expiry_date_value;
+          $j++;
+        }
+      }
+      // dump($notifications);
+      
     }
     // dump($notifications);
   }
