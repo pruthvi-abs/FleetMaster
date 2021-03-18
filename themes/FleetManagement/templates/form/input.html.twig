@@ -25,6 +25,13 @@ attributes.type != 'submit' %}
   </div>
 </div>
 {{ children }}
+{% elseif attributes.type == 'delete' %}
+<div class="lorvens-widget">
+  <div class="col-sm-12">
+    <input{{ attributes.addClass("btn btn-primary btn-lg btn-block") }}/>
+  </div>
+</div>
+{{ children }}
 {% elseif attributes.type == 'checkbox' %}
 <span class="">
   <span class="col-sm-3">

@@ -19,7 +19,9 @@
         "drupal/core-composer-scaffold": "^9",
         "drupal/core-project-message": "^9",
         "drupal/core-recommended": "^9",
-        "drupal/core-vendor-hardening": "^9"
+        "drupal/core-vendor-hardening": "^9",
+        "drupal/csv_serialization": "^2.0",
+        "phpoffice/phpspreadsheet": "^1.17"
     },
     "conflict": {
         "drupal/drupal": "*"

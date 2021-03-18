@@ -66,6 +66,10 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 		case 'user_register_form':
 			$form = _user_register_form($form, $path_args, $form_state);
 			break;
+		case 'webform_submission_company_report_node_203_add_form':
+			// dump($form);
+			$form['actions']['submit']['#submit'][] = '_company_report_handler';
+			break;
         case 'node_driver_form':
 					//$form=_employeeid_duplication_validate($form,$form_state);
 					$form['#validate'][] = '_employeeid_duplication_validate';
@@ -176,6 +180,29 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 }
 
 
+
+function _company_report_handler($form, &$form_state){
+	$from_date=$form_state->getValue('from_date');
+	$to_date=$form_state->getValue('to_date');
+	$status=$form_state->getValue('status');
+	dump($from_date);
+	dump($to_date);
+	dump($status);
+	// die;
+}
+
+/**
+* Generate the node editing form array.
+*/
+function helloworld_node_form_array($node) {
+	
+	// Add the buttons.
+	$form['preview'] = array('#type' => 'button', '#value' => t('Preview'), '#weight' => 40);
+	$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'), '#weight' => 45);
+	if ($node->nid && node_access('delete', $node)) {
+		$form['delete'] = array('#type' => 'button', '#value' => t('DELETESS'), '#weight' => 50);
+	}
+}
 
 function fuelmaster_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state){
   //die("I'm not getting run, why :(");
@@ -659,11 +686,10 @@ function _companyname_duplication_validate(&$form, \Drupal\Core\Form\FormStateIn
      $companyname = $companyname['0']['value'];
 	$connection = \Drupal::database();
 	
-	$query = $connection->query("SELECT * FROM {user__field_company_name} as companyname
-	WHERE companyname.field_company_name_value ='". $companyname."'");
+	$query = $connection->query("SELECT * FROM {user__field_company_name} as companyname WHERE companyname.field_company_name_value ='". $companyname."'");
 	
 	$referenced_nids = $query->fetchObject();
-	if(($referenced_nids == false) ||($referenced_nids == NULL) || ($referenced_nids == "" ))
+	if(($referenced_nids != false) ||($referenced_nids != NULL) || ($referenced_nids != "" ))
 	{
 		$form_state->setErrorByName('field_company_name', t('Company Already exists with this namee= Please try another name'));
 

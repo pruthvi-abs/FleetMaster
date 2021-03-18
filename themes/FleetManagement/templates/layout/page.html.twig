@@ -194,15 +194,20 @@
             </a>
             <div class="dropdown-menu lorvens-box-shadow notifications animated flipInY">
               <h5>Notifications</h5>
+              <div class="notification-menu">
               {% if notifications | json_decode %}
-                {% for notification in notifications | json_decode %}  
-                  <a class="dropdown-item" href="#">
-                    <span class="{{ notification.icon }}"></span> {{ notification.title }}</a>
-                    {% endfor %}
-                  {% else %}
-                  <a class="dropdown-item" href="#">
-                    <span class="ti-info"></span> No Notification Yet!</a>
+              {% for notification in notifications | json_decode %}
+              <p class="dropdown-header font-weight-bold text-left bg-lightgrey">{{ notification.0.type }}</p>
+              {% for notifi in notification %}
+                <a class="dropdown-item" href="#">
+                  <span class="{{ notifi.icon }}"></span> {{ notifi.title }}</a>
+                {% endfor %}
+                {% endfor %}
+              {% else %}
+                <a class="dropdown-item" href="#">
+                  <span class="ti-info"></span> No Notification Yet!</a>
               {% endif %}
+                </div>
             </div>
           </li>
           <li class="nav-item">

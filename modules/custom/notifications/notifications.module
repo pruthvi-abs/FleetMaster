@@ -7,7 +7,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
  */
 
 function preprocess_notifications(&$variables) {
-	$variables['test'] = 'testVariable from notification modules';
+	$variables['test'] = 'testVariable from Report modules';
   }
 
 ?>

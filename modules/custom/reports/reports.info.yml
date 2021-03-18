@@ -1,0 +1,9 @@
+name: Reports
+type: module
+description: Modules for Reports
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: custom
+dependencies:
+- node
+- block

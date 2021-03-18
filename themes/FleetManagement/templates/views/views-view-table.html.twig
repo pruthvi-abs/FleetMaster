@@ -110,9 +110,14 @@
             'pd-10',
             ]
             %}
+            
             {% for field in column.fields %}
             {% set column_classes = column_classes|merge(['views-field-' ~ field]) %}
             {% endfor %}
+            
+            {% if tsplit == 'Assigned' and column_classes.2 == 'views-field-delete-node' %}
+              {% set column_classes = column_classes|merge(['disable']) %} 
+            {% endif %}
             {% endif %}
           <td{{ column.attributes.addClass(column_classes) }}>
             {%- if column.wrapper_element -%}

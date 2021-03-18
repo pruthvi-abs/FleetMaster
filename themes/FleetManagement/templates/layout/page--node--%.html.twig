@@ -14,7 +14,14 @@
     <!-- Sidebar -->
     <nav id="sidebar" class="lorvens-bg">
       <div class="sidebar-header">
-        <a href="../admin/dashboard"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
+        {% if role == 'company' %} 
+          {% set home_url = base_url ~ '/company/dashboard' %}
+        {% elseif role == 'operator' %}
+          {% set home_url = base_url ~ '/operator/dashboard' %}
+        {% elseif role == 'administrator' %}
+          {% set home_url = base_url ~ '/admin/dashboard' %}
+        {% endif %}
+        <a href="{{ home_url }}"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
       </div>
       {% if expiry_status != 'expired' %}
       <ul class="list-unstyled components">

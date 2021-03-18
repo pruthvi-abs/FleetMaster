@@ -1,0 +1,13 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+
+function preprocess_reports(&$variables) {
+	$variables['test'] = 'testVariable from Report modules';
+  }
+
+?>

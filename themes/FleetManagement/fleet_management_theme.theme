@@ -137,9 +137,10 @@ function fleet_management_theme_preprocess_page(&$variables)
         $field_package_expiry_date = $users[$keys[$i]]->get('field_package_expiry_date')->getValue()[0]['value'];
         $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
         if($field_package_expiry_date >= $start_date && $field_package_expiry_date <= $end_date){
-          $notifications[$j]['icon'] = 'ti-alert';
-          $notifications[$j]['title'] = $name . ' is going to be expired on '.$field_package_expiry_date;
-          $j++;
+          $notifications[$j][$i]['icon'] = 'ti-alert';
+          $notifications[$j][$i]['type'] = 'Company Package';
+          $notifications[$j][$i]['title'] = $name . '\'s package is going to be expired on '.$field_package_expiry_date;
+          // $j++;
         }
       }
       
@@ -157,57 +158,83 @@ function fleet_management_theme_preprocess_page(&$variables)
         $field_package_expiry_date = $users[$keys[$i]]->get('field_package_expiry_date')->getValue()[0]['value'];
         $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
         if($field_package_expiry_date <= $current_date){
-          $notifications[$j]['icon'] = 'ti-alert';
-          $notifications[$j]['title'] = $name . ' is already expired on '.$field_package_expiry_date;
-          $j++;
+          $notifications[$j][$i]['icon'] = 'ti-alert';
+          $notifications[$j][$i]['type'] = 'Company Package';
+          $notifications[$j][$i]['title'] = $name . '\'s package is already expired on '.$field_package_expiry_date;
+          // $j++;
         }
       }
     } elseif($roles[1] == 'company'){
+
       $database = \Drupal::database();
       $current_user = \Drupal::currentUser();
-      $role = $current_user->getRoles();
-      // dump($role);
-      $user_ids = array();
-      $user_id = '';
+      $user_id = $current_user->id();
+      $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      $current_date =  date("Y-m-d");
 
-  
-
-      if($role[1] == 'company'){
-        $userStorage = \Drupal::entityTypeManager()->getStorage('user');
-        $query = $userStorage->getQuery();
-        $uids = $query->condition('status', '1')->condition('roles', 'data_entry')->execute();
-        $users = $userStorage->loadMultiple($uids);
-        $keys = array_keys($users);
-      
-        array_push($user_ids,$current_user->id());
-        $user_id = $current_user->id();
-        for($i=0;$i<count($users);$i++){
-          $company_id = $users[$keys[$i]]->get('field_operatorcompany')->target_id;
-          if($current_user->id() == $company_id){
-            array_push($user_ids,$users[$keys[$i]]->id());
-            $user_id .= ',' . $users[$keys[$i]]->id();
-          }
-        }
-      }
-      elseif($role[1] == 'data_entry'){
-          $user_id = $current_user->id();
-          $user = \Drupal\user\Entity\User::load($current_user->id());
-          $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];
-          array_push($user_ids,$parent_company_id);
-          $user_id .= ',' . $parent_company_id;
-        }
-        $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ")");
-        $result = $query->fetchAll();
-        // dump($query);
-
-      for($i=0,$j=0;$i<count($result);$i++){
+      for($i=0,$k=0,$j=0;$i<count($result);$i++){
         $field_insurance_expiry_date_value = $result[$i]->field_insurance_expiry_date_value;
         $title = $result[$i]->title;
-        // $nid = $result[$i]->nid;
         if($field_insurance_expiry_date_value <= $current_date){
-          $notifications[$j]['icon'] = 'ti-alert';
-          $notifications[$j]['title'] = $title . '\'s insurance is already expired on '.$field_insurance_expiry_date_value;
-          $j++;
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Insurance Expired';
+          $notifications[$j][$k]['title'] = $title . '\'s insurance is already expired on '.$field_insurance_expiry_date_value;
+          $k++;
+        }
+      }
+      
+      // fuel card
+      $database = \Drupal::database();
+      $query = $database->query("SELECT * FROM `node_field_data` data,`node__field_fuel_card_expiry_date` expiry_date, `node__field_fuel` fuel WHERE data.type = 'vehicle' and expiry_date.entity_id = data.nid and fuel.entity_id = data.nid and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      // dump($query);
+      for($i=0,$k=0,$j=count($notifications);$i<count($result);$i++){
+        $field_fuel_card_expiry_date_value = $result[$i]->field_fuel_card_expiry_date_value;
+        $title = $result[$i]->field_fuel_value;
+        if($field_fuel_card_expiry_date_value <= $current_date){
+          // dump($field_fuel_card_expiry_date_value . " " . $title);
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Fuel Card Expired';
+          $notifications[$j][$k]['title'] = $title . '\'s fuel card is already expired on '.$field_fuel_card_expiry_date_value;
+          $k++;
+        }
+      }
+      
+      // safet stickers
+      $database = \Drupal::database();
+      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_safet` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      // dump($query);
+      for($i=0,$k=0,$j=count($notifications);$i<count($result);$i++){
+        $field_safet_value = $result[$i]->field_safet_value;
+        $title = $result[$i]->title;
+        if($field_safet_value <= $current_date){
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Safety Sticker Expired';
+          $notifications[$j][$k]['title'] = $title . '\'s safety sticker is already expired on '.$field_safet_value;
+          $k++;
+        }
+      }
+      // dump($notifications);
+
+      // echo "<pre>";
+      // print_r(json_encode($notifications));
+      // echo "</pre>";
+      
+      $database = \Drupal::database();
+      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_licence_expiry_date` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      // dump($query);
+      for($i=0,$k=0,$j=count($notifications);$i<count($result);$i++){
+        $field_licence_expiry_date_value = $result[$i]->field_licence_expiry_date_value;
+        $title = $result[$i]->title;
+        if($field_licence_expiry_date_value <= $current_date){
+          // dump($field_licence_expiry_date_value . " " . $title);
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Licence Expired';
+          $notifications[$j][$k]['title'] = $title . '\'s licence is already expired on '.$field_licence_expiry_date_value;
+          $k++;
         }
       }
       // dump($notifications);
