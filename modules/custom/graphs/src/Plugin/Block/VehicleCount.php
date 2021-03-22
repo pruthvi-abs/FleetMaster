@@ -64,6 +64,11 @@ class VehicleCount extends BlockBase
     
     $data[0]['total_vehicle'] = (int)$total_vehicle[0]['total_vehicle'];
 
+    if(!in_array('vehicle',$role)){
+      $data = '';
+    }
+
+
     // dump($query);
     // dump($total_vehicle);
     // dump($data);

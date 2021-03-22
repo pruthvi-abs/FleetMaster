@@ -27,7 +27,7 @@ class DepartmentCount extends BlockBase
     $data = array();
     $current_user = \Drupal::currentUser();
     $role = $current_user->getRoles();
-    // dump($role[1]);
+    // dump($role);
     $user_ids = array();
     $user_id = '';
 

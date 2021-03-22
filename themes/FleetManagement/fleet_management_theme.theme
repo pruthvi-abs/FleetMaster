@@ -138,7 +138,7 @@ function fleet_management_theme_preprocess_page(&$variables)
         $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
         if($field_package_expiry_date >= $start_date && $field_package_expiry_date <= $end_date){
           $notifications[$j][$i]['icon'] = 'ti-alert';
-          $notifications[$j][$i]['type'] = 'Company Package';
+          $notifications[$j][$i]['type'] = 'Company Package is going to expired';
           $notifications[$j][$i]['title'] = $name . '\'s package is going to be expired on '.$field_package_expiry_date;
           // $j++;
         }
@@ -159,7 +159,7 @@ function fleet_management_theme_preprocess_page(&$variables)
         $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
         if($field_package_expiry_date <= $current_date){
           $notifications[$j][$i]['icon'] = 'ti-alert';
-          $notifications[$j][$i]['type'] = 'Company Package';
+          $notifications[$j][$i]['type'] = 'Company Package is already expired';
           $notifications[$j][$i]['title'] = $name . '\'s package is already expired on '.$field_package_expiry_date;
           // $j++;
         }

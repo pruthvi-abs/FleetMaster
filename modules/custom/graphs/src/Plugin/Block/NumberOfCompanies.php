@@ -27,6 +27,8 @@ class NumberOfCompanies extends BlockBase
   {
     global $gcustdata;
     $current_user = \Drupal::currentUser();
+    // $role = $current_user->getRoles();
+    // dump($role);
     // dump($current_user);
 
     $database = \Drupal::database();
@@ -69,6 +71,11 @@ class NumberOfCompanies extends BlockBase
     if(empty($data)){
       $data = '';
     }
+
+    // if(!in_array('trip_logging',$role)){
+    //   $data = '';
+    // }
+
     // dump($data);
 
     // if ((int)$data[0]['x'] == 0 && (int)$data[1]['x'] == 0 && (int)$data[2]['x'] == 0 && (int)$data[3]['x'] == 0 && (int)$data[4]['x'] == 0 && (int)$data[5]['x'] == 0) {

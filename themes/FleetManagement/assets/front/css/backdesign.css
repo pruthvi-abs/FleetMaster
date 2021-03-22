@@ -512,29 +512,31 @@ a.menu_lvl_0_link.is-active {
 .notification-menu {
   height: 250px;
   overflow: scroll;
+  scrollbar-width: thin;
 }
 /* width */
-::-webkit-scrollbar {
+.notification-menu::-webkit-scrollbar {
   width: 5px;
   height: 0;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+.notification-menu::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+.notification-menu::-webkit-scrollbar-thumb {
   background: #888;
-  border-top-left-radius: 25%;
+  border-radius: 6px;
+  /* border-top-left-radius: 25%;
   border-top-right-radius: 25%;
   border-bottom-left-radius: 25%;
-  border-bottom-right-radius: 25%;
+  border-bottom-right-radius: 25%; */
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+.notification-menu::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 

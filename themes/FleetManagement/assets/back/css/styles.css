@@ -747,7 +747,7 @@ div[class*="col-"] div[class*="col-"] {
   pointer-events: none;
   border-bottom-color: #555;
   border-width: 9px;
-  left: 50%;
+  left: 75%;
 }
 
 .dropdown-menu.notifications:before {

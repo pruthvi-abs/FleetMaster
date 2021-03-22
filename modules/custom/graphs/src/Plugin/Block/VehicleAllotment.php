@@ -50,7 +50,7 @@ class VehicleAllotment extends BlockBase
         }
       }
     }
-    elseif($role[1] == 'data_entry'){
+    elseif(in_array('data_entry',$role)){
         $user_id = $current_user->id();
         $user = \Drupal\user\Entity\User::load($current_user->id());
         $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];
@@ -77,6 +77,10 @@ class VehicleAllotment extends BlockBase
       $data[1]['label'] = 'Unassigned Vehicle';
       $data[1]['value'] = (int)$unassigned[0]['unassigned_vehicle'];
     } else{
+      $data = '';
+    }
+
+    if(!in_array('vehicle_allotment',$role)){
       $data = '';
     }
 

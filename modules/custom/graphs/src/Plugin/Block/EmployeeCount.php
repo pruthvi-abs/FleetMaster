@@ -65,6 +65,10 @@ class EmployeeCount extends BlockBase
 
     $data[0]['total_emp'] = (int)$total_emp[0]['total_emp'];
 
+    if(!in_array('employee',$role)){
+      $data = '';
+    }
+
     // dump($total_emp);
     // dump($data);
 

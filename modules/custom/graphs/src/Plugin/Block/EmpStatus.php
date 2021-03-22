@@ -78,6 +78,10 @@ class EmpStatus extends BlockBase
       $data = '';
     }
 
+    if(!in_array('employee',$role)){
+      $data = '';
+    }
+
       // dump($unactive_emp);
       // dump($active_emp);
       // dump($data);

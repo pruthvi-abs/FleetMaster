@@ -75,7 +75,7 @@ class FuelFilling extends BlockBase
       $data[$i]['y'] = $months[$i]['vehicle_name'];
     }
 
-    if (!in_array('trip_logging', $role)) {
+    if (!in_array('fuel_filling', $role)) {
       $data = '';
     }
     // dump($data);

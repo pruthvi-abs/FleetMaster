@@ -197,7 +197,9 @@
               <div class="notification-menu">
               {% if notifications | json_decode %}
               {% for notification in notifications | json_decode %}
-              <p class="dropdown-header font-weight-bold text-left bg-lightgrey">{{ notification.0.type }}</p>
+              {% if notification.0.type %}
+                <p class="dropdown-header font-weight-bold text-left bg-lightgrey">{{ notification.0.type }}</p>
+              {% endif %}
               {% for notifi in notification %}
                 <a class="dropdown-item" href="#">
                   <span class="{{ notifi.icon }}"></span> {{ notifi.title }}</a>
