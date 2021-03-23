@@ -179,6 +179,7 @@ function fleet_management_theme_preprocess_page(&$variables)
         if($field_insurance_expiry_date_value <= $current_date){
           $notifications[$j][$k]['icon'] = 'ti-alert';
           $notifications[$j][$k]['type'] = 'Insurance Expired';
+          $notifications[$j][$k]['id'] = 'insuranceExpired';
           $notifications[$j][$k]['title'] = $title . '\'s insurance is already expired on '.$field_insurance_expiry_date_value;
           $k++;
         }
@@ -196,6 +197,7 @@ function fleet_management_theme_preprocess_page(&$variables)
           // dump($field_fuel_card_expiry_date_value . " " . $title);
           $notifications[$j][$k]['icon'] = 'ti-alert';
           $notifications[$j][$k]['type'] = 'Fuel Card Expired';
+          $notifications[$j][$k]['id'] = 'fuelcardExpired';
           $notifications[$j][$k]['title'] = $title . '\'s fuel card is already expired on '.$field_fuel_card_expiry_date_value;
           $k++;
         }
@@ -212,6 +214,7 @@ function fleet_management_theme_preprocess_page(&$variables)
         if($field_safet_value <= $current_date){
           $notifications[$j][$k]['icon'] = 'ti-alert';
           $notifications[$j][$k]['type'] = 'Safety Sticker Expired';
+          $notifications[$j][$k]['id'] = 'safetyStickerExpired';
           $notifications[$j][$k]['title'] = $title . '\'s safety sticker is already expired on '.$field_safet_value;
           $k++;
         }
@@ -233,6 +236,7 @@ function fleet_management_theme_preprocess_page(&$variables)
           // dump($field_licence_expiry_date_value . " " . $title);
           $notifications[$j][$k]['icon'] = 'ti-alert';
           $notifications[$j][$k]['type'] = 'Licence Expired';
+          $notifications[$j][$k]['id'] = 'licenceExpired';
           $notifications[$j][$k]['title'] = $title . '\'s licence is already expired on '.$field_licence_expiry_date_value;
           $k++;
         }

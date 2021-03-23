@@ -21,7 +21,13 @@ attributes.type != 'submit' %}
 {% elseif attributes.type == 'submit' %}
 <div class="lorvens-widget">
   <div class="col-sm-12">
-    <input{{ attributes.addClass("btn btn-primary btn-lg btn-block") }}/>
+    <input{{ attributes.addClass("btn btn-primary btn-lg btn-block h-50 rounded-5") }}/>
+  </div>
+</div>
+{% elseif attributes.type == 'Reset' %}
+<div class="lorvens-widget">
+  <div class="col-sm-12">
+    <input{{ attributes.addClass("btn btn-primary btn-lg btn-block h-50 rounded-5") }}/>
   </div>
 </div>
 {{ children }}
@@ -43,7 +49,7 @@ attributes.type != 'submit' %}
 {% elseif attributes.type == 'date' %}
 <div class="form-group">
   <div class="">
-    <input{{ attributes.addClass("form-control col-sm-8 datesystem") }}/>{{
+    <input{{ attributes.addClass("form-control col-sm-11 datesystem") }}/>{{
       children
     }}
   </div>
@@ -51,7 +57,7 @@ attributes.type != 'submit' %}
 {% elseif attributes.type == 'time' %}
 <div class="">
   <div class="">
-    <input{{ attributes.addClass("form-control col-sm-8 timesystem") }}/>{{
+    <input{{ attributes.addClass("form-control col-sm-11 timesystem") }}/>{{
       children
     }}
   </div>
@@ -59,13 +65,13 @@ attributes.type != 'submit' %}
 {% elseif attributes.type == 'number' %}
 <div class="form-group">
   <div class="">
-    <input{{ attributes.addClass("form-control col-sm-8 ml-1") }} />{{ children }}
+    <input{{ attributes.addClass("form-control col-sm-11 ml-1") }} />{{ children }}
   </div>
 </div>
 {% else %}
 <div class="form-group">
   <div class="">
-    <input{{ attributes.addClass("form-control col-sm-8") }} />{{ children }}
+    <input{{ attributes.addClass("form-control col-sm-11") }} />{{ children }}
   </div>
 </div>
 {% endif %}

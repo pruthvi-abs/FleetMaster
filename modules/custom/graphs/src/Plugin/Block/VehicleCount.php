@@ -27,7 +27,7 @@ class VehicleCount extends BlockBase
     $data = array();
     $current_user = \Drupal::currentUser();
     $role = $current_user->getRoles();
-    // dump($role[1]);
+    // dump($role);
     $user_ids = array();
     $user_id = '';
 
@@ -64,14 +64,14 @@ class VehicleCount extends BlockBase
     
     $data[0]['total_vehicle'] = (int)$total_vehicle[0]['total_vehicle'];
 
-    if(!in_array('vehicle',$role)){
+    if(!in_array('vehicle_',$role)){
       $data = '';
     }
 
 
     // dump($query);
     // dump($total_vehicle);
-    // dump($data);
+    // dump(json_encode($data));
 
     return array(
       '#type' => 'markup-cust',

@@ -503,8 +503,19 @@ a.menu_lvl_0_link.is-active {
 } */
 .filter form {
   display: flex;
+  flex-wrap: wrap;
   margin-left: 20px;
 }
+
+.break{
+  flex-basis: 100%;
+  height: 0;
+}
+
+.rounded-5{
+  border-radius: 5px;
+}
+
 .filter #edit-actions {
   display: block;
   margin-top: 2.55%;

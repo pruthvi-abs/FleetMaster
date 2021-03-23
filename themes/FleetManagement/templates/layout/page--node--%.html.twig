@@ -40,6 +40,35 @@
           <div class="navbar-header"></div>
           <ul class="nav justify-content-end">
             <li class="nav-item">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="ti-announcement"></span>
+              </a>
+              <div class="dropdown-menu lorvens-box-shadow notifications animated flipInY">
+                <h5>Notifications</h5>
+                <div class="notification-menu">
+                {% if notifications | json_decode %}
+                {% for i in 0..3 %}
+                  {% set notification = notifications | json_decode %}
+                  {% if notification[i][0].type %}
+                  <p class="dropdown-header font-weight-bold text-left bg-lightgrey">{{ notification[i][0].type }}</p>
+                  {% endif %}
+                  {% for j in 0..2 %}
+                    {% if notification[i][j] %}
+                      <a class="dropdown-item" href="#">
+                        <span class="{{ notification[i][j].icon }}"></span> {{ notification[i][j].title }}</a>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+                  <hr class="m-0">
+                  <a href="{{ base_url }}/notifications" class="dropdown-header text-center text-primary font-weight-bold text-left m-auto">View More</a>
+                {% else %}
+                  <a class="dropdown-item" href="#">
+                    <span class="ti-info"></span> No Notification Yet!</a>
+                {% endif %}
+                  </div>
+              </div>
+            </li>
+            <li class="nav-item">
               <a
                 class="nav-link dropdown-toggle"
                 data-toggle="dropdown"

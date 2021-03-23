@@ -747,7 +747,7 @@ div[class*="col-"] div[class*="col-"] {
   pointer-events: none;
   border-bottom-color: #555;
   border-width: 9px;
-  left: 75%;
+  left: 45%;
 }
 
 .dropdown-menu.notifications:before {
@@ -1074,8 +1074,8 @@ h4.wiget-title {
 ====================== */
 
 .form-control {
-  border-radius: 0px;
-  border-color: #ddd;
+  border-radius: 5px;
+  border-color: #6d6d6d;
 }
 input.form-control {
   padding: 0.59rem 0.75rem;
