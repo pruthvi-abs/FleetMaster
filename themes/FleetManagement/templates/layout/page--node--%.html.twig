@@ -14,14 +14,12 @@
     <!-- Sidebar -->
     <nav id="sidebar" class="lorvens-bg">
       <div class="sidebar-header">
-        {% if role == 'company' %} 
-          {% set home_url = base_url ~ '/company/dashboard' %}
-        {% elseif role == 'operator' %}
-          {% set home_url = base_url ~ '/operator/dashboard' %}
-        {% elseif role == 'administrator' %}
-          {% set home_url = base_url ~ '/admin/dashboard' %}
-        {% endif %}
+        {% if role == 'company' %} {% set home_url = base_url ~
+        '/company/dashboard' %} {% elseif role == 'operator' %} {% set home_url =
+        base_url ~ '/operator/dashboard' %} {% elseif role == 'administrator' %}
+        {% set home_url = base_url ~ '/admin/dashboard' %} {% endif %}
         <a href="{{ home_url }}"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
+        <a href="{{ home_url }}"><h5 class="minimal-logo" alt="logo"><strong>DF</strong></h5></a>
       </div>
       {% if expiry_status != 'expired' %}
       <ul class="list-unstyled components">
@@ -37,7 +35,9 @@
       <!-- Top Navigation -->
       <nav class="navbar navbar-default">
         <div class="container-fluid">
-          <div class="navbar-header"></div>
+          <div class="navbar-header">
+            <span class="ti-menu" id="sidebarCollapse"></span>
+          </div>
           <ul class="nav justify-content-end">
             <li class="nav-item">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

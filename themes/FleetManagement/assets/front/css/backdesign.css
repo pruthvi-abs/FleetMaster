@@ -570,3 +570,74 @@ a.menu_lvl_0_link.is-active {
 .bg-lightgrey{
   background-color: lightgrey;
 }
+
+.nav-icon span{
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
+}
+
+.nav-icon::before{
+  /* font-family: "themify"; */
+  padding-right: 10px;
+  font-size: 18px;
+  /* vertical-align: middle !important; */
+}
+/* #sidebar.active ul li a.nav-icon span{
+  display: none !important;
+} 
+#sidebar.active ul li a.nav-icon::before{
+  padding: 15px;
+  font-size: 25px;
+} 
+#sidebar.active ul li span.cexpand{
+  display: none !important;
+} 
+
+#sidebar.active li:hover ul li a span{
+  font-size: 15px;
+}
+#sidebar.active li:hover ul li a{
+  border-radius: 0 5px 5px 0;
+}
+#sidebar.active li:hover ul{
+  left: 80px;
+  position: absolute;
+  margin-top: -45px;
+  width: 210px;
+  z-index: 4000;
+  background: #3E5367;
+  display: block;
+  font-size: 10px;
+} */
+
+#sidebar.active ul li a.nav-icon span{
+  display: none !important;
+} 
+#sidebar.active ul li a.nav-icon::before{
+  padding: 15px;
+  font-size: 25px;
+} 
+/* #sidebar.active ul li span.cexpand.open,#sidebar.active ul li ul.collapse.in{
+  display: none !important;
+} */
+#sidebar.active ul li span.cexpand{
+  /* display: none !important; */
+  margin-top: -35px;
+} 
+
+#sidebar.active ul.collapse.in li a span{
+  font-size: 15px;
+}
+#sidebar.active ul.collapse.in li a{
+  border-radius: 0 5px 5px 0;
+}
+#sidebar.active ul.collapse.in{
+  left: 80px;
+  position: absolute;
+  margin-top: -45px;
+  width: 210px;
+  z-index: 4000;
+  background: #3E5367;
+  /* display: block; */
+  font-size: 10px;
+}

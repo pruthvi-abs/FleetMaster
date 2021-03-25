@@ -38,8 +38,8 @@
       <ul class="menu_lvl_1">
     {% endif %}
     {% for item in items %}
-      <li{{ item.attributes }}>
-        {{ link(item.title, item.url, item.attributes.addClass('menu_lvl_0_link')) }}
+      <li>
+        <a href="{{ item.url }}" {{ item.attributes.addClass('menu_lvl_0_link') }}><span>{{ item.title }}</span></a>
         {% if item.below %}
           {{ menus.menu_links(item.below, item.attributes.addClass('menu_lvl_1_link'), menu_level + 1) }}
         {% endif %}

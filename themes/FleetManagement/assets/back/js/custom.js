@@ -2,6 +2,7 @@
     "use strict"; // Start of use strict
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
+        $('ul.collapse').removeClass('open');
     });
     /*Loader Javascript
     -------------------*/

@@ -4,21 +4,21 @@ Color : RED
 .lorvens-bg {
 	background: #37517e;
 	/* fallback for old browsers */
-	/* background: -webkit-linear-gradient(to right, #F15044, #EB3349); */
+	/* background: -webkit-linear-gradient(to right, #37517e, #EB3349); */
 	/* Chrome 10-25, Safari 5.1-6 */
-	/* background: linear-gradient(to right, #F15044, #EB3349); */
+	/* background: linear-gradient(to right, #37517e, #EB3349); */
 	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .lorvens-text-color{
-	color: #F15044;
+	color: #37517e;
 }
 .pagination .page-link {
-	color: #F15044;
+	color: #37517e;
 }
 
 .pagination .page-item.active .page-link {
-	background-color: #F15044;
-	border-color: #F15044;
+	background-color: #37517e;
+	border-color: #37517e;
 }
 .btn-primary {
     background-color: #37517e;
@@ -29,31 +29,31 @@ Color : RED
     border-color: rgba(55,81,126,.8);
 }
 .text-round {
-	background: #F15044;
+	background: #37517e;
 }
 .btn-outline-primary {
-    color: #F15044;
-    border-color: #F15044;
+    color: #37517e;
+    border-color: #37517e;
 }
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
-	background: #F15044;
+	background: #37517e;
 }
 .btn-hero-primary{
-	background: #F15044;
-	border-color: #F15044;
+	background: #37517e;
+	border-color: #37517e;
 }
 .media h5{
-	color: #F15044;
+	color: #37517e;
 }
 #faq2 .block-header{
-	background-color: #F15044;
+	background-color: #37517e;
 }
 #faq1 .block-header {
-    color: #F15044;
+    color: #37517e;
 }
 .widget-title{
-	color: #F15044;
+	color: #37517e;
 }
 .pricing-h2{
-	color: #F15044;
+	color: #37517e;
 }

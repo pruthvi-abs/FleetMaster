@@ -38,7 +38,7 @@
 {% block vehicle_allotment %}
   <div class='col-sm-12'>
     <div class="widget-area-2 lorvens-box-shadow widget-morris vehicle_allotment">
-      <h3 class="widget-title">{{ label }} Chart </h3>
+      <h3 class="widget-title font-weight-bold">{{ label }} Chart </h3>
       <div id="donutMorris_vehicle" class="chart-one"></div>
       {%  set g_data = content['#markup'] %}
       <input type="hidden" id="vehicle" name="vehicle" value="{{ g_data }}">
@@ -58,7 +58,7 @@
         barSize: 0.1,
         labelColor: "#3e5569",
         resize: true, //defaulted to true
-        colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+        colors: ["#6930c3", "#fb743e", "#22c6ab"],
       });
         }
       </script>
@@ -67,7 +67,7 @@
     {% block emp_status %}
     <div class='col-sm-12'>
       <div class="widget-area-2 lorvens-box-shadow widget-morris employee_status">
-        <h3 class="widget-title">{{ label }} Chart</h3>
+        <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
         <div id="donutMorris_emp" class="chart-one"></div>
         {%  set g_data1 = content['#markup'] %}
         <input type="hidden" id="empstatus" name="empstatus" value="{{ g_data1 }}">
@@ -86,7 +86,7 @@
       barSize: 0.1,
       labelColor: "#3e5569",
       resize: true, //defaulted to true
-      colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+      colors: ["#6930c3", "#fb743e", "#22c6ab"],
     });
   }
     </script>
@@ -95,7 +95,7 @@
     {% block trip_analysis %}
     <div class='col-sm-12'>
       <div class="widget-area-2 lorvens-box-shadow widget-morris trip_analysis">
-        <h3 class="widget-title">{{ label }} Chart</h3>
+        <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
         <div id="barMorris" class="chart-one"></div>
         {%  set g_data2 = content['#markup'] %}
         <input type="hidden" id="tripanalysis" name="tripanalysis" value="{{ g_data2 }}">
@@ -113,7 +113,7 @@
       xkey: "y",
       ykeys: ["x"],
       labels: ["Trips"],
-      barColors: ["#86C417"],
+      barColors: ["#19d3da"],
       barOpacity: 1,
       barSizeRatio: 0.5,
       hideHover: "auto",
@@ -129,7 +129,7 @@
       <div class="col-md-12">
         <div class="widget-area lorvens-box-shadow totalemployee text-white bg-danger">
           <div class="widget-left text-white">
-            <span class="ti-user"></span>
+            <span class="fas fa-users"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold">Total Employees</h3>
@@ -159,7 +159,7 @@
       <div class="col-md-12">
         <div class="widget-area lorvens-box-shadow text-white bg-info">
           <div class="widget-left text-white">
-            <span class="ti-layout-grid3-alt"></span>
+            <span class="fas fa-building"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold">Total Branches</h3>
@@ -182,7 +182,7 @@
       <div class="col-md-12">
         <div class="widget-area lorvens-box-shadow totalvehicle text-white bg-success">
           <div class="widget-left text-white">
-            <span class="ti-car"></span>
+            <span class="fas fa-car"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold">Total Vehicles</h3>
@@ -212,7 +212,7 @@
       <div class="col-md-12">
         <div class="widget-area lorvens-box-shadow text-white bg-warning">
           <div class="widget-left text-white">
-            <span class="ti-briefcase"></span>
+            <span class="fas fa-briefcase"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold">Total Departments</h3>
@@ -232,7 +232,7 @@
     {% block accident_analysis %}
     <div class='col-sm-12'>
       <div class="widget-area-2 lorvens-box-shadow widget-morris accident_analysis">
-        <h3 class="widget-title">{{ label }} Chart</h3>
+        <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
         <div id="barMorris1" class="chart-one"></div>
         {%  set g_data2 = content['#markup'] %}
         <input type="hidden" id="accidentanalysis" name="accidentanalysis" value="{{ g_data2 }}">
@@ -250,7 +250,7 @@
       xkey: "y",
       ykeys: ["x"],
       labels: ["Accidents"],
-      barColors: ["#86C417"],
+      barColors: ["#19d3da"],
       barOpacity: 1,
       barSizeRatio: 0.5,
       hideHover: "auto",
@@ -263,7 +263,7 @@
     {% block fuel_filling %}
     <div class='col-sm-12'>
       <div class="widget-area-2 lorvens-box-shadow widget-morris fuel_filling">
-        <h3 class="widget-title">{{ label }} Chart</h3>
+        <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
         <div id="barMorris2" class="chart-one"></div>
         {%  set g_data3 = content['#markup'] %}
         <input type="hidden" id="fuel_filling" name="fuel_filling" value="{{ g_data3 }}">
@@ -281,7 +281,7 @@
       xkey: "y",
       ykeys: ["x"],
       labels: ["Accidents"],
-      barColors: ["#86C417"],
+      barColors: ["#19d3da"],
       barOpacity: 1,
       barSizeRatio: 0.5,
       hideHover: "auto",
@@ -294,7 +294,7 @@
 <div{{ attributes.addClass('widget-area-2 lorvens-box-shadow md-10') }}>
   {{ title_prefix }}
   {% if label %}
-  <h2{{ title_attributes.addClass('widget-title') }}>{{ label }}</h2>
+  <h2{{ title_attributes.addClass('widget-title font-weight-bold') }}>{{ label }}</h2>
   {% endif %}
   {{ title_suffix }}
   {% block Company_content %}
@@ -313,7 +313,7 @@
       <div class="col-md-12">
         <div class="widget-area lorvens-box-shadow totalvehicle text-white bg-success">
           <div class="widget-left text-white">
-            <span class="ti-car"></span>
+            <span class="fas fa-car"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold">Total Vehicles</h3>
@@ -340,7 +340,7 @@
     {% block accident_analysis_operator %}
     <div class='col-sm-12'>
       <div class="widget-area-2 lorvens-box-shadow widget-morris accident_analysis">
-        <h3 class="widget-title">{{ label }} Chart</h3>
+        <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
         <div id="barMorris1" class="chart-one"></div>
         {%  set g_data2 = content['#markup'] %}
         <input type="hidden" id="accidentanalysis" name="accidentanalysis" value="{{ g_data2 }}">
@@ -358,7 +358,7 @@
       xkey: "y",
       ykeys: ["x"],
       labels: ["Accidents"],
-      barColors: ["#86C417"],
+      barColors: ["#19d3da"],
       barOpacity: 1,
       barSizeRatio: 0.5,
       hideHover: "auto",
@@ -374,7 +374,7 @@
       <div class="col-md-12">
         <div class="widget-area lorvens-box-shadow totalemployee text-white bg-danger">
           <div class="widget-left text-white">
-            <span class="ti-user"></span>
+            <span class="fas fa-users"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold">Total Employees</h3>
@@ -404,7 +404,7 @@
       <div class="col-md-12">
         <div class="widget-area lorvens-box-shadow text-white bg-info">
           <div class="widget-left text-white">
-            <span class="ti-layout-grid3-alt"></span>
+            <span class="fas fa-building"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold">Total Branches</h3>
@@ -427,7 +427,7 @@
       <div class="col-md-12">
         <div class="widget-area lorvens-box-shadow color-blue">
           <div class="widget-left">
-            <span class="ti-briefcase"></span>
+            <span class="fas fa-briefcase"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold">Total Department</h3>
@@ -447,7 +447,7 @@
     {% block trip_analysis_operator %}
     <div class='col-sm-12'>
       <div class="widget-area-2 lorvens-box-shadow widget-morris trip_analysis">
-        <h3 class="widget-title">{{ label }} Chart</h3>
+        <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
         <div id="barMorris" class="chart-one"></div>
         {%  set g_data2 = content['#markup'] %}
         <input type="hidden" id="tripanalysis" name="tripanalysis" value="{{ g_data2 }}">
@@ -465,7 +465,7 @@
       xkey: "y",
       ykeys: ["x"],
       labels: ["Trips"],
-      barColors: ["#86C417"],
+      barColors: ["#19d3da"],
       barOpacity: 1,
       barSizeRatio: 0.5,
       hideHover: "auto",
@@ -478,7 +478,7 @@
 {% block vehicle_allotment_operator %}
   <div class='col-sm-12'>
     <div class="widget-area-2 lorvens-box-shadow widget-morris vehicle_allotment">
-      <h3 class="widget-title">{{ label }} Chart </h3>
+      <h3 class="widget-title font-weight-bold">{{ label }} Chart </h3>
       <div id="donutMorris_vehicle" class="chart-one"></div>
       {%  set g_data = content['#markup'] %}
       <input type="hidden" id="vehicle" name="vehicle" value="{{ g_data }}">
@@ -498,7 +498,7 @@
         barSize: 0.1,
         labelColor: "#3e5569",
         resize: true, //defaulted to true
-        colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+        colors: ["#6930c3", "#fb743e", "#22c6ab"],
       });
         }
       </script>
@@ -507,7 +507,7 @@
     {% block emp_status_operator %}
     <div class='col-sm-12'>
       <div class="widget-area-2 lorvens-box-shadow widget-morris employee_status">
-        <h3 class="widget-title">{{ label }} Chart</h3>
+        <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
         <div id="donutMorris_emp" class="chart-one"></div>
         {%  set g_data1 = content['#markup'] %}
         <input type="hidden" id="empstatus" name="empstatus" value="{{ g_data1 }}">
@@ -526,7 +526,7 @@
       barSize: 0.1,
       labelColor: "#3e5569",
       resize: true, //defaulted to true
-      colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+      colors: ["#6930c3", "#fb743e", "#22c6ab"],
     });
   }
     </script>
@@ -535,7 +535,7 @@
     {% block fuel_filling_operator %}
     <div class='col-sm-12'>
       <div class="widget-area-2 lorvens-box-shadow widget-morris fuel_filling">
-        <h3 class="widget-title">{{ label }} Chart</h3>
+        <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
         <div id="barMorris2" class="chart-one"></div>
         {%  set g_data3 = content['#markup'] %}
         <input type="hidden" id="fuel_filling" name="fuel_filling" value="{{ g_data3 }}">
@@ -553,7 +553,7 @@
       xkey: "y",
       ykeys: ["x"],
       labels: ["Accidents"],
-      barColors: ["#86C417"],
+      barColors: ["#19d3da"],
       barOpacity: 1,
       barSizeRatio: 0.5,
       hideHover: "auto",
@@ -566,7 +566,7 @@
     <div{{ attributes.addClass('widget-area-2 lorvens-box-shadow md-10') }}>
       {{ title_prefix }}
       {% if label %}
-      <h2{{ title_attributes.addClass('widget-title') }}>{{ label }}</h2>
+      <h2{{ title_attributes.addClass('widget-title font-weight-bold') }}>{{ label }}</h2>
       {% endif %}
       {{ title_suffix }}
       {% block Operator_content %}
@@ -581,7 +581,7 @@
     <div class="row">
       <div class='col-sm-12'>
         <div class="widget-area-2 lorvens-box-shadow widget-morris number_of_companies">
-          <h3 class="widget-title">{{ label }} Chart</h3>
+          <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
           <div id="barMorris" class="chart-one"></div>
           <input type="hidden" id="numberofcompany" name="numberofcompany" value="{{ g_data5 }}">
         </div>
@@ -599,7 +599,7 @@
       xkey: "y",
       ykeys: ["x"],
       labels: ["Package"],
-      barColors: ["#86C417"],
+      barColors: ["#19d3da"],
       barOpacity: 1,
       barSizeRatio: 0.5,
       hideHover: "auto",
@@ -614,7 +614,7 @@
     <div class="row">
       <div class='col-sm-12'>
         <div class="widget-area-2 lorvens-box-shadow widget-morris company_status">
-          <h3 class="widget-title">{{ label }} Chart</h3>
+          <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
           <div id="donutMorris_emp" class="chart-one"></div>
           <input type="hidden" id="empstatus" name="empstatus" value="{{ g_data1 }}">
         </div>
@@ -633,7 +633,7 @@
       barSize: 0.1,
       labelColor: "#3e5569",
       resize: true, //defaulted to true
-      colors: ["#FFAA2A", "#ef6e6e", "#22c6ab"],
+      colors: ["#6930c3", "#fb743e", "#22c6ab"],
     });
   }
     </script>
@@ -646,7 +646,7 @@
       <!-- Widget Item -->
       <div class="col-md-12">
         <div class="widget-area-2 lorvens-box-shadow">
-          <h3 class="widget-title">{{ label }} Chart</h3>
+          <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
           <div class="">
             <table class="table" width="100%">
               <thead>
@@ -695,7 +695,7 @@
       <!-- Widget Item -->
       <div class="col-md-12">
         <div class="widget-area-2 lorvens-box-shadow">
-          <h3 class="widget-title">{{ label }} Chart</h3>
+          <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
           <div class="">
             <table class="table" width="100%">
               <thead>
@@ -746,7 +746,7 @@
       <!-- Widget Item -->
       <div class="col-md-12">
         <div class="widget-area-2 lorvens-box-shadow">
-          <h3 class="widget-title">{{ label }} Chart</h3>
+          <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
           <div class="">
             <table class="table" width="100%">
               <thead>
