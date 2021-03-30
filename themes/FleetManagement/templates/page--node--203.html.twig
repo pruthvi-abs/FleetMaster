@@ -32,7 +32,7 @@
       base_url ~ '/operator/dashboard' %} {% elseif role == 'administrator' %}
       {% set home_url = base_url ~ '/admin/dashboard' %} {% endif %}
       <a href="{{ home_url }}"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
-      <a href="{{ home_url }}"><h5 class="minimal-logo" alt="logo"><strong>DF</strong></h5></a>
+      <a href="{{ home_url }}"><h5 class="minimal-logo text-align" alt="logo"><strong>DF</strong></h5></a>
     </div>
     {% if expiry_status != 'expired' %}
     <ul class="list-unstyled components">

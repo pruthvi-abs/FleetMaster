@@ -28,11 +28,11 @@
   <nav id="sidebar" class="lorvens-bg">
     <div class="sidebar-header">
       {% if role == 'company' %} {% set home_url = base_url ~
-      '/company/dashboard' %} {% elseif role == 'operator' %} {% set home_url =
+      '/company/dashboard' %} {% elseif role == 'data_entry' %} {% set home_url =
       base_url ~ '/operator/dashboard' %} {% elseif role == 'administrator' %}
       {% set home_url = base_url ~ '/admin/dashboard' %} {% endif %}
       <a href="{{ home_url }}"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
-      <a href="{{ home_url }}"><h5 class="minimal-logo" alt="logo"><strong>DF</strong></h5></a>
+      <a href="{{ home_url }}"><h5 class="minimal-logo text-align" alt="logo"><strong>DF</strong></h5></a>
     </div>
     {% if expiry_status != 'expired' %}
     <ul class="list-unstyled components">
@@ -57,7 +57,7 @@
               <span class="ti-announcement"></span>
             </a>
             <div class="dropdown-menu lorvens-box-shadow notifications animated flipInY">
-              <h5>Notifications</h5>
+              <h5><strong> Notifications </strong></h5>
               <div class="notification-menu">
               {% if notifications | json_decode %}
               {% for i in 0..3 %}

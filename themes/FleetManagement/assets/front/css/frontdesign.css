@@ -22,21 +22,17 @@
   display: inline-block;
   width: 100%;
 }
-#edit-field-trip-status-wrapper
-{
+#edit-field-trip-status-wrapper {
   display: none;
 }
-#edit-field-status-trip-wrapper
-{
+#edit-field-status-trip-wrapper {
   display: none;
 }
-#edit-field-efficiency-fuel-wrapper
-{
+#edit-field-efficiency-fuel-wrapper {
   display: none;
 }
 
-#edit-field-fuel-efficiency-wrapper
-{
+#edit-field-fuel-efficiency-wrapper {
   display: none;
 }
 
@@ -145,7 +141,8 @@ h2.thankyou {
   }
 }
 
-.four-zero-three, .four-zero-four {
+.four-zero-three,
+.four-zero-four {
   font-family: fantasy;
   text-align: center;
   display: flex;
@@ -153,33 +150,40 @@ h2.thankyou {
   justify-content: center;
   min-height: 50vh;
 }
-.four-zero-three__inner, .four-zero-four__inner{
+.four-zero-three__inner,
+.four-zero-four__inner {
   padding: 20px;
 }
-.four-zero-three__title, .four-zero-four__title{
+.four-zero-three__title,
+.four-zero-four__title {
   color: #000;
   font-size: 5rem;
 }
 @media (max-width: 600px) {
-  .four-zero-three__title, .four-zero-four__title{
+  .four-zero-three__title,
+  .four-zero-four__title {
     font-size: 4rem;
   }
 }
-.four-zero-three__desc,.four-zero-four__desc {
+.four-zero-three__desc,
+.four-zero-four__desc {
   color: #e41919;
   font-size: 2.5rem;
 }
 @media (max-width: 600px) {
-  .four-zero-three__desc,.four-zero-four__desc {
+  .four-zero-three__desc,
+  .four-zero-four__desc {
     font-size: 2rem;
   }
 }
-.four-zero-three__content,.four-zero-four__content {
+.four-zero-three__content,
+.four-zero-four__content {
   font-size: 1.2rem;
   /* margin-bottom: 2rem; */
 }
 @media (max-width: 600px) {
-  .four-zero-three__content,.four-zero-four__content {
+  .four-zero-three__content,
+  .four-zero-four__content {
     font-size: 1rem;
   }
 }
@@ -195,7 +199,7 @@ h2.thankyou {
   background-repeat: no-repeat;
   background-size: 6px 6px;
 }
-.package_card{
+.package_card {
   padding: 0 5px !important;
 }
 .pricing p {
@@ -205,17 +209,17 @@ h2.thankyou {
 }
 
 .password-strength__meter {
-    /* height: 0.25em; */
-    height: 0;
-    margin-top: 0.5em;
-    background-color: lightgray;
+  /* height: 0.25em; */
+  height: 0;
+  margin-top: 0.5em;
+  background-color: lightgray;
 }
 
 ul.plist {
   min-height: 275px;
 }
 
-ul.clist{
+ul.clist {
   padding-top: 10px;
 }
 
@@ -225,6 +229,19 @@ ul.clist li {
   margin-left: 41px;
 }
 
-.service-title{
+.service-title {
   min-height: 115px;
 }
+
+#user-login-form .form-control {
+  width: 30% !important;
+}
+
+/* @media only screen and (max-width: 768px) {
+  #user-login-form .form-control {
+    width: 100% !important;
+  }
+  #user-login-form {
+    margin-top: 20% !important;
+  }
+} */

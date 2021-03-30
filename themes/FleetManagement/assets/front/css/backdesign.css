@@ -241,6 +241,7 @@ a.menu_lvl_0_link.is-active {
 }
 .node_class.table {
   margin-bottom: 0px;
+  margin-left: 5px;
 }
 .node_class.table td {
   padding: 0 0.95rem;
@@ -623,6 +624,7 @@ a.menu_lvl_0_link.is-active {
 #sidebar.active ul li span.cexpand{
   /* display: none !important; */
   margin-top: -35px;
+  width: 15px;
 } 
 
 #sidebar.active ul.collapse.in li a span{

@@ -132,7 +132,7 @@
             <span class="fas fa-users"></span>
           </div>
           <div class="widget-right">
-            <h3 class="wiget-title font-weight-bold">Total Employees</h3>
+            <h3 class="wiget-title font-weight-bold h5">Total Employees</h3>
             <span class="numeric" id="totalemployee">{{ ecount[0].total_emp }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
@@ -152,6 +152,36 @@
       </div>
     </div>
     {% endblock %}
+  {% elseif label == 'Number of Operator' %}
+    {% block Operator_count %}
+    {% set opcount = content['#markup'] | json_decode %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget-area lorvens-box-shadow totaloperator text-white bg-secondary">
+          <div class="widget-left text-white">
+            <span class="fas fa-user-tie"></span>
+          </div>
+          <div class="widget-right">
+            <h3 class="wiget-title font-weight-bold h5">Total Operator</h3>
+            <span class="numeric" id="totaloperator">{{ opcount[0].total_operator }}</span>
+          </div>
+          <footer class="pd-top-10 pd-bottom-10 col-md-12">
+            <div class="text-right">
+              <a href="{{ url('<front>') }}view-all-users">View More</a>
+              <a href="{{ url('<front>') }}register/employee" class="ml-3 add_new">Add New</a>
+            </div>
+          </footer>
+          <script>
+            var totaloperator = $("#totaloperator").html();
+            // console.log(totaloperator);
+            if(!totaloperator){
+                  $('.totaloperator').addClass('d-none');
+                }
+        </script>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
   {% elseif label == 'Number of Branches' %}
     {% block Branches_count %}
     {% set bcount = content['#markup'] | json_decode %}
@@ -162,7 +192,7 @@
             <span class="fas fa-building"></span>
           </div>
           <div class="widget-right">
-            <h3 class="wiget-title font-weight-bold">Total Branches</h3>
+            <h3 class="wiget-title font-weight-bold h5">Total Branches</h3>
             <span class="numeric text-white">{{ bcount[0].total_branches }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
@@ -185,7 +215,7 @@
             <span class="fas fa-car"></span>
           </div>
           <div class="widget-right">
-            <h3 class="wiget-title font-weight-bold">Total Vehicles</h3>
+            <h3 class="wiget-title font-weight-bold h5">Total Vehicles</h3>
             <span class="numeric text-white" id="totalvehicle">{{ vcount[0].total_vehicle }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
@@ -215,7 +245,7 @@
             <span class="fas fa-briefcase"></span>
           </div>
           <div class="widget-right">
-            <h3 class="wiget-title font-weight-bold">Total Departments</h3>
+            <h3 class="wiget-title font-weight-bold h5">Total Departments</h3>
             <span class="numeric text-white">{{ dcount[0].total_department }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
@@ -316,7 +346,7 @@
             <span class="fas fa-car"></span>
           </div>
           <div class="widget-right">
-            <h3 class="wiget-title font-weight-bold">Total Vehicles</h3>
+            <h3 class="wiget-title font-weight-bold h5">Total Vehicles</h3>
             <span class="numeric text-white" id="totalvehicle">{{ vcount[0].total_vehicle }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
@@ -377,7 +407,7 @@
             <span class="fas fa-users"></span>
           </div>
           <div class="widget-right">
-            <h3 class="wiget-title font-weight-bold">Total Employees</h3>
+            <h3 class="wiget-title font-weight-bold h5">Total Employees</h3>
             <span class="numeric" id="totalemployee">{{ ecount[0].total_emp }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
@@ -407,7 +437,7 @@
             <span class="fas fa-building"></span>
           </div>
           <div class="widget-right">
-            <h3 class="wiget-title font-weight-bold">Total Branches</h3>
+            <h3 class="wiget-title font-weight-bold h5">Total Branches</h3>
             <span class="numeric text-white">{{ bcount[0].total_branches }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
@@ -430,7 +460,7 @@
             <span class="fas fa-briefcase"></span>
           </div>
           <div class="widget-right">
-            <h3 class="wiget-title font-weight-bold">Total Department</h3>
+            <h3 class="wiget-title font-weight-bold h5">Total Department</h3>
             <span class="numeric color-blue">{{ dcount[0].total_department }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
@@ -649,10 +679,10 @@
           <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
           <div class="">
             <table class="table" width="100%">
-              <thead>
+              <thead class="thead-light">
                 <tr>
                   <!-- <th>Serial Number</th> -->
-                  <th>Id</th>
+                  {# <th>Id</th> #}
                   <th>Name</th>
                   <th>Package</th>
                   <th>Expiry Date</th>
@@ -663,7 +693,7 @@
                 {% for user in g_data6 %}
                   <tr>
                     {# <td>{{ count }}</td> #}
-                    <td>{{ user.user_id }}</td>
+                    {# <td>{{ user.user_id }}</td> #}
                     <td>{{ user.company_name }}</td>
                     <td>{{ user.package }}</td>
                     <td>{{ user.expiry_date }}</td>
@@ -698,14 +728,14 @@
           <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
           <div class="">
             <table class="table" width="100%">
-              <thead>
+              <thead class="thead-light">
                 <tr>
                   <!-- <th>Serial Number</th> -->
-                  <th>Id</th>
+                  {# <th>Id</th> #}
                   <th>Name</th>
                   <th>Package</th>
                   <th>Payment Date</th>
-                  <th>Cost</th>
+                  {# <th>Cost</th> #}
                   <!-- <th>Status</th> -->
                 </tr>
               </thead>
@@ -713,11 +743,11 @@
                 {% for user in g_data6 %}
                   <tr>
                     {# <td>{{ count }}</td> #}
-                    <td>{{ user.user_id }}</td>
+                    {# <td>{{ user.user_id }}</td> #}
                     <td>{{ user.company_name }}</td>
                     <td>{{ user.package }}</td>
                     <td>{{ user.start_date }}</td>
-                    <td>{{ user.package_cost }}</td>
+                    {# <td>{{ user.package_cost }}</td> #}
                     {# {% if user.status == 'Active' %}
                       <td>
                         <span class="badge badge-success">{{ user.status }}</span>
@@ -749,10 +779,10 @@
           <h3 class="widget-title font-weight-bold">{{ label }} Chart</h3>
           <div class="">
             <table class="table" width="100%">
-              <thead>
+              <thead class="thead-light">
                 <tr>
                   <!-- <th>Serial Number</th> -->
-                  <th>Id</th>
+                  {# <th>Id</th> #}
                   <th>Name</th>
                   <th>Package</th>
                   <th>Status</th>
@@ -762,16 +792,20 @@
                 {% for user in g_data6 %}
                   <tr>
                     {# <td>{{ count }}</td> #}
-                    <td>{{ user.user_id }}</td>
+                    {# <td>{{ user.user_id }}</td> #}
                     <td>{{ user.company_name }}</td>
                     <td>{{ user.package }}</td>
                     {% if user.status == 'Active' %}
                       <td>
-                        <span class="badge badge-success">{{ user.status }}</span>
+                        {# <a href="{{ statuschange(user.user_id,user.status) }}"> #}
+                          <span class="badge badge-success w-100">{{ user.status }}</span>
+                        {# </a> #}
                       </td>
                       {% elseif user.status == 'Inactive' %}
                       <td>
-                        <span class="badge badge-danger">{{ user.status }}</span>
+                        {# <a href="{{ statuschange(user.user_id,user.status) }}"> #}
+                          <span class="badge badge-danger w-100">{{ user.status }}</span>
+                        {# </a> #}
                       </td>
                     {% endif %}
                     {% set count = count + 1 %}
@@ -781,7 +815,7 @@
             </table>
             <footer class="pd-top-10 pd-bottom-10 col-md-12">
               <div class="text-right lorvens-text-color">
-                <a href="">View More</a>
+                <a href="{{ url('<front>') }}all-companies">View More</a>
               </div>
             </footer>
           </div>

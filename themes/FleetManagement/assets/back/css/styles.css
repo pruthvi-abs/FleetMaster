@@ -713,7 +713,7 @@ div[class*="col-"] div[class*="col-"] {
   background: #fff;
 }
 
-.dropdown-menu.notifications .dropdown-item:nth-child(odd) [class^="ti-"],
+/* .dropdown-menu.notifications .dropdown-item:nth-child(odd) [class^="ti-"],
 .dropdown-menu.profile .dropdown-item:nth-child(odd) [class^="ti-"] {
   margin-right: 10px;
   color: #fa3664;
@@ -721,6 +721,11 @@ div[class*="col-"] div[class*="col-"] {
 
 .dropdown-menu.notifications .dropdown-item:nth-child(even) [class^="ti-"],
 .dropdown-menu.profile .dropdown-item:nth-child(even) [class^="ti-"] {
+  margin-right: 10px;
+  color: #076ad0;
+} */
+.dropdown-menu.notifications .dropdown-item [class^="ti-"],
+.dropdown-menu.profile .dropdown-item [class^="ti-"] {
   margin-right: 10px;
   color: #076ad0;
 }
@@ -1077,9 +1082,9 @@ h4.wiget-title {
   border-radius: 5px;
   border-color: #6d6d6d;
 }
-input.form-control {
+/* input.form-control {
   padding: 0.59rem 0.75rem;
-}
+} */
 .form-control:focus {
   color: #495057;
   background-color: #fff;
@@ -1300,4 +1305,10 @@ a.block.block-link-pop:hover {
 }
 .swal-overlay {
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+.table thead th,.table td{
+  border-right: 1px solid #dee2e6 !important;
+  border-left: 1px solid #dee2e6 !important;
+  border-bottom: 1px solid #dee2e6 !important;
 }
