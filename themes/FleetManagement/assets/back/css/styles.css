@@ -665,7 +665,7 @@ div[class*="col-"] div[class*="col-"] {
   border-radius: 50%;
   color: #fff;
 }
-.navbar-default .ti-announcement::after {
+.navbar-default .notification-badges {
   content: "";
   width: 15px;
   height: 15px;

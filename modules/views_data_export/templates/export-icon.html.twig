@@ -12,6 +12,11 @@
  * @ingroup themeable
  */
 #}
-<a href="{{ url }}"{{ attributes.addClass('feed-icon') }}>
-  {{ 'Download @format'|t({'@format': format}) }}
-</a>
+<div class="lorvens-widget text-right m-3">
+  <div class="col-sm-12">
+    <a href="{{ url }}"{{ attributes.addClass('csv-feed feed-icon btn btn-primary btn-lg h-50 rounded-5') }}>
+    {# {{ 'Download @format'|t({'@format': format}) }} #}
+    Export
+    </a>
+  </div>
+</div>

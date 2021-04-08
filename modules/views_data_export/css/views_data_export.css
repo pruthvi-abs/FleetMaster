@@ -2,7 +2,7 @@
   display: inline;
 }
 .views-data-export-feed .feed-icon {
-  background: no-repeat;
+  /* background: no-repeat; */
   overflow: hidden;
   text-indent: -9999px;
   display: block;
@@ -15,7 +15,8 @@
   background-image: url(../images/xml.png);
 }
 .csv-feed .feed-icon {
-  background-image: url(../images/csv.png);
+  /* background-image: url(../images/csv.png); */
+  display: inline;
 }
 .xls-feed .feed-icon {
   background-image: url(../images/xls.png);

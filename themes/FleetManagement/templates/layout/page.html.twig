@@ -193,7 +193,11 @@
         <ul class="nav justify-content-end">
           <li class="nav-item">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              {% if notifications | json_decode %}
+              <span class="ti-announcement"><span class="notification-badges"></span></span>
+              {% else %}
               <span class="ti-announcement"></span>
+              {% endif %}
             </a>
             <div class="dropdown-menu lorvens-box-shadow notifications animated flipInY">
               <h5>Notifications</h5>

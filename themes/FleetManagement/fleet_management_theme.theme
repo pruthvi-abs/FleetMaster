@@ -131,19 +131,23 @@ function fleet_management_theme_preprocess_page(&$variables)
       $current_date =  date("Y-m-d");
       $end_date = date("Y-m-d", strtotime($current_date . ' + 1 month'));
       $start_date = date("Y-m-d", strtotime($current_date));
+      // dump($start_date);
+      // dump($end_date);
       // dump($users);
       // array_push($user_ids,$current_user->id());
-      for ($i = 0, $j = 0; $i < count($users); $i++) {
+      for ($i = 0, $k = 0, $j = 0; $i < count($users); $i++) {
         $field_package_expiry_date = $users[$keys[$i]]->get('field_package_expiry_date')->getValue()[0]['value'];
+        // dump($field_package_expiry_date);
         $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
         if ($field_package_expiry_date >= $start_date && $field_package_expiry_date <= $end_date) {
-          $notifications[$j][$i]['icon'] = 'ti-alert';
-          $notifications[$j][$i]['type'] = 'Company Package is going to expired';
-          $notifications[$j][$i]['title'] = $name . '\'s package is going to be expired on ' . $field_package_expiry_date;
-          // $j++;
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Company Package is going to expired';
+          $notifications[$j][$k]['title'] = $name . '\'s package is going to be expired on ' . $field_package_expiry_date;
+          $k++;
         }
       }
 
+      
       $userStorage = \Drupal::entityTypeManager()->getStorage('user');
       $query = $userStorage->getQuery();
       $uids = $query->condition('status', '0')->condition('roles', 'company')->execute();
@@ -154,19 +158,21 @@ function fleet_management_theme_preprocess_page(&$variables)
       $start_date = date("Y-m-d", strtotime($current_date));
       // dump($users);
       // array_push($user_ids,$current_user->id());
-      for ($i = 0, $j = count($notifications); $i < count($users); $i++) {
+      for ($i = 0, $k = 0, $j = count($notifications); $i < count($users); $i++) {
         $field_package_expiry_date = $users[$keys[$i]]->get('field_package_expiry_date')->getValue()[0]['value'];
         $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
         if ($field_package_expiry_date <= $current_date) {
-          $notifications[$j][$i]['icon'] = 'ti-alert';
-          $notifications[$j][$i]['type'] = 'Company Package is already expired';
-          $notifications[$j][$i]['title'] = $name . '\'s package is already expired on ' . $field_package_expiry_date;
-          // $j++;
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Company Package is already expired';
+          $notifications[$j][$k]['title'] = $name . '\'s package is already expired on ' . $field_package_expiry_date;
+          $k++;
         }
       }
+      // dump($notifications);
     } elseif ($roles[1] == 'company') {
-
+      
       $database = \Drupal::database();
+      $notification_count = 0;
       $current_user = \Drupal::currentUser();
       $user_id = $current_user->id();
       $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ")");
@@ -239,8 +245,9 @@ function fleet_management_theme_preprocess_page(&$variables)
           $notifications[$j][$k]['id'] = 'licenceExpired';
           $notifications[$j][$k]['title'] = $title . '\'s licence is already expired on ' . $field_licence_expiry_date_value;
           $k++;
-        }
+        }        
       }
+      // dump($notification_count);
       // dump($notifications);
 
     } elseif ($roles[1] == 'data_entry') {
