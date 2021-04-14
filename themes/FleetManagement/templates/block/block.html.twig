@@ -162,7 +162,7 @@
             <span class="fas fa-user-tie"></span>
           </div>
           <div class="widget-right">
-            <h3 class="wiget-title font-weight-bold h5">Total Operator</h3>
+            <h3 class="wiget-title font-weight-bold h5">Total Operators</h3>
             <span class="numeric" id="totaloperator">{{ opcount[0].total_operator }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
@@ -797,18 +797,18 @@
                     <td>{{ user.package }}</td>
                     {% if user.status == 'Active' %}
                       <td>
-                        {# <a href="{{ statuschange(user.user_id,user.status) }}"> #}
+                        <a href="{{ url('<front>') }}user/{{ user.user_id }}/edit">
                           <span class="badge badge-success w-100">{{ user.status }}</span>
-                        {# </a> #}
+                        </a>
                       </td>
                       {% elseif user.status == 'Inactive' %}
                       <td>
-                        {# <a href="{{ statuschange(user.user_id,user.status) }}"> #}
+                        <a href="{{ url('<front>') }}user/{{ user.user_id }}/edit">
                           <span class="badge badge-danger w-100">{{ user.status }}</span>
-                        {# </a> #}
+                        </a>
                       </td>
                     {% endif %}
-                    {% set count = count + 1 %}
+                    {# {% set count = count + 1 %} #}
                   </tr>
                   {% endfor %}
               </tbody>

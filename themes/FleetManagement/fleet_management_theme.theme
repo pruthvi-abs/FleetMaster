@@ -32,6 +32,18 @@ function fleet_management_theme_preprocess_user(&$variables)
 //$user = \Drupal::currentUser();
 //$settings['user']['uid'] = $user->id();
 
+
+function statuschange($uid, $status)
+{
+  $user = \Drupal\user\Entity\User::load($uid);
+  if ($status == 'Active') {
+    $user->block();
+    $user->save();
+  } elseif ($status == 'Inactive') {
+    $user->activate();
+    $user->save();
+  }
+}
 function fleet_management_theme_preprocess_page(&$variables)
 {
   global $base_url;
@@ -131,6 +143,7 @@ function fleet_management_theme_preprocess_page(&$variables)
       $current_date =  date("Y-m-d");
       $end_date = date("Y-m-d", strtotime($current_date . ' + 1 month'));
       $start_date = date("Y-m-d", strtotime($current_date));
+      $notifications = array();
       // dump($start_date);
       // dump($end_date);
       // dump($users);
@@ -146,7 +159,7 @@ function fleet_management_theme_preprocess_page(&$variables)
           $k++;
         }
       }
-
+      
       
       $userStorage = \Drupal::entityTypeManager()->getStorage('user');
       $query = $userStorage->getQuery();
@@ -170,7 +183,7 @@ function fleet_management_theme_preprocess_page(&$variables)
       }
       // dump($notifications);
     } elseif ($roles[1] == 'company') {
-      
+
       $database = \Drupal::database();
       $notification_count = 0;
       $current_user = \Drupal::currentUser();
@@ -245,7 +258,7 @@ function fleet_management_theme_preprocess_page(&$variables)
           $notifications[$j][$k]['id'] = 'licenceExpired';
           $notifications[$j][$k]['title'] = $title . '\'s licence is already expired on ' . $field_licence_expiry_date_value;
           $k++;
-        }        
+        }
       }
       // dump($notification_count);
       // dump($notifications);

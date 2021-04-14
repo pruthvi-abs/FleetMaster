@@ -29,7 +29,10 @@
 {{ menus.menu_links(items, attributes, 0) }}
 
 {% macro menu_links(items, attributes, menu_level) %}
-  {% import _self as menus %}
+{% import _self as menus %}
+{# <pre>
+  {{ dump(items) }}
+</pre> #}
   {% if items %}
     {% if menu_level == 0 %}
       <ul{{ attributes.addClass('menu_lvl_0') }}>
@@ -41,7 +44,7 @@
       <li>
         <a href="{{ item.url }}" {{ item.attributes.addClass('menu_lvl_0_link') }}><span>{{ item.title }}</span></a>
         {% if item.below %}
-          {{ menus.menu_links(item.below, item.attributes.addClass('menu_lvl_1_link'), menu_level + 1) }}
+          {{ menus.menu_links(item.below, item.attributes.addClass('submenu menu_lvl_1_link'), menu_level + 1) }}
         {% endif %}
       </li>
     {% endfor %}

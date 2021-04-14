@@ -1,0 +1,9 @@
+name: TwigExtension
+type: module
+description: 'Twig custom extension - Filter and function'
+package: Theme
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+- node
+- block

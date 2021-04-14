@@ -1,142 +1,3 @@
-{% if not logged_in %}
-{{ attach_library("fleet_management_theme/front-style") }}
-{% if page.header %}
-<header id="header" class="fixed-top" style="background: #37517e">
-  <div class="container-fluid px-5 d-flex align-items-center">
-    <h1 class="logo mr-auto"><a href="{{ url('<front>') }}">DIGIFLEET</a></h1>
-    {{ page.header }}
-    <div style="margin-left: 50px">
-      <a href="{{ url('<front>') }}user/login" class="btn btn-success">login</a>
-      <a href="{{ url('<front>') }}register/company" class="btn btn-primary"
-        >Register</a
-      >
-    </div>
-    <!-- <a href="/user/logout" class="btn btn-outline-danger">Logout</a> -->
-  </div>
-</header>
-{% endif %}
-<!-- End Header -->
-{% if is_front and show_slideshow %}
-<section id="hero" class="d-flex align-items-center">
-  <div class="container">
-    <div class="row">
-      {% for slider_contents in slider_content %}
-      {{ slider_contents | raw }}
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-<!-- End Hero -->
-
-<main id="main">
-  <!-- ======= content Section ======= -->
-  {% if page.content and not is_front %}
-  <section id="content" class="section-bg">
-    <div class="container" data-aos="fade-up">
-      {{ page.content }}
-    </div>
-  </section>
-  {% endif %}
-  <!-- ======= content Section ======= -->
-
-  <!-- ======= Services Section ======= -->
-
-  {% if page.features_first and is_front %}
-  <section id="services" class="services section-bg">
-    <div class="container" data-aos="fade-up">
-      {{ page.features_first }}
-    </div>
-  </section>
-  {% endif %}
-  <!-- End Services Section -->
-  <!-- ======= Cta Section ======= -->
-  {% if page.features_second and is_front %}
-  <section id="cta" class="cta">
-    <div class="container" data-aos="zoom-in">
-      <div class="row">
-        {{ page.features_second }}
-      </div>
-    </div>
-  </section>
-  {% endif %}
-  <!-- End Cta Section -->
-</main>
-<!-- End #main -->
-
-<!-- ======= Footer ======= -->
-<footer id="footer">
-  {% if page.features_third and is_front %}
-  <div class="footer-newsletter">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-6">
-          <h4>Join Our Newsletter</h4>
-          <p>
-            Tamen quem nulla quae legam multos aute sint culpa legam noster
-            magna
-          </p>
-          {{ page.features_third }}
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endif %}
-
-  <div class="footer-top">
-    <div class="container">
-      <div class="row">
-        {% if page.bottom_first %}
-        <div class="col-lg-4 col-md-6 footer-contact">
-          {{ page.bottom_first }}
-        </div>
-        {% endif %} {% if page.bottom_second %}
-        <div class="col-lg-4 col-md-6 footer-links">
-          <h4>Links</h4>
-          {{ page.bottom_second }}
-        </div>
-        {% endif %}
-
-        <div class="col-lg-4 col-md-6 footer-links">
-          <h4>Our Social Networks</h4>
-          <p>
-            Cras fermentum odio eu feugiat lide par naso tierra videa magna
-            derita valies
-          </p>
-          <div class="social-links mt-3">
-            <a href="{{ facebook_url }}" class="facebook"
-              ><i class="bx bxl-facebook"></i
-            ></a>
-            <a href="{{ instagram_url }}" class="instagram"
-              ><i class="bx bxl-instagram"></i
-            ></a>
-            <a href="{{ linkedin_url }}" class="linkedin"
-              ><i class="bx bxl-linkedin"></i
-            ></a>
-            <a href="{{ twitter_url }}" class="twitter"
-              ><i class="bx bxl-twitter"></i
-            ></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container footer-bottom clearfix">
-    {% if page.footer_first %}
-    {{ page.footer_first }}
-    {% endif %} {% if page.footer_second %}
-    {{ page.footer_second }}
-    {% endif %}
-  </div>
-</footer>
-
-<!-- End Footer -->
-
-<a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
-<div id="preloader"></div>
-
-{% else %}
-
 {{ attach_library("fleet_management_theme/back-style") }}
 <script src="{{ url('<front>') }}themes/FleetManagement/assets/back/js/modernizr.min.js"></script>
 <script src="{{ url('<front>') }}themes/FleetManagement/assets/back/js/jquery-3.2.1.min.js"></script>
@@ -171,7 +32,7 @@
       base_url ~ '/operator/dashboard' %} {% elseif role == 'administrator' %}
       {% set home_url = base_url ~ '/admin/dashboard' %} {% endif %}
       <a href="{{ home_url }}"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
-      <a href="{{ home_url }}"><h5 class="minimal-logo text-center" alt="logo"><strong>DF</strong></h5></a>
+      <a href="{{ home_url }}"><h5 class="minimal-logo" alt="logo"><strong>DF</strong></h5></a>
     </div>
     {% if expiry_status != 'expired' %}
     <ul class="list-unstyled components">
@@ -272,7 +133,80 @@
       value="{{ expiry_status }}"
     />
     {% if expiry_status != 'expired' %}
-    {{ page.content }}
+    
+    <div class="">
+      <div class="widget-area-2">
+        <!-- Item -->
+        <h3 class="widget-title">Help</h3>
+        <div class="lorvens-widget mb-3">
+          <div id="accordion">
+            <div class="card">
+              <div class="accordion-header" style="background: #37517e" id="headingOne">
+                <h5 class="mb-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Non consectetur a erat nam at lectus urna duis? 
+                </h5>
+              </div>
+  
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  <small>Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.</small>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="accordion-header" style="background: #37517e" id="headingTwo">
+                <h5 class="mb-0" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Feugiat scelerisque varius morbi enim nunc? 
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                  <small>Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.</small>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="accordion-header" style="background: #37517e" id="headingThree">
+                <h5 class="mb-0" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Dolor sit amet consectetur adipiscing elit? 
+                </h5>
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                  <small>Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis.</small>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="accordion-header" style="background: #37517e" id="headingFour">
+                <h5 class="mb-0" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  Tempus quam pellentesque nec nam aliquam sem et tortor consequat? 
+                </h5>
+              </div>
+              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                  <small>Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in.</small>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="accordion-header" style="background: #37517e" id="headingFive">
+                <h5 class="mb-0" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                  Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? 
+                </h5>
+              </div>
+              <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                <div class="card-body">
+                  <small>Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Item -->
+
+      </div>
+    </div>
     {% endif %}
     <!-- /Main Content -->
   </div>
@@ -290,18 +224,6 @@
   var package = document.getElementById("package").value;
   // console.log(package);
   if (package == "expired") {
-    // Swal.fire({
-    //   title: "package Expired!",
-    //   text: "Please Renew your package!",
-    //   icon: "error",
-    //   button: "Renew!",
-    //   closeOnClickOutside: false,
-    //   closeOnEsc: false,
-    //   dangerMode: true,
-    // });
-    // $(".swal-button").on("click", function () {
-    //   window.location.href = "https://www.google.com/";
-    // });
     Swal.fire({
       title: 'Package Expired!',
       text: "Please Renew Your Package!",
@@ -333,47 +255,8 @@
       }
     })
   }
-  
-  // $('#liveToastBtn').on('click',function(){
-  //   const Toast = Swal.mixin({
-  //     toast: true,
-  //     position: 'bottom-end',
-  //     showConfirmButton: false,
-  //     timer: 3000,
-  //     timerProgressBar: true,
-  //     didOpen: (toast) => {
-  //       toast.addEventListener('mouseenter', Swal.stopTimer)
-  //       toast.addEventListener('mouseleave', Swal.resumeTimer)
-  //     }
-  //   });
-  //   toastcall('success','SignUp Successful!!!');
-  // });
-  
-  // // toastcall( '{{ icon }}' , '{{ title }}');
-  // function toastcall(icon,title){
-  //   const Toast = Swal.mixin({
-  //     toast: true,
-  //     position: 'bottom-end',
-  //     showConfirmButton: false,
-  //     timer: 3000,
-  //     timerProgressBar: true,
-  //     didOpen: (toast) => {
-  //       toast.addEventListener('mouseenter', Swal.stopTimer)
-  //       toast.addEventListener('mouseleave', Swal.resumeTimer)
-  //     }
-  //   });
-  //   Toast.fire({
-  //     icon: icon,
-  //     title: title,
-  //   });
-  // }
 </script>
-  {# {% for notification in popup %}
-  <script> toastcall("{{ notification.icon }}" , '{{ notification.title }}'); </script>    
-  {% endfor %} #}
-{# <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> #}
 <script src="{{ url('<front>') }}themes/FleetManagement/assets/back/js/sweetalert2.all.js"></script>
 <script src="{{ url('<front>') }}themes/FleetManagement/assets/back/js/custom.js"></script>
 <script src="{{ url('<front>') }}themes/FleetManagement/assets/back/js/bootstrap.min.js"></script>
 
-{% endif %}

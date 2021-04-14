@@ -408,8 +408,9 @@ span.cexpand {
   position: relative;
   display: block;
   margin-right: 10px;
-  width: 50px;
+  width: 100%;
   height: auto;
+  cursor: pointer;
 }
 .cexpand.open:before {
   content: "-";
@@ -624,7 +625,7 @@ a.menu_lvl_0_link.is-active {
 #sidebar.active ul li span.cexpand{
   /* display: none !important; */
   margin-top: -35px;
-  width: 15px;
+  width: 100%;
 } 
 
 #sidebar.active ul.collapse.in li a span{
@@ -643,3 +644,7 @@ a.menu_lvl_0_link.is-active {
   /* display: block; */
   font-size: 10px;
 }
+/* .nav-icon{
+  pointer-events: none;
+  cursor: pointer;
+} */
