@@ -1307,9 +1307,128 @@ a.block.block-link-pop:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.table thead th,.table td{
+.table thead th,
+.table td {
   border-right: 1px solid #dee2e6 !important;
   border-left: 1px solid #dee2e6 !important;
   border-bottom: 1px solid #dee2e6 !important;
 }
 
+#node-driver-form .text-full,
+#node-driver-form .form-date,
+#node-driver-form .form-email,
+#node-driver-form .form-select,
+#node-driver-form .form-file,
+#node-driver-form .form-number{
+  width: 53%;
+}
+#node-driver-edit-form .text-full,
+#node-driver-edit-form .form-date,
+#node-driver-edit-form .form-email,
+#node-driver-edit-form .form-select,
+#node-driver-edit-form .form-file,
+#node-driver-edit-form .form-number{
+  width: 53%;
+}
+#node-departments-form .form-select ,
+#node-departments-form .text-full {
+  width: 53%;
+}
+#node-departments-edit-form .form-select ,
+#node-departments-edit-form .text-full {
+  width: 53%;
+}
+#node-branches-form .text-full,
+#node-branches-form .form-autocomplete {
+  width: 53%;
+}
+#node-branches-edit-form .text-full,
+#node-branches-edit-form .form-autocomplete {
+  width: 53%;
+}
+#user-register-form .text-full,
+#user-register-form .form-email,
+#user-register-form .form-date,
+#user-register-form .form-select {
+  width: 53%;
+}
+#node-vehicle-form .text-full,
+#node-vehicle-form .form-date,
+#node-vehicle-form .form-select {
+  width: 53%;
+}
+#node-vehicle-edit-form .text-full,
+#node-vehicle-edit-form .form-date,
+#node-vehicle-edit-form .form-select {
+  width: 53%;
+}
+#node-vehicle-assigment-form .form-select,
+#node-vehicle-assigment-form .text-full,
+#node-vehicle-assignment-form .form-time,
+#node-vehicle-assigment-form .form-date,
+#node-vehicle-assignment-form .form-textarea,
+#node-vehicle-assignment-form .form-time {
+  width: 53%;
+}
+#node-vehicle-assigment-edit-form .form-select,
+#node-vehicle-assigment-edit-form .form-date,
+#node-vehicle-assigment-edit-form .text-full,
+#node-vehicle-assignment-edit-form .form-time,
+#node-vehicle-assignment-edit-form .form-textarea,
+#node-vehicle-assignment-edit-form .form-time {
+  width: 53%;
+}
+#node-fuel-master-form .text-full,
+#node-fuel-master-form .form-select,
+#node-fuel-master-form .form-date,
+#node-fuel-master-form .form-number
+ {
+  width: 53%;
+}
+#node-fuel-master-edit-form .text-full,
+#node-fuel-master-edit-form .form-select,
+#node-fuel-master-edit-form .form-date,
+#node-fuel-master-edit-form .form-number
+ {
+  width: 53%;
+}
+#node-vehicle-maintenance-form .text-full,
+#node-vehicle-maintenance-form .form-select,
+#node-vehicle-maintenance-form .form-date {
+  width: 53%;
+}
+#node-vehicle-maintenance-edit-form .text-full,
+#node-vehicle-maintenance-edit-form .form-select,
+#node-vehicle-maintenance-edit-form .form-date {
+  width: 53%;
+}
+#node-trip-logging-form .text-full,
+#node-trip-logging-form .form-select,
+#node-trip-logging-form .form-date,
+#node-trip-logging-form .form-time,
+#node-trip-logging-form .form-number {
+  width: 53%;
+}
+#node-trip-logging-edit-form .text-full,
+#node-trip-logging-edit-form .form-select,
+#node-trip-logging-edit-form .form-date,
+#node-trip-logging-edit-form .form-time,
+#node-trip-logging-edit-form .form-number {
+  width: 53%;
+}
+#node-accident-reporting-form .text-full,
+#node-accident-reporting-form .form-select,
+#node-accident-reporting-form .form-date,
+#node-accident-reporting-form .form-time,
+#node-accident-reporting-form .form-number
+ {
+  width: 53%;
+}
+#node-accident-reporting-edit-form .text-full,
+#node-accident-reporting-edit-form .form-select,
+#node-accident-reporting-edit-form .form-date,
+#node-accident-reporting-edit-form .form-time,
+#node-accident-reporting-edit-form .form-number
+ {
+  width: 53%;
+}

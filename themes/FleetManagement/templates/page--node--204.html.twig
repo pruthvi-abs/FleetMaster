@@ -202,7 +202,8 @@
     }).then((result) => {
       console.log(result);
       if (result.isConfirmed) {
-        window.location.href = "https://www.google.com/";
+        // window.location.href = "https://www.google.com/";
+        window.location.href = '{{ base_url }}/subscription';
       }
       if(result.isDismissed){
         // window.location.href = "https://www.google.com/";

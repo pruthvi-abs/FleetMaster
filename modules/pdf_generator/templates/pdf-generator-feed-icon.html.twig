@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a feed icon.
+ *
+ * Available variables:
+ * - url: An internal system path or a fully qualified external URL of the feed.
+ * - attributes: Remaining HTML attributes for the feed link.
+ *   - title: A descriptive title of the feed link.
+ *   - class: HTML classes to be applied to the feed link.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="lorvens-widget text-right my-3 d-inline-flex float-right">
+  <div class="col-sm-12">
+    <a href="{{ url }}"{{ attributes.addClass('pdf-feed feed-icon btn btn-primary btn-lg h-50 rounded-5') }}>
+      Report
+    </a>
+  </div>
+</div>

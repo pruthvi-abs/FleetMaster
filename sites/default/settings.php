@@ -775,7 +775,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 }
 $config['system.logging']['error_level']='verbose';
 $databases['default']['default'] = array (
-  'database' => 'fleet_management',
+  'database' => 'fleet_management_old',
   'username' => 'root',
   'password' => '',
   'prefix' => '',

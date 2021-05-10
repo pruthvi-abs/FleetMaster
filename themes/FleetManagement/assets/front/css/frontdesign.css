@@ -36,6 +36,11 @@
   display: none;
 }
 
+#edit-field-companybranch-wrapper
+{
+  display: none;
+}
+
 #user-register-form #edit-submit {
   margin-top: 30px;
   background: #209dd8;

@@ -164,7 +164,7 @@
 <!--/Pre Loader -->
 <div class="wrapper">
   <!-- Sidebar -->
-  <nav id="sidebar" class="lorvens-bg">
+  <nav id="sidebar" class="lorvens-bg fixed-sidebar">
     <div class="sidebar-header">
       {% if role == 'company' %} {% set home_url = base_url ~
       '/company/dashboard' %} {% elseif role == 'operator' %} {% set home_url =
@@ -184,6 +184,7 @@
   <!-- /Sidebar -->
   <!-- Page Content -->
   <div id="content">
+    <div class="fixed-nav">
     <!-- Top Navigation -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -203,7 +204,7 @@
               <h5>Notifications</h5>
               <div class="notification-menu">
               {% if notifications | json_decode %}
-              {% for i in 0..3 %}
+              {% for i in 0..4 %}
                 {% set notification = notifications | json_decode %}
                 {% if notification[i][0].type %}
                 <p class="dropdown-header font-weight-bold text-left bg-lightgrey">{{ notification[i][0].type }}</p>
@@ -264,6 +265,7 @@
       <li class="breadcrumb-item active">Dashboard</li>
     </ol>
     <!-- /Breadcrumb -->
+    </div>
     <!-- Main Content -->
     <input
       id="package"
@@ -272,7 +274,9 @@
       value="{{ expiry_status }}"
     />
     {% if expiry_status != 'expired' %}
-    {{ page.content }}
+    <div>
+      {{ page.content }}
+    </div>
     {% endif %}
     <!-- /Main Content -->
   </div>
@@ -290,18 +294,6 @@
   var package = document.getElementById("package").value;
   // console.log(package);
   if (package == "expired") {
-    // Swal.fire({
-    //   title: "package Expired!",
-    //   text: "Please Renew your package!",
-    //   icon: "error",
-    //   button: "Renew!",
-    //   closeOnClickOutside: false,
-    //   closeOnEsc: false,
-    //   dangerMode: true,
-    // });
-    // $(".swal-button").on("click", function () {
-    //   window.location.href = "https://www.google.com/";
-    // });
     Swal.fire({
       title: 'Package Expired!',
       text: "Please Renew Your Package!",
@@ -325,7 +317,8 @@
     }).then((result) => {
       console.log(result);
       if (result.isConfirmed) {
-        window.location.href = "https://www.google.com/";
+        // window.location.href = "https://www.google.com/";
+        window.location.href = '{{ base_url }}/subscription';
       }
       if(result.isDismissed){
         // window.location.href = "https://www.google.com/";
@@ -333,40 +326,6 @@
       }
     })
   }
-  
-  // $('#liveToastBtn').on('click',function(){
-  //   const Toast = Swal.mixin({
-  //     toast: true,
-  //     position: 'bottom-end',
-  //     showConfirmButton: false,
-  //     timer: 3000,
-  //     timerProgressBar: true,
-  //     didOpen: (toast) => {
-  //       toast.addEventListener('mouseenter', Swal.stopTimer)
-  //       toast.addEventListener('mouseleave', Swal.resumeTimer)
-  //     }
-  //   });
-  //   toastcall('success','SignUp Successful!!!');
-  // });
-  
-  // // toastcall( '{{ icon }}' , '{{ title }}');
-  // function toastcall(icon,title){
-  //   const Toast = Swal.mixin({
-  //     toast: true,
-  //     position: 'bottom-end',
-  //     showConfirmButton: false,
-  //     timer: 3000,
-  //     timerProgressBar: true,
-  //     didOpen: (toast) => {
-  //       toast.addEventListener('mouseenter', Swal.stopTimer)
-  //       toast.addEventListener('mouseleave', Swal.resumeTimer)
-  //     }
-  //   });
-  //   Toast.fire({
-  //     icon: icon,
-  //     title: title,
-  //   });
-  // }
 </script>
   {# {% for notification in popup %}
   <script> toastcall("{{ notification.icon }}" , '{{ notification.title }}'); </script>    

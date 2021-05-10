@@ -1,0 +1,589 @@
+<?php
+
+/**
+ * @file
+ * Contains theme override functions and preprocess functions
+ */
+
+use Drupal\Core\Template\RenderWrapper;
+use Drupal\Core\Template\Attribute;
+use Drupal\search\Form\SearchBlockForm;
+use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\system\Form\ThemeSettingsForm;
+use Drupal\file\Entity\File;
+use Drupal\Core\Url;
+use Drupal\file\Plugin\Core\Entity\FileInterface;
+use Drupal\block_content\Entity\BlockContent;
+use Drupal\Core\Block\BlockPluginInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+/**
+ * Implements hook_preprocess_page() for block templates.
+ */
+function fleet_management_theme_preprocess_user(&$variables)
+{
+  /** @var User $account */
+  // $account = $variables['elements']['#user'];
+  // $variables['username'] = $account->getDisplayName();
+
+}
+//Or
+//$user = \Drupal::currentUser();
+//$settings['user']['uid'] = $user->id();
+
+function fleet_management_theme_preprocess_page(&$variables)
+{
+  global $base_url;
+  $session = \Drupal::request()->getSession();
+  $database = \Drupal::database();
+  $variables['company_email'] = $session->get('company_email');
+  $query = $database->query("SELECT uid,field_package_value FROM user__field_package,users_field_data where uid = entity_id and mail = '". $variables['company_email'] ."'");
+  $result = $query->fetchAll();
+  $field_package_value = $result[0]->field_package_value;
+  $uid = $result[0]->uid;
+
+  $variables['base_url'] = $base_url;
+  $current_user = \Drupal::currentUser();
+  $current_path = \Drupal::service('path.current')->getPath();
+  $path_args = explode('/', $current_path);
+  if($uid){
+    $user = \Drupal\user\Entity\User::load($uid);
+    
+    if($path_args[2] == '126'){
+    switch($field_package_value){
+      case 'Bronze': 
+        $user->activate();
+        $user->save();
+        break;
+      case 'Silver': 
+        $user->block();
+        $user->save();
+        break;
+        case 'Gold': 
+        $user->block();
+        $user->save();
+        break;
+      case 'Platinum': 
+        $user->block();
+        $user->save();
+        break;
+    }
+  }
+}
+  
+  if ($current_user->id()) {
+    $user = \Drupal\user\Entity\User::load($current_user->id());
+    $variables['package'] = $user->get('field_package')->value;
+    $variables['package_expiry_date'] = $user->get('field_package_expiry_date')->value;
+    $current_date =  date("Y-m-d");
+    // dump($user);
+    // dump($variables['package_expiry_date']);
+    if ($user->id() != '1') {
+      if ($path_args[1] == 'company') {
+        if ($current_date > $variables['package_expiry_date']) {
+          $variables['expiry_status'] = 'expired';
+          $user->block();
+          $user->save();
+        } else {
+          $variables['expiry_status'] = $variables['package'];
+        }
+      } elseif ($path_args[1] == 'operator') {
+        $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];
+        if ($parent_company_id) {
+          $parent_company = \Drupal\user\Entity\User::load($parent_company_id);
+        }
+        $parent_company_status = $parent_company->status->getValue()[0]['value'];
+        if (!$parent_company_status) {
+          $variables['expiry_status'] = 'expired';
+          $user->block();
+          $user->save();
+          // dump($parent_company_status);
+        }
+      }
+    }
+  }
+  $roles = $current_user->getRoles();
+  // dump($roles);
+  // $key = array_search('vehicle_allotment',$roles);
+  // dump($key);
+  if (!empty($roles[1])) {
+    $variables['role'] = $roles[1];
+    if ($roles[1] == 'company' && $current_path == '/node') {
+      $response = new RedirectResponse($base_url . '/company/dashboard');
+      $response->send();
+      return;
+    } elseif ($roles[1] == 'data_entry' && $current_path == '/node') {
+      $response = new RedirectResponse($base_url . '/operator/dashboard');
+      $response->send();
+      return;
+    } elseif ($roles[1] == 'administrator' && $current_path == '/node') {
+      $response = new RedirectResponse($base_url . '/admin/dashboard');
+      $response->send();
+      return;
+    }
+        if($roles[1] == 'administrator'){
+      $userStorage = \Drupal::entityTypeManager()->getStorage('user');
+      $query = $userStorage->getQuery();
+      $uids = $query->condition('status', '1')->condition('roles', 'company')->execute();
+      $users = $userStorage->loadMultiple($uids);
+      $keys = array_keys($users);
+      $current_date =  date("Y-m-d");
+      $end_date = date("Y-m-d", strtotime($current_date . ' + 1 month'));
+      $start_date = date("Y-m-d", strtotime($current_date));
+      // dump($users);
+      // array_push($user_ids,$current_user->id());
+      for($i=0,$j=0;$i<count($users);$i++){
+        $field_package_expiry_date = $users[$keys[$i]]->get('field_package_expiry_date')->getValue()[0]['value'];
+        $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
+        if($field_package_expiry_date >= $start_date && $field_package_expiry_date <= $end_date){
+          $notifications[$j][$i]['icon'] = 'ti-alert';
+          $notifications[$j][$i]['type'] = 'Company Package is going to expired';
+          $notifications[$j][$i]['title'] = $name . '\'s package is going to be expired on '.$field_package_expiry_date;
+          // $j++;
+        }
+      }
+      
+      $userStorage = \Drupal::entityTypeManager()->getStorage('user');
+      $query = $userStorage->getQuery();
+      $uids = $query->condition('status', '0')->condition('roles', 'company')->execute();
+      $users = $userStorage->loadMultiple($uids);
+      $keys = array_keys($users);
+      $current_date =  date("Y-m-d");
+      $end_date = date("Y-m-d", strtotime($current_date . ' + 1 month'));
+      $start_date = date("Y-m-d", strtotime($current_date));
+      // dump($users);
+      // array_push($user_ids,$current_user->id());
+      for($i=0,$j=count($notifications);$i<count($users);$i++){
+        $field_package_expiry_date = $users[$keys[$i]]->get('field_package_expiry_date')->getValue()[0]['value'];
+        $name = $users[$keys[$i]]->get('name')->getValue()[0]['value'];
+        if($field_package_expiry_date <= $current_date){
+          $notifications[$j][$i]['icon'] = 'ti-alert';
+          $notifications[$j][$i]['type'] = 'Company Package is already expired';
+          $notifications[$j][$i]['title'] = $name . '\'s package is already expired on '.$field_package_expiry_date;
+          // $j++;
+        }
+      }
+    } elseif($roles[1] == 'company'){
+
+      $database = \Drupal::database();
+      $current_user = \Drupal::currentUser();
+      $user_id = $current_user->id();
+      $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      $current_date =  date("Y-m-d");
+
+      for($i=0,$k=0,$j=0;$i<count($result);$i++){
+        $field_insurance_expiry_date_value = $result[$i]->field_insurance_expiry_date_value;
+        $title = $result[$i]->title;
+        if($field_insurance_expiry_date_value <= $current_date){
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Insurance Expired';
+          $notifications[$j][$k]['title'] = $title . '\'s insurance is already expired on '.$field_insurance_expiry_date_value;
+          $k++;
+        }
+      }
+      
+      // fuel card
+      $database = \Drupal::database();
+      $query = $database->query("SELECT * FROM `node_field_data` data,`node__field_fuel_card_expiry_date` expiry_date, `node__field_fuel` fuel WHERE data.type = 'vehicle' and expiry_date.entity_id = data.nid and fuel.entity_id = data.nid and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      // dump($query);
+      for($i=0,$k=0,$j=count($notifications);$i<count($result);$i++){
+        $field_fuel_card_expiry_date_value = $result[$i]->field_fuel_card_expiry_date_value;
+        $title = $result[$i]->field_fuel_value;
+        if($field_fuel_card_expiry_date_value <= $current_date){
+          // dump($field_fuel_card_expiry_date_value . " " . $title);
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Fuel Card Expired';
+          $notifications[$j][$k]['title'] = $title . '\'s fuel card is already expired on '.$field_fuel_card_expiry_date_value;
+          $k++;
+        }
+      }
+      
+      // safet stickers
+      $database = \Drupal::database();
+      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_safet` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      // dump($query);
+      for($i=0,$k=0,$j=count($notifications);$i<count($result);$i++){
+        $field_safet_value = $result[$i]->field_safet_value;
+        $title = $result[$i]->title;
+        if($field_safet_value <= $current_date){
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Safety Sticker Expired';
+          $notifications[$j][$k]['title'] = $title . '\'s safety sticker is already expired on '.$field_safet_value;
+          $k++;
+        }
+      }
+      // dump($notifications);
+
+      // echo "<pre>";
+      // print_r(json_encode($notifications));
+      // echo "</pre>";
+      
+      $database = \Drupal::database();
+      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_licence_expiry_date` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      // dump($query);
+      for($i=0,$k=0,$j=count($notifications);$i<count($result);$i++){
+        $field_licence_expiry_date_value = $result[$i]->field_licence_expiry_date_value;
+        $title = $result[$i]->title;
+        if($field_licence_expiry_date_value <= $current_date){
+          // dump($field_licence_expiry_date_value . " " . $title);
+          $notifications[$j][$k]['icon'] = 'ti-alert';
+          $notifications[$j][$k]['type'] = 'Licence Expired';
+          $notifications[$j][$k]['title'] = $title . '\'s licence is already expired on '.$field_licence_expiry_date_value;
+          $k++;
+        }
+      }
+      // dump($notifications);
+      
+    }
+    // dump($notifications);
+  }
+  $variables['notifications'] = json_encode($notifications);
+  // dump($roles);
+  // dump($current_path);
+  // if ($current_path == '/company/dashboard') {
+  //   $block = \Drupal\block_content\Entity\BlockContent::load('1');
+  //   // dump($block->get('body')->value);
+  //   // $block->get('body')->value = '<h3>Hello World</h3>';
+
+  //   $original_message = $block->get('body')->getValue();
+  //   // dump($original_message);
+  //   $original_message[0]['value'] = '<h3>Hello World</h3>';
+  //   $original_message[0]['summary'] = '';
+  //   $original_message[0]['format'] = 'full_html';
+  //   $block->set('body', $original_message[0]['value']);
+  //   //$value = $block->get('values')->value;
+  //   dump($block);
+  // }
+
+  // dump($current_user->getAccount());
+  // echo '<pre>';
+  // print_r($current_user);
+  // echo '</pre>';
+  // dump($current_user);
+  // echo $current_user->getEmail();
+  // dump($current_user->getRoles());
+  // echo $current_user->getDisplayName();
+  // echo $current_user->getAccountName();
+  //echo $current_user->getUsername();
+  // die;
+  // {% set roles = user.getroles(TRUE) %}
+  // {{ dump(roles) }}
+
+  $variables['username'] = $current_user->getDisplayName();
+
+  // Add responsive class
+  if (!empty($variables['page']['topwidget_first']) && !empty($variables['page']['topwidget_second']) && !empty($variables['page']['topwidget_third'])) {
+    $variables['topwidget_class'] = 'col-sm-4';
+  } elseif ((!empty($variables['page']['topwidget_first']) && !empty($variables['page']['topwidget_second'])) or (!empty($variables['page']['topwidget_first']) && !empty($variables['page']['topwidget_third'])) or (!empty($variables['page']['topwidget_third']) && !empty($variables['page']['topwidget_second']))) {
+    $variables['topwidget_class'] = 'col-sm-6';
+  } else {
+    $variables['topwidget_class'] = 'col-sm-12';
+  }
+
+
+  // Add responsive class
+  if (!empty($variables['page']['bottom_first']) && !empty($variables['page']['bottom_second']) && !empty($variables['page']['bottom_third']) && !empty($variables['page']['bottom_forth'])) {
+    $variables['bottom_class'] = 'col-md-3';
+  } else if (!empty($variables['page']['bottom_first']) && !empty($variables['page']['bottom_second']) && !empty($variables['page']['bottom_third'])) {
+    $variables['bottom_class'] = 'col-md-4';
+  } else if ((!empty($variables['page']['bottom_first']) && !empty($variables['page']['bottom_second'])) or (!empty($variables['page']['bottom_first']) && !empty($variables['page']['bottom_third'])) or (!empty($variables['page']['bottom_third']) && !empty($variables['page']['bottom_second']))) {
+    $variables['bottom_class'] = 'col-md-6';
+  } else {
+    $variables['bottom_class'] = 'col-md-12';
+  }
+
+
+  // Add responsive class
+  if (!empty($variables['page']['midwidget_first']) && !empty($variables['page']['midwidget_second']) && !empty($variables['page']['midwidget_third']) && !empty($variables['page']['midwidget_forth'])) {
+    $variables['midwidget_class'] = 'col-md-3';
+  } else if (!empty($variables['page']['midwidget_first']) && !empty($variables['page']['midwidget_second']) && !empty($variables['page']['midwidget_third'])) {
+    $variables['midwidget_class'] = 'col-md-4';
+  } else if ((!empty($variables['page']['midwidget_first']) && !empty($variables['page']['midwidget_second'])) or (!empty($variables['page']['midwidget_first']) && !empty($variables['page']['midwidget_third'])) or (!empty($variables['page']['midwidget_third']) && !empty($variables['page']['midwidget_second']))) {
+    $variables['midwidget_class'] = 'col-md-6';
+  } else {
+    $variables['midwidget_class'] = 'col-md-12';
+  }
+
+
+  // Add responsive class
+  if (!empty($variables['page']['updates_first']) && !empty($variables['page']['updates_second']) && !empty($variables['page']['updates_third']) && !empty($variables['page']['updates_forth'])) {
+    $variables['updates_class'] = 'col-md-3';
+  } else if (!empty($variables['page']['updates_first']) && !empty($variables['page']['updates_second']) && !empty($variables['page']['updates_third'])) {
+    $variables['updates_class'] = 'col-md-4';
+  } else if ((!empty($variables['page']['updates_first']) && !empty($variables['page']['updates_second'])) or (!empty($variables['page']['updates_first']) && !empty($variables['page']['updates_third'])) or (!empty($variables['page']['updates_third']) && !empty($variables['page']['updates_second']))) {
+    $variables['updates_class'] = 'col-md-6';
+  } else {
+    $variables['updates_class'] = 'col-md-12';
+  }
+
+
+  // Add responsive class
+  if (!empty($variables['page']['features_first']) && !empty($variables['page']['features_second']) && !empty($variables['page']['features_third'])) {
+    $variables['features_class'] = 'col-md-4';
+    $variables['features_first_class'] = 'col-md-4';
+  } elseif ((!empty($variables['page']['features_first']) && !empty($variables['page']['features_second'])) or (!empty($variables['page']['features_first']) && !empty($variables['page']['features_third'])) or (!empty($variables['page']['features_third']) && !empty($variables['page']['features_second']))) {
+    $variables['features_class'] = 'col-md-6';
+    $variables['features_first_class'] = 'col-md-6';
+  } else {
+    $variables['features_class'] = 'col-md-12';
+  }
+
+
+  // Add responsive class.
+  if (!empty($variables['page']['footer_first']) && !empty($variables['page']['footer_second']) && !empty($variables['page']['footer_third'])) {
+    $variables['footer_class'] = 'col-md-4';
+  } elseif ((!empty($variables['page']['footer_first']) && !empty($variables['page']['footer_second'])) or (!empty($variables['page']['footer_first']) && !empty($variables['page']['footer_third'])) or (!empty($variables['page']['footer_third']) && !empty($variables['page']['footer_second']))) {
+    $variables['footer_class'] = 'col-md-6';
+  } else {
+    $variables['footer_class'] = 'col-md-12';
+  }
+
+
+  // Add information about the number of sidebars.
+  if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
+    $variables['contentlayout'] = 'col-md-6';
+    $variables['sidebarfirst'] = 'col-md-3';
+    $variables['sidebarsecond'] = 'col-md-3';
+  } elseif (!empty($variables['page']['sidebar_first'])) {
+    $variables['contentlayout'] = 'col-md-9 ';
+    $variables['sidebarfirst'] = 'col-md-3';
+  } elseif (!empty($variables['page']['sidebar_second'])) {
+    $variables['contentlayout'] = 'col-md-9';
+    $variables['sidebarsecond'] = 'col-md-3';
+  } else {
+    $variables['contentlayout'] = 'col-md-12';
+  }
+
+
+  // Social media global variable.
+  $variables['show_social_icon'] = theme_get_setting('show_social_icon');
+  $variables['facebook_url'] = theme_get_setting('facebook_url');
+  $variables['twitter_url'] = theme_get_setting('twitter_url');
+  $variables['linkedin_url'] = theme_get_setting('linkedin_url');
+  $variables['instagram_url'] = theme_get_setting('instagram_url');
+  $variables['rss_url'] = theme_get_setting('rss_url');
+  $variables['show_credit_link'] = theme_get_setting('show_credit_link');
+
+
+  //To get the current URL
+  $current_url  = \Drupal::request()->getRequestUri();
+  $current_path = explode("/", $current_url);
+  $variables['current_path'] = $current_path[2];
+
+
+  // Slider
+  // Assign Variable for slider
+  if ($variables['is_front']) {
+    if (theme_get_setting('show_slideshow', 'fleet_management_theme') == 1) {
+      $variables['show_slideshow'] = 1;
+      $variables['slider_content'] = fleet_management_theme_get_slider_content();
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_menu().
+ */
+function fleet_management_theme_preprocess_menu(&$variables, $hook)
+{
+  if ($hook == 'menu__main') { // We're doing that for main menu.
+    // Get the current path.
+    $current_path = \Drupal::request()->getRequestUri();
+    $items = $variables['items'];
+    foreach ($items as $key => $item) {
+      // If path is current_path, set active to li.
+      if ($item['url']->toString() == $current_path) {
+        // Add active link.
+        $variables['items'][$key]['attributes']['class'] = 'active';
+      }
+    }
+  }
+}
+
+/**
+ * Slider
+ * Implements custom function for get slider content.
+ */
+function fleet_management_theme_get_slider_content()
+{
+  $slider_content = array();
+  for ($i = 1; $i <= theme_get_setting('no_of_slides'); $i++) {
+    $fid = theme_get_setting('slide_image_path' . $i, 'fleet_management_theme');
+    if (!empty($fid)) {
+      // $file = file_load($fid[0]);
+      $file = File::load($fid[0]);
+      $uri = $file->getFileUri();
+      $path = file_create_url($uri);
+    } else {
+      // $path = base_path() . drupal_get_path('theme', 'fleet_management_theme') . theme_get_setting('slide_image_path_' . $i, 'fleet_management_theme');
+      $path = base_path() . theme_get_setting('slide_image_path_' . $i, 'fleet_management_theme');
+    }
+    $slider_content[$i] = '
+    <div
+        class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+    <h1>' . theme_get_setting('slide_title_' . $i, 'fleet_management_theme') . '</h1>
+    <h2>' . theme_get_setting('slide_description_' . $i, 'fleet_management_theme') . '</h2>
+    <div class="d-lg-flex">
+          <a href="' . theme_get_setting('slide_url_' . $i, 'fleet_management_theme') . '" class="btn-get-started scrollto">Get Started</a>
+          
+        </div>
+        </div>
+        <div
+          class="col-lg-6 order-1 order-lg-2 hero-img"
+          data-aos="zoom-in"
+          data-aos-delay="200"
+        >
+          <img
+            src="' . $path . '"
+            class="img-fluid animated"
+            alt=""
+          />
+      ';
+  }
+
+
+
+
+
+
+  return $slider_content;
+}
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ */
+function fleet_management_theme_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+
+  $form['fleet_management_theme_info'] = array(
+    '#markup' => '<h2><br/>Advanced Theme Settings</h2><div class="messages messages--warning">Clear cache after making any changes in theme settings. <a href="../../config/development/performance">Click here to clear cache</a></div>'
+  );
+
+  //Social Icon Link
+  $form['fleet_management_theme_settings']['social_icon'] = array(
+    '#type' => 'details',
+    '#title' => t('Social Media Link'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+  $form['fleet_management_theme_settings']['social_icon']['show_social_icon'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Social Icons'),
+    '#default_value' => theme_get_setting('show_social_icon'),
+    '#description'   => t("Show/hide social media links"),
+  );
+  $form['fleet_management_theme_settings']['social_icon']['facebook_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Facebook URL'),
+    '#default_value' => theme_get_setting('facebook_url'),
+  );
+  $form['fleet_management_theme_settings']['social_icon']['twitter_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Twitter URL'),
+    '#default_value' => theme_get_setting('twitter_url'),
+  );
+  $form['fleet_management_theme_settings']['social_icon']['linkedin_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('LinkedIn URL'),
+    '#default_value' => theme_get_setting('linkedin_url'),
+  );
+  $form['fleet_management_theme_settings']['social_icon']['instagram_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Instagram URL'),
+    '#default_value' => theme_get_setting('instagram_url'),
+  );
+  $form['fleet_management_theme_settings']['social_icon']['rss_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('RSS URL'),
+    '#default_value' => theme_get_setting('rss_url'),
+  );
+
+  // Show/hide credit
+  $form['fleet_management_theme_settings']['credit_link'] = array(
+    '#type' => 'details',
+    '#title' => t('Footer Credit Link'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+  $form['fleet_management_theme_settings']['credit_link']['show_credit_link'] = array(
+    '#type' => 'checkbox',
+    '#title' => t("Show/Hide 'Designed by Zymphonies' credit text"),
+    '#default_value' => theme_get_setting('show_credit_link'),
+    '#description'   => t("Highly recommend to display credit in footer"),
+  );
+
+  //Slide show configure 
+  $form['fleet_management_theme_settings']['slideshow'] = array(
+    '#type' => 'details',
+    '#title' => t('Front Page Slideshow'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+  $form['fleet_management_theme_settings']['slideshow']['no_of_slides'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of slides'),
+    '#default_value' => theme_get_setting('no_of_slides'),
+    '#description'  => t("Enter the number of slides required & Save configuration"),
+    '#markup' => '<div class="messages messages--warning">Clear caches after making any changes in theme settings. <a href="../../config/development/performance">Click here to clear cache</a></div>',
+  );
+  $form['fleet_management_theme_settings']['slideshow']['show_slideshow'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show Slideshow'),
+    '#default_value' => theme_get_setting('show_slideshow'),
+    '#description'   => t("Show/Hide Slideshow in home page"),
+  );
+  $form['fleet_management_theme_settings']['slideshow']['slide'] = array(
+    '#markup' => t('Change the banner image, title, description and link using below fieldset'),
+  );
+
+  for ($i = 1; $i <= theme_get_setting('no_of_slides'); $i++) {
+    $form['fleet_management_theme_settings']['slideshow']['slide' . $i] = array(
+      '#type' => 'details',
+      '#title' => t('Slide ' . $i),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+    );
+    $form['fleet_management_theme_settings']['slideshow']['slide' . $i]['slide_image_path' . $i] = array(
+      '#type' => 'managed_file',
+      '#title' => t('Slide ' . $i . ' Image'),
+      '#default_value' => theme_get_setting('slide_image_path' . $i, 'fleet_management_theme'),
+      '#upload_location' => 'public://',
+    );
+    $form['fleet_management_theme_settings']['slideshow']['slide' . $i]['slide_title_' . $i] = array(
+      '#type' => 'textfield',
+      '#title' => t('Slide ' . $i . ' Title'),
+      '#default_value' => theme_get_setting('slide_title_' . $i, 'fleet_management_theme'),
+    );
+    $form['fleet_management_theme_settings']['slideshow']['slide' . $i]['slide_description_' . $i] = array(
+      '#type' => 'textarea',
+      '#title' => t('Slide ' . $i . ' Description'),
+      '#default_value' => theme_get_setting('slide_description_' . $i, 'fleet_management_theme'),
+    );
+    $form['fleet_management_theme_settings']['slideshow']['slide' . $i]['slide_url_' . $i] = array(
+      '#type' => 'textfield',
+      '#title' => t('Slide ' . $i . ' URL'),
+      '#default_value' => theme_get_setting('slide_url_' . $i, 'fleet_management_theme'),
+    );
+
+    // Make the uploaded images permanent.
+    $image = theme_get_setting('slide_image_path' . $i, 'fleet_management_theme');
+    if (!empty($image)) {
+      $file = File::load($image[0]);
+      $file->status = FILE_STATUS_PERMANENT;
+      $file->save();
+      $file_usage = \Drupal::service('file.usage');
+      $file_usage_check = $file_usage->listUsage($file);
+      if (empty($file_usage_check)) {
+        $file_usage->add($file, 'fleet_management_theme', 'theme', $image[0]);
+      }
+    }
+  }
+}

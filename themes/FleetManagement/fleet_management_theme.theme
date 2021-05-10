@@ -59,26 +59,27 @@ function fleet_management_theme_preprocess_page(&$variables)
   $current_user = \Drupal::currentUser();
   $current_path = \Drupal::service('path.current')->getPath();
   $path_args = explode('/', $current_path);
+  // dump($path_args);
   if ($uid) {
     $user = \Drupal\user\Entity\User::load($uid);
 
-    if ($path_args[2] == '126') {
+    if ($path_args[2] == '126') { // for thank you subscription page
       switch ($field_package_value) {
         case 'Bronze':
-          $user->activate();
-          $user->save();
+          // $user->activate();
+          // $user->save();
           break;
         case 'Silver':
-          $user->block();
-          $user->save();
+          // $user->block();
+          // $user->save();
           break;
         case 'Gold':
-          $user->block();
-          $user->save();
+          // $user->block();
+          // $user->save();
           break;
         case 'Platinum':
-          $user->block();
-          $user->save();
+          // $user->block();
+          // $user->save();
           break;
       }
     }
@@ -95,8 +96,8 @@ function fleet_management_theme_preprocess_page(&$variables)
       if ($path_args[1] == 'company') {
         if ($current_date > $variables['package_expiry_date']) {
           $variables['expiry_status'] = 'expired';
-          $user->block();
-          $user->save();
+          // $user->block();
+          // $user->save();
         } else {
           $variables['expiry_status'] = $variables['package'];
         }
@@ -108,8 +109,8 @@ function fleet_management_theme_preprocess_page(&$variables)
         $parent_company_status = $parent_company->status->getValue()[0]['value'];
         if (!$parent_company_status) {
           $variables['expiry_status'] = 'expired';
-          $user->block();
-          $user->save();
+          // $user->block();
+          // $user->save();
           // dump($parent_company_status);
         }
       }
@@ -159,8 +160,8 @@ function fleet_management_theme_preprocess_page(&$variables)
           $k++;
         }
       }
-      
-      
+
+
       $userStorage = \Drupal::entityTypeManager()->getStorage('user');
       $query = $userStorage->getQuery();
       $uids = $query->condition('status', '0')->condition('roles', 'company')->execute();
@@ -260,9 +261,85 @@ function fleet_management_theme_preprocess_page(&$variables)
           $k++;
         }
       }
-      // dump($notification_count);
-      // dump($notifications);
 
+      $user_ids = array();
+      $user_id = '';
+      $database = \Drupal::database();
+      $userStorage = \Drupal::entityTypeManager()->getStorage('user');
+      $query = $userStorage->getQuery();
+      $uids = $query->condition('status', '1')->condition('roles', 'data_entry')->execute();
+      $users = $userStorage->loadMultiple($uids);
+      $keys = array_keys($users);
+
+      array_push($user_ids, $current_user->id());
+      $user_id = $current_user->id();
+      for ($i = 0; $i < count($users); $i++) {
+        $company_id = $users[$keys[$i]]->get('field_operatorcompany')->target_id;
+        if ($current_user->id() == $company_id) {
+          array_push($user_ids, $users[$keys[$i]]->id());
+          $user_id .= ',' . $users[$keys[$i]]->id();
+        }
+      }
+
+      $monday = strtotime("last monday");
+      $monday = date('w', $monday) == date('w') ? $monday + 7 * 86400 : $monday;
+      $sunday = strtotime(date("Y-m-d", $monday) . " +6 days");
+      $start_date = date("Y-m-d", $monday);
+      $end_date = date("Y-m-d", $sunday);
+      $vehicle_ids = array();
+      $total_litres_pumped = array();
+      $data = array();
+      // dump($start_date);
+      // dump($end_date);
+
+      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_tank_capacity_in_litres` WHERE `type` LIKE 'vehicle' and nid = entity_id and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      // dump($query);
+      // dump($result);
+
+      for ($i = 0; $i < count($result); $i++) {
+        $vehicle_id = $result[$i]->nid;
+        $field_tank_capacity_in_litres_value = $result[$i]->field_tank_capacity_in_litres_value;
+        $vehicle_ids[$vehicle_id] = $field_tank_capacity_in_litres_value;
+        // dump($vehicle_id);
+      }
+      // dump($vehicle_ids);
+
+      $query = $database->query("SELECT t1.nid,t1.vid,t1.title,t3.field_fuel_date_value,t2.field_litres_pumped_value,t4.field_vehicle_regno_target_id FROM node_field_data as t1 inner join node__field_litres_pumped as t2 on t1.nid = t2.entity_id inner join node__field_fuel_date as t3 on t1.nid = t3.entity_id inner join node__field_vehicle_regno as t4 on t4.entity_id = t1.nid WHERE `type` LIKE 'fuel_master' and `uid` in (57,191,192,194) and ( t3.field_fuel_date_value >= '$start_date' and t3.field_fuel_date_value <= '$end_date')");
+      $result = $query->fetchAll();
+      // dump($query);
+      // dump($result);
+      $title = array();
+      $date = array();
+      for ($i = 0; $i < count($result); $i++) {
+        $vid = $result[$i]->field_vehicle_regno_target_id;
+        $title[$vid] = $result[$i]->title;
+        $date[$vid] = $result[$i]->field_fuel_date_value;
+        $total_litres_pumped[$vid] += $result[$i]->field_litres_pumped_value;
+        // dump($vid);
+      }
+      // dump($title);
+      $keys = array_keys($vehicle_ids);
+      for ($i = 0; $i < count($vehicle_ids); $i++) {
+        if ((string) $total_litres_pumped[$keys[$i]] > $vehicle_ids[$keys[$i]]) {
+          $data[$keys[$i]]['title'] = $title[$keys[$i]];
+          $data[$keys[$i]]['date'] = $result[$i]->field_fuel_date_value;
+          $data[$keys[$i]]['liters_pumped'] = (string) $total_litres_pumped[$keys[$i]];
+        }
+      }
+
+      // dump($data);
+      for ($l = 0, $k = 0, $j = count($notifications); $l < count($data); $l++) {
+        $notifications[$j][$k]['icon'] = 'ti-alert';
+        $notifications[$j][$k]['type'] = 'Fuel Limit Exceeded';
+        $notifications[$j][$k]['id'] = 'fuelLimitExceed';
+        $notifications[$j][$k]['title'] = $data[$keys[$l]]['title'] . '\'s Fuel Limit is Exceeded on ' . $data[$keys[$l]]['date'];
+        $k++;
+      }
+      // dump($result);       
+      // dump($vehicle_ids);
+
+      // dump($notifications);
     } elseif ($roles[1] == 'data_entry') {
 
       // dump($roles);
@@ -312,6 +389,67 @@ function fleet_management_theme_preprocess_page(&$variables)
           }
         }
       }
+      
+      // fuel limit notifications
+      
+      if (in_array('fuel_filling', $roles)) {
+
+      $monday = strtotime("last monday");
+      $monday = date('w', $monday) == date('w') ? $monday + 7 * 86400 : $monday;
+      $sunday = strtotime(date("Y-m-d", $monday) . " +6 days");
+      $start_date = date("Y-m-d", $monday);
+      $end_date = date("Y-m-d", $sunday);
+      $vehicle_ids = array();
+      $total_litres_pumped = array();
+      $data = array();
+      // dump($start_date);
+      // dump($end_date);
+      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_tank_capacity_in_litres` WHERE `type` LIKE 'vehicle' and nid = entity_id and `uid` in (" . $user_id . ")");
+      $result = $query->fetchAll();
+      // dump($query);
+      // dump($result);
+
+      for ($i = 0; $i < count($result); $i++) {
+        $vehicle_id = $result[$i]->nid;
+        $field_tank_capacity_in_litres_value = $result[$i]->field_tank_capacity_in_litres_value;
+        $vehicle_ids[$vehicle_id] = $field_tank_capacity_in_litres_value;
+        // dump($vehicle_id);
+      }
+      // dump($vehicle_ids);
+
+      $query = $database->query("SELECT t1.nid,t1.vid,t1.title,t3.field_fuel_date_value,t2.field_litres_pumped_value,t4.field_vehicle_regno_target_id FROM node_field_data as t1 inner join node__field_litres_pumped as t2 on t1.nid = t2.entity_id inner join node__field_fuel_date as t3 on t1.nid = t3.entity_id inner join node__field_vehicle_regno as t4 on t4.entity_id = t1.nid WHERE `type` LIKE 'fuel_master' and `uid` in (57,191,192,194) and ( t3.field_fuel_date_value >= '$start_date' and t3.field_fuel_date_value <= '$end_date')");
+      $result = $query->fetchAll();
+      // dump($query);
+      // dump($result);
+      $title = array();
+      $date = array();
+      for ($i = 0; $i < count($result); $i++) {
+        $vid = $result[$i]->field_vehicle_regno_target_id;
+        $title[$vid] = $result[$i]->title;
+        $date[$vid] = $result[$i]->field_fuel_date_value;
+        $total_litres_pumped[$vid] += $result[$i]->field_litres_pumped_value;
+        // dump($vid);
+      }
+      // dump($title);
+      $keys = array_keys($vehicle_ids);
+      for ($i = 0; $i < count($vehicle_ids); $i++) {
+        if ((string) $total_litres_pumped[$keys[$i]] > $vehicle_ids[$keys[$i]]) {
+          $data[$keys[$i]]['title'] = $title[$keys[$i]];
+          $data[$keys[$i]]['date'] = $result[$i]->field_fuel_date_value;
+          $data[$keys[$i]]['liters_pumped'] = (string) $total_litres_pumped[$keys[$i]];
+        }
+      }
+
+      // dump($data);
+      for ($l = 0, $k = 0, $j = count($notifications); $l < count($data); $l++) {
+        $notifications[$j][$k]['icon'] = 'ti-alert';
+        $notifications[$j][$k]['type'] = 'Fuel Limit Exceeded';
+        $notifications[$j][$k]['id'] = 'fuelLimitExceed';
+        $notifications[$j][$k]['title'] = $data[$keys[$l]]['title'] . '\'s Fuel Limit is Exceeded on ' . $data[$keys[$l]]['date'];
+        $k++;
+      }
+
+    }
 
       // safet stickers
       if (in_array('vehicle_', $roles)) {

@@ -34,21 +34,21 @@ class CompanyDetails extends BlockBase
     $query = $database->query($query);
     $results = $query->fetchAll();
     $results = json_decode(json_encode($results), true);
-
+    
     // dump($query);
     // dump($results);
 
-    for ($i = 0; $i < count($results); $i++) {
+    for($i = 0;$i<count($results);$i++){
       $data[$i]['user_id'] = $results[$i]['user_id'];
       $data[$i]['company_name'] = $results[$i]['company_name'];
       $data[$i]['package'] = $results[$i]['package'];
-      if ($results[$i]['status'] == '1') {
+      if($results[$i]['status'] == '1'){
         $data[$i]['status'] = 'Active';
       } else {
         $data[$i]['status'] = 'Inactive';
       }
     }
-    if (empty($data)) {
+    if(empty($data)){
       $data = '';
     }
     // dump($data);
@@ -63,17 +63,5 @@ class CompanyDetails extends BlockBase
       '#markup' => json_encode($data),
       '#description' => 'my custom desc'
     );
-  }
-  public function statuschange(int $st, int $id)
-  {
-    $user = \Drupal\user\Entity\User::load($id);
-    dump($user);
-    // if ($st == 'Active') {
-    //   $user->block();
-    //   $user->save();
-    // } elseif ($st == 'Inactive') {
-    //   $user->activate();
-    //   $user->save();
-    // }
   }
 }

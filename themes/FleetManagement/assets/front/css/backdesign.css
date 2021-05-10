@@ -17,6 +17,11 @@
 #edit-field-fuel-efficiency-wrapper {
   display: none;
 }
+#edit-field-companybranch-wrapper
+{
+  display: none;
+}
+
 #edit-preview {
   display: none;
 }
@@ -474,19 +479,19 @@ a.menu_lvl_0_link.is-active {
   background-color: rgba(55, 81, 126, 0.8);
   border-color: rgba(55, 81, 126, 0.8);
 }
-#edit-delete {
+#edit-delete,#edit-cancel {
   color: white;
   cursor: pointer;
-  width: 7%;
+  width: auto;
   background-color: #37517e;
   border-color: #37517e;
-  border-radius: 0;
+  border-radius: 5px;
   margin-bottom: 5px;
   display: block;
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   line-height: 1.5;
-  height: 48px;
+  height: 50% !important;
 }
 
 /* .filter form label{
@@ -647,4 +652,19 @@ a.menu_lvl_0_link.is-active {
 /* .nav-icon{
   pointer-events: none;
   cursor: pointer;
+} */
+
+/* .fixed-nav{
+  top: 0;
+  right: 0;
+  position: fixed;
+  width: 81.5%;
+  z-index: 9999;
+}
+.fixed-sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18.5%;
+  z-index:9999;
 } */

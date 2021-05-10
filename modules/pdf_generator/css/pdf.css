@@ -1,0 +1,43 @@
+@page {
+  padding: 2cm;
+}
+
+body {
+  font: normal 14px "Enriqueta", serif;
+  margin: 0;
+  position: relative;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table thead {
+  background-color: #37517e;
+  color: white;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table,
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-capitalize{
+  text-transform: capitalize;
+}
+
+.text-color{
+  color: #37517e;
+}

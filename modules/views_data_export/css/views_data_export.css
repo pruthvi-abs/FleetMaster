@@ -25,3 +25,7 @@
   background-image: url(../images/xlsx.png);
   width: 43px;
 }
+
+.csv-feed:focus{
+  color: white;
+}

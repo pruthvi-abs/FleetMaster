@@ -32,6 +32,8 @@
 <div{{ attributes.addClass(classes).addClass('d-flex') }}>{{ children }}</div>
 {% elseif attributes.id == 'edit-body-0-format-help' %}
 <div{{ attributes.addClass('d-none') }}>{{ children }}</div>
+{% elseif attributes.id == 'edit-body-0-format-help' %}
+<div{{ attributes.addClass('delete') }}>{{ children }}</div>
 {% else %}
 <div{{ attributes.addClass(classes) }}>{{ children }}</div>
 {% endif %}

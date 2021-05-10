@@ -9,6 +9,8 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 /**
  * Implements hook_help().
@@ -44,7 +46,7 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 {
 
 	$current_path = \Drupal::service('path.current')->getPath();
-	//dump($form_id);	
+	//dump($form_id);
 
 
 	/*
@@ -64,29 +66,34 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 	$path_args = explode('/', $current_path);
 	switch ($form_id) {
 		case 'user_register_form':
-			$form = _user_register_form($form, $path_args, $form_state);
+			$package = $_GET['pkg'];
+			$form = _user_register_form($form, $path_args, $form_state, $package);
 			break;
 		case 'webform_submission_company_report_node_203_add_form':
 			// dump($form);
 			$form['actions']['submit']['#submit'][] = '_company_report_handler';
 			break;
-        case 'node_driver_form':
-					//$form=_employeeid_duplication_validate($form,$form_state);
-					$form['#validate'][] = '_employeeid_duplication_validate';
-					break;
+		case 'node_driver_form':
+			//$form=_employeeid_duplication_validate($form,$form_state);
+			$form['#validate'][] = '_employeeid_duplication_validate';
+			break;
 		case 'node_vehicle_assigment_form':
 			$form = _vehicle_assignment_form($form, $path_args);
 			$form = _vehicle_assignment_driver_options($form, $path_args);
 			$form = _driver_assignment_options($form, $path_args);
 			$form['actions']['submit']['#submit'][] = '_vehicle_assignment_submit';
+
 			break;
 		case 'node_vehicle_assigment_edit_form':
 			$form['actions']['submit']['#submit'][] = '_vehicle_unassignment_submit';
+			(string)$form['status']['widget']['value']['#title'] = "UnAssign";
 
 			break;
 		case 'user_form':
 			//	dump($form['role_change']['widget']['#default_value']);
 			$form = _remove_roles($form);
+			unset($form['field_employee_type']['widget']['#options']['GENERAL DRIVER']);
+			unset($form['field_employee_type']['widget']['#options']['NORMAL EMPLOYEE']);
 			break;
 		case  'role_delegation_role_assign_form':
 			//
@@ -98,46 +105,68 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 		case  'views_exposed_form':
 			//	unset($form['field_branch_name_target_id_verf']['#options'][102]);
 			$form = _branch_list_exposed_options($form, $path_args);
+			$form =  _department_list_exposed_options($form, $path_args);
+			$form['field_trip_completed_status_value']['#options'][1] = "Completed";
+			$form['field_trip_completed_status_value']['#options'][0] = "Ongoing";
+			// dump($form);
+
+
+
+
+			$view = $form_state->view;
+			// if ($view->name == 'driver_mangement' && $view->current_display == 'Page') { 
+			$form['views_exposed_form'] = array(
+				// '#markup' => '<div class="YOUR_CLASSES"><a href="/link-target">Link Label1</a></div>',
+				'#markup' => '<div class="lorvens-widget text-right my-3 d-inline-flex float-right"><div class="col-sm-12">
+										<a href="#" class="pdf-feed feed-icon btn btn-primary btn-lg rounded-5">
+											Template
+										</a></div></div>'
+			);
+			//  }
+
+
+
+
 			break;
-	
-			case 'node_branches_form':
-			case 'node_branches_edit_form':	
 
-						$form = _addcompanynameforbranch($form,$form_state);
-						$form['#validate'][] = '_branchname_duplication_validate';
+		case 'node_branches_form':
+		case 'node_branches_edit_form':
+
+			$form = _addcompanynameforbranch($form, $form_state);
+			$form['#validate'][] = '_branchname_duplication_validate';
 
 
-							
-					break;
 
-			case 'node_departments_form':
-						$form = _addcompanynameforbranch($form,$form_state);
-						$form['#validate'][] = '_departmentname_duplication_validate';
+			break;
 
-					break;		
+		case 'node_departments_form':
+			$form = _addcompanynameforbranch($form, $form_state);
+			$form['#validate'][] = '_departmentname_duplication_validate';
+
+			break;
 
 
 		case 'node_vehicle_maintenance_form':
 
-					$form= _helloworld_field_driver_name($form,$path_args);
-					$form= _helloworld_field_vehicle_name($form,$path_args);
-					
-
-					break;			
-
- 	  case 'node_accident_reporting_form':		
-					$form= _helloworld_field_driver_name($form,$path_args);
-					$form= _helloworld_field_vehicle_name($form,$path_args);
-					
-
-					break;			
+			$form = _helloworld_field_driver_name($form, $path_args);
+			$form = _helloworld_field_vehicle_name($form, $path_args);
 
 
-	
+			break;
+
+		case 'node_accident_reporting_form':
+			$form = _helloworld_field_driver_name($form, $path_args);
+			$form = _helloworld_field_vehicle_name($form, $path_args);
+
+
+			break;
+
+
+
 
 		case 'node_trip_logging_form':
-			$form = _trip_assignment_vehicle_options($form,$path_args);
-			$form = _trip_assignment_driver_options($form,$path_args);
+			$form = _trip_assignment_vehicle_options($form, $path_args);
+			$form = _trip_assignment_driver_options($form, $path_args);
 			$form = _helloworld_field_driver_name($form, $path_args);
 			$form = _helloworld_field_vehicle_name($form, $path_args);
 			unset($form['field_trip_completed_status']);
@@ -152,8 +181,8 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 			break;
 		case 'node_trip_logging_edit_form':
 
-			$form = _trip_assignment_vehicle_edit_options($form,$form_state);
-			$form = _trip_assignment_driver_edit_options($form,$form_state);
+			$form = _trip_assignment_vehicle_edit_options($form, $form_state);
+			$form = _trip_assignment_driver_edit_options($form, $form_state);
 			foreach (array_keys($form['actions']) as $action) {
 				if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
 					$form['actions'][$action]['#submit'][] = 'employee_form_submit';
@@ -176,26 +205,385 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 
 
 			break;
+
+		case 'node_vehicles_import_form':
+			//dump("chandana");
+
+			foreach (array_keys($form['actions']) as $action) {
+				if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+
+					//dump("sdjkvjsdbvljds");
+					//exit;
+					//dump($form);
+					$form['actions'][$action]['#submit'][] = 'vehicleimport_form_submit';
+					$form['#validate'][] = 'vehicleimport_form_validate';
+				}
+			}
+
+			break;
+
+		case 'node_employees_import_form':
+
+			foreach (array_keys($form['actions']) as $action) {
+				if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+
+					//dump("sdjkvjsdbvljds");
+					//exit;			
+					$form['actions'][$action]['#submit'][] = 'employee_import_form_submit';
+					//dump($form);
+					$form['#validate'][] = 'employee_import_form_validate';
+				}
+			}
+			break;
+	}
+}
+
+function validate_set_error_message(\Drupal\Core\Form\FormStateInterface $form_state, $field, $msg)
+{
+
+	$form_state->setErrorByName($field, t($msg));
+}
+
+function vehicleimport_form_validate(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+	//$chassisno = $form_state->getValue('field_chassis_no');
+	$fid = $form['field_vehicle_import']['widget']['0']['fids']['#value']['0'];
+
+	//dump($form['field_vehicle_import']);
+	//dump($fid);   
+	$array = file_import($form, $form_state, $fid);
+
+	foreach ($array as $key => $value) {
+		if ($value[11] != NULL) {
+
+			if (empty($value[1])) {
+				validate_set_error_message($form_state, 'field_chassis_no' . $key, "chassis number required at row number" . ($key + 1));
+			}
+			if (empty($value[11])) {
+				validate_set_error_message($form_state, 'title' . $key, "Registration Number  required at row number" . ($key + 1));
+			}
+			if (empty($value[0])) {
+				validate_set_error_message($form_state, 'field_brand' . $key, "Brand Name required at row number" . ($key + 1));
+			}
+			if (empty($value[8])) {
+				validate_set_error_message($form_state, 'field_make' . $key, "make value required at row number" . ($key + 1));
+			}
+
+			if (empty($value[2])) {
+				validate_set_error_message($form_state, 'field_color' . $key, "color required at row number" . ($key + 1));
+			}
+			if (empty($value[17])) {
+				validate_set_error_message($form_state, 'field_model' . $key, "model bumber required at row number" . ($key + 1));
+			}
+			if (empty($value[4])) {
+				validate_set_error_message($form_state, 'field_fuel_card_expiry_date' . $key, "fuel card expiry value required at row number" . ($key + 1));
+			}
+
+			if (empty($value[12])) {
+				validate_set_error_message($form_state, 'field_safet' . $key, "safetystickerexpiry required at row number" . ($key + 1));
+			}
+
+			if (empty($value[6])) {
+				validate_set_error_message($form_state, 'field_insurance_expiry_date' . $key, "insurance expiry required at row number" . ($key + 1));
+			}
+			if (empty($value[15])) {
+				validate_set_error_message($form_state, 'field_fuel_type' . $key, "fueltype required at row number" . ($key + 1));
+			}
+			if (empty($value[10])) {
+				validate_set_error_message($form_state, 'field_purchase_date' . $key, "purchase date  required at row number" . ($key + 1));
+			} else {
+				$purchase_date = explode('/', $value[10]);
+				if (!is_numeric($purchase_date[0]) || !is_numeric($purchase_date[1]) || !is_numeric($purchase_date[2]))
+					validate_set_error_message($form_state, 'field_purchase_date' . $key, "purchase date should be a number at row number" . ($key + 1));
+			}
+			if (empty($value[13])) {
+
+				validate_set_error_message($form_state, 'field_tank_capacity_in_litres' . $key, "Tank capacity required at row number" . ($key + 1));
+			} else {
+				if (!is_numeric($value[13])) {
+					validate_set_error_message($form_state, 'field_tank_capacity_in_litres' . $key, "tank capacity should be number" . ($key + 1));
+				}
+			}
+
+			if (empty($value[19])) {
+				validate_set_error_message($form_state, 'field_branch_name' . $key, "Branch Name  required at row number" . ($key + 1));
+			} else {
+				$connection = \Drupal::database();
+				$result = $connection->query("SELECT nid FROM node_field_data WHERE title='" . $value[19] . "'");
+				$result = $result->fetchObject();
+				if ($result == false)
+					validate_set_error_message($form_state, 'field_branch_name' . $key, "Branch Name does not exists row number" . ($key + 1));
+			}
+		}
+	}
+}
+
+function employee_import_form_validate(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+
+	// dump($form['field_employee_import']);
+	//  $chassisno = $form_state->getValue('field_chassis_no');
+	$fid = $form['field_employee_import']['widget']['0']['fids']['#value']['0'];
+
+	//dump($fid);	
+	//	dump($form['field_employee_import']);
+	//dump($form_state);
+	$array = file_import($form, $form_state, $fid);
+
+	//	dump($array);	
+	foreach ($array as $key => $value) {
+		if ($value[0] != NULL) {
+
+			if (empty($value[5])) {
+				validate_set_error_message($form_state, 'field_doj' . $key, "Date of joining required at row number" . ($key + 1));
+			} else {
+				$dojo = explode('/', $value[5]);
+				if (!is_numeric($dojo[0]) || !is_numeric($dojo[1]) || !is_numeric($dojo[2]))
+					validate_set_error_message($form_state, 'field_doj' . $key, "Date of joining  should be a number at row number" . ($key + 1));
+			}
+			if (!empty($value[4])) {
+				$dobo = explode('/', $value[4]);
+				if (!is_numeric($dobo[0]) || !is_numeric($dobo[1]) || !is_numeric($dobo[2]))
+					validate_set_error_message($form_state, 'field_doj' . $key, "Date of Birth  should be a number at row number" . ($key + 1));
+			}
+
+			if (empty($value[3])) {
+				validate_set_error_message($form_state, 'field_driver_id' . $key, "Employee ID required at row number" . ($key + 1));
+			}
+
+			if (empty($value[2])) {
+				validate_set_error_message($form_state, 'field_employee_type' . $key, "Employee Type required at row number" . ($key + 1));
+			}
+
+			if (empty($value[9])) {
+				validate_set_error_message($form_state, 'field_mobil' . $key, "model number required at row number" . ($key + 1));
+			}
+			if (empty($value[7])) {
+				validate_set_error_message($form_state, 'field_licence_expiry_date' . $key, "licenceexpiry expiry value required at row number" . ($key + 1));
+			} else {
+				$licence_date = explode('/', $value[7]);
+				if (!is_numeric($licence_date[0]) || !is_numeric($licence_date[1]) || !is_numeric($licence_date[2]))
+					validate_set_error_message($form_state, 'field_licence_expiry_date' . $key, "licence expiry date should be a number at row number" . ($key + 1));
+			}
+
+			if (empty($value[8])) {
+				validate_set_error_message($form_state, 'field_licence_no' . $key, " Licence No  required at row number" . ($key + 1));
+			}
+
+
+			if (empty($value[11])) {
+				validate_set_error_message($form_state, 'field_branch_name' . $key, "Branch Name  required at row number" . ($key + 1));
+			} else {
+				$connection = \Drupal::database();
+				$result = $connection->query("SELECT nid FROM node_field_data WHERE title='" . $value[11] . "'");
+				$result = $result->fetchObject();
+				if ($result == false)
+					validate_set_error_message($form_state, 'field_branch_name' . $key, "Branch Name does not exists row number" . ($key + 1));
+			}
+
+
+
+			if (empty($value[12])) {
+				validate_set_error_message($form_state, 'field_de' . $key, "Department Name  required at row number" . ($key + 1));
+			} else {
+				$connection = \Drupal::database();
+				$result = $connection->query("SELECT nid FROM node_field_data WHERE title='" . $value[12] . "'");
+				$result = $result->fetchObject();
+				if ($result == false)
+					validate_set_error_message($form_state, 'field_branch_name' . $key, "Department Name does not exists row number" . ($key + 1));
+			}
+		}
 	}
 }
 
 
+function vehicleimport_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+	$fid = $form['field_vehicle_import']['widget']['0']['fids']['#value']['0'];
 
-function _company_report_handler($form, &$form_state){
-	$from_date=$form_state->getValue('from_date');
-	$to_date=$form_state->getValue('to_date');
-	$status=$form_state->getValue('status');
-	dump($from_date);
-	dump($to_date);
-	dump($status);
+	$array = file_import($form, $form_state, $fid);
+
+
+	foreach ($array as $key => $row) {
+		//  	dump($row);
+
+		if ($row[11] != NULL)
+			import_values_vehicle($row);
+	}
+}
+
+
+function employee_import_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+
+	$fid = $form['field_employee_import']['widget']['0']['fids']['#value']['0'];
+
+	$array = file_import($form, $form_state, $fid);
+	foreach ($array as $key => $row) {
+		//		   	 	dump($row);
+		//		   	 	exit;	
+		if ($row[0] != NULL)
+			import_values_employee($row);
+	}
+}
+
+function import_values_employee($employee)
+{
+
+
+	$connection = \Drupal::database();
+	$result = $connection->query("SELECT nid FROM node_field_data WHERE title='" . $employee[11] . "'");
+	$result = $result->fetchObject();
+	$branch = $result->nid;
+	$result = $connection->query("SELECT nid FROM node_field_data WHERE title='" . $employee[12] . "'");
+	$dep = $result->nid;
+
+
+	$dob = str_replace('/', '-', $employee[4]);
+
+	$dob = date("Y-m-d", strtotime($dob));
+
+	//dump($dob);
+
+	$doj = str_replace('/', '-', $employee[5]);
+
+	$doj = date("Y-m-d", strtotime($doj));
+
+
+	$licenceexpiry = str_replace('/', '-', $employee[7]);
+
+	$licencexpiry = date("Y-m-d", strtotime($licenceexpiry));
+
+
+	$node = Node::create([
+		'type'        => 'driver',
+		'title'       => $employee[0],
+		'field_name' => $employee[1],
+		'field_employee_type' => $employee[2],
+		'field_driver_id' => $employee[3],
+		'field_dob' => $dob,
+		'field_doj' => $doj,
+		'field_email' => $employee[6],
+		'field_licence_expiry_date' => $licenceexpiry,
+		'field_licence_no' => $employee[8],
+		'field_mobil' => $employee[9],
+		'field_altern' => $employee[10],
+		'field_branch_name' => $branch,
+		'field_de' => $dep
+	]);
+	$node->save();
+}
+
+
+
+
+
+function file_import(array $form, \Drupal\Core\Form\FormStateInterface $form_state, $fid)
+{
+
+
+	global $base_url;
+	//$fid= $form['field_vehicle_import']['widget']['0']['fids']['#value']['0'];
+	$file_imported = \Drupal\file\Entity\File::load($fid);
+	$file_destination = $file_imported->createFileUrl();
+	/*need to deleted in live server chandana*/
+	$base_path_file	 = explode('/', $base_url);
+
+	$pop_var = array_pop($base_path_file);
+	$final_path = implode('/', $base_path_file);
+	/**********************************************************/ -
+	// dump($final_path);
+	//dump($file_destination);
+	//exit;
+	$data = @file_get_contents($final_path . $file_destination);
+	$rows = explode("\n", $data);
+	$array = [];
+	$lines = explode(PHP_EOL, $data);
+	foreach ($lines as $line) {
+		$array[] = str_getcsv($line);
+	}
+
+	/*	for($i=1;$i<count($array)-1;$i++)*/
+
+	array_shift($array);
+	$array = array_filter($array);
+
+	return $array;
+}
+
+
+
+
+function import_values_vehicle($vehicle)
+{
+
+
+	$connection = \Drupal::database();
+	$result = $connection->query("SELECT nid FROM node_field_data WHERE title='" . $vehicle[19] . "'");
+	$result = $result->fetchObject();
+
+	$fuelcardexpiry = str_replace('/', '-', $vehicle[4]);
+
+	$fuelcardexpiry = date("Y-m-d", strtotime($fuelcardexpiry));
+
+
+	$insuranceexpiry = str_replace('/', '-', $vehicle[6]);
+
+	$insuranceexpiry = date("Y-m-d", strtotime($insuranceexpiry));
+
+
+	$safetystickerexpiry = str_replace('/', '-', $vehicle[12]);
+
+	$safetystickerexpiry = date("Y-m-d", strtotime($safetystickerexpiry));
+
+	$purchasedate = str_replace('/', '-', $vehicle[10]);
+
+	$purchasedate = date("Y-m-d", strtotime($purchasedate));
+
+	$node = Node::create([
+		'type'        => 'vehicle',
+		'title'       => $vehicle[11],
+		'field_chassis_no' => $vehicle[1],
+		'field_color' => $vehicle[2],
+		'field_brand' => $vehicle[0],
+		'field_engine_no' => $vehicle[16],
+		'field_fleet' => $vehicle[18],
+		'field_branch_name' => $result->nid,
+		'field_fuel_type' => $vehicle[15],
+		'field_engine_capacity' => $vehicle[3],
+		'field_fuel_card_expiry_date' => $fuelcardexpiry,
+		'field_make' => $vehicle[8],
+		'field_model' => $vehicle[17],
+		'field_purchase_cost' => $vehicle[9],
+		'field_purchase_date' => $purchasedate,
+		'field_safet' => $safetystickerexpiry,
+		'field_tank_capacity_in_litres' => $vehicle[13],
+		'field_insurance_expiry_date' => $insuranceexpiry,
+		'field_insurance_vendor' => $vehicle[7],
+		'field_tyre_type' => $vehicle[14]
+	]);
+	$node->save();
+}
+
+
+
+function _company_report_handler($form, &$form_state)
+{
+	$from_date = $form_state->getValue('from_date');
+	$to_date = $form_state->getValue('to_date');
+	$status = $form_state->getValue('status');
+	//dump($from_date);
+	//dump($to_date);
+	//dump($status);
 	// die;
 }
 
 /**
-* Generate the node editing form array.
-*/
-function helloworld_node_form_array($node) {
-	
+ * Generate the node editing form array.
+ */
+function helloworld_node_form_array($node)
+{
+
 	// Add the buttons.
 	$form['preview'] = array('#type' => 'button', '#value' => t('Preview'), '#weight' => 40);
 	$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'), '#weight' => 45);
@@ -204,72 +592,73 @@ function helloworld_node_form_array($node) {
 	}
 }
 
-function fuelmaster_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state){
-  //die("I'm not getting run, why :(");
+function fuelmaster_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+	//die("I'm not getting run, why :(");
 	//dump("hello");
 
-	$fuelefficiency=$form_state->getValue('field_fuel_efficiency')['0']['value'];
-	$vehicle_id =$form_state->getValue('field_vehicle_regno')['0']['target_id'];
+	$fuelefficiency = $form_state->getValue('field_fuel_efficiency')['0']['value'];
+	$vehicle_id = $form_state->getValue('field_vehicle_regno')['0']['target_id'];
 	$node = Node::load($vehicle_id);
-    $node->set('field_efficiency_fuel',$fuelefficiency);
+	$node->set('field_efficiency_fuel', $fuelefficiency);
 	$node->save();
 	//dump($node);
 	//exit;
-	
- // \Drupal::service('messenger')->addMessage("Why won't this message show?");
+
+	// \Drupal::service('messenger')->addMessage("Why won't this message show?");
 }
 
-function employee_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state){
-  //die("I'm not getting run, why :(");
+function employee_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+	//die("I'm not getting run, why :(");
 	//dump("hello");				   
-//dump($form_state->getValue('field_trip_completed_status'));
-//exit;		
-	$tripstatus=$form_state->getValue('field_trip_completed_status')['value'];
-	$employee_id =$form_state->getValue('field_driver_name')['0']['target_id'];
+	//dump($form_state->getValue('field_trip_completed_status'));
+	//exit;		
+	$tripstatus = $form_state->getValue('field_trip_completed_status')['value'];
+	$employee_id = $form_state->getValue('field_driver_name')['0']['target_id'];
 	$node = Node::load($employee_id);
-	if($tripstatus==true)
-	$node->set('field_trip_status',false);
-	else 
-	$node->set('field_trip_status',true);
+	if ($tripstatus == true)
+		$node->set('field_trip_status', false);
+	else
+		$node->set('field_trip_status', true);
 
-    //$node->set('field_trip_status',$tripstatus);
+	//$node->set('field_trip_status',$tripstatus);
 	$node->save();
-	
 }
 
 
 
-function _addcompanynameforbranch($form,$form_state)
+function _addcompanynameforbranch($form, $form_state)
 {
 
 
-	
-	  $current_user_id =	_get_company_userid();
 
-		$current_user = \Drupal\user\Entity\User::load($current_user_id);
-		
-		$form['field_companybranch']['widget'][0]['target_id']['#default_value'] = $current_user;
+	$current_user_id =	_get_company_userid();
 
-		return $form;
+	$current_user = \Drupal\user\Entity\User::load($current_user_id);
+
+	$form['field_companybranch']['widget'][0]['target_id']['#default_value'] = $current_user;
+
+	return $form;
 }
 
-function vehicle_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state){
-  //die("I'm not getting run, why :(");
-	//dump("hello");				   
-//dump($form_state->getValue('field_trip_completed_status'));
-//exit;		
-	$tripstatus=$form_state->getValue('field_trip_completed_status')['value'];
-	$vehicle_id =$form_state->getValue('field_vehicle_regno')['0']['target_id'];
+function vehicle_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+	//die("I'm not getting run, why :(");
+
+	//dump($form_state->getValue('field_trip_completed_status'));
+	//exit;		
+	$tripstatus = $form_state->getValue('field_trip_completed_status')['value'];
+	$vehicle_id = $form_state->getValue('field_vehicle_regno')['0']['target_id'];
 	$node = Node::load($vehicle_id);
-	if($tripstatus==true)
-	$node->set('field_status_trip',false);
-	else 
-	$node->set('field_status_trip',true);
- 
-	
+	if ($tripstatus == true)
+		$node->set('field_status_trip', false);
+	else
+		$node->set('field_status_trip', true);
+
+
 
 	$node->save();
-	
 }
 
 function fuelfilling_form_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state)
@@ -277,39 +666,35 @@ function fuelfilling_form_submit(array $form, \Drupal\Core\Form\FormStateInterfa
 	//die("I'm not getting run, why :(");
 	//dump("hello");
 
-	$fuelefficiency=$form_state->getValue('field_fuel_efficiency')['0']['value'];
-	$vehicle_id =$form_state->getValue('field_vehicle_regno')['0']['target_id'];
+	$fuelefficiency = $form_state->getValue('field_fuel_efficiency')['0']['value'];
+	$vehicle_id = $form_state->getValue('field_vehicle_regno')['0']['target_id'];
 
 
 
 	$connection = \Drupal::database();
 
-	$result=$connection->query("SELECT efficiency.field_fuel_efficiency_value FROM {node__field_fuel_efficiency} as efficiency INNER JOIN {node__field_vehicle_regno} as regno on regno.entity_id=efficiency.entity_id
-		WHERE regno.field_vehicle_regno_target_id = '".$vehicle_id."' 
+	$result = $connection->query("SELECT efficiency.field_fuel_efficiency_value FROM {node__field_fuel_efficiency} as efficiency INNER JOIN {node__field_vehicle_regno} as regno on regno.entity_id=efficiency.entity_id
+		WHERE regno.field_vehicle_regno_target_id = '" . $vehicle_id . "' 
 		");
-	
-	$efficiencyavg=[];	
+
+	$efficiencyavg = [];
 	//$referenced_nids = $query->fetchObject();
-	foreach ($result as $record   ) {
-		
-		$efficiencyavg[]=$record->field_fuel_efficiency_value;
+	foreach ($result as $record) {
+
+		$efficiencyavg[] = $record->field_fuel_efficiency_value;
 	}
 
-	$fuelavg=0;
-	if(sizeof($efficiencyavg)>0)
-	{
+	$fuelavg = 0;
+	if (sizeof($efficiencyavg) > 0) {
 
-		$fuelavg=array_sum($efficiencyavg)/sizeof($efficiencyavg);
-
-
+		$fuelavg = array_sum($efficiencyavg) / sizeof($efficiencyavg);
 	}
 
 
 	$node = Node::load($vehicle_id);
-    $node->set('field_efficiency_fuel',$fuelefficiency);
-    $node->set('field_efficiency_average',$fuelavg);
-	$node->save();	
-
+	$node->set('field_efficiency_fuel', $fuelefficiency);
+	$node->set('field_efficiency_average', $fuelavg);
+	$node->save();
 }
 
 
@@ -360,16 +745,16 @@ function _helloworld_calculate_efficency(&$element, FormStateInterface $form_sta
 
 
 
-    	if(($litres_pumped_previous!=0 || $litres_pumped_previous !=NULL) &&($meter_reading_diff >= 0) )
+	if (($litres_pumped_previous != 0 || $litres_pumped_previous != NULL) && ($meter_reading_diff >= 0))
 
-//	if($litres_pumped_previous!=0 || $litres_pumped_previous !=NULL)
-	{	
-	  $efficiency = $meter_reading_diff / $litres_pumped_previous;
+	//	if($litres_pumped_previous!=0 || $litres_pumped_previous !=NULL)
+	{
+		$efficiency = $meter_reading_diff / $litres_pumped_previous;
 
-  	 $efficiency = number_format((float)$efficiency, 2, '.', '');
+		$efficiency = number_format((float)$efficiency, 2, '.', '');
 
-	  $form_state->setValueForElement($element, ['value' => $efficiency]);
-    }
+		$form_state->setValueForElement($element, ['value' => $efficiency]);
+	}
 	//$form_state->setValue('field_fuel_efficiency', $efficiency);
 	//$form_state->setRebuild();
 
@@ -510,7 +895,7 @@ function helloworld_page_attachments(array &$page)
 		$page['#attached']['library'][] = 'helloworld/general-lib';
 	}
 }
-function _user_register_form($form, $path_args, &$form_state)
+function _user_register_form($form, $path_args, &$form_state, $package)
 {
 	$form['account']['mail']['#description'] = '';
 	$form['account']['name']['#description'] = '';
@@ -518,7 +903,7 @@ function _user_register_form($form, $path_args, &$form_state)
 		$roles = get_role_array('Operator', $form);
 		$form['account']['roles']['#default_value'] = $roles;
 
-				$form['#validate'][] = '_operatorname_duplication_validate';
+		$form['#validate'][] = '_operatorname_duplication_validate';
 
 		$form['account']['status']['#element_validate'][] = 'operator_status_submit';
 		$current_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
@@ -531,17 +916,33 @@ function _user_register_form($form, $path_args, &$form_state)
 		$roles = get_role_array('company', $form);
 		$form['account']['roles']['#default_value'] = $roles;
 		$form['#validate'][] = '_companyname_duplication_validate';
+		$form['field_package']['widget']['#default_value'][] = $package;
+		if ($package == "Bronze") {
+			$expiry_date = strtotime(date('Y-m-d', strtotime("+1 day", strtotime("+1 months", strtotime(date("Y-m-d"))))));
+			// dump($expiry_date);
+			$form['field_package_cost']['widget'][0]['value']['#default_value'] = '0';
+			$form['field_package_expiry_date']['widget'][0]['value']['#default_value'] = DrupalDateTime::createFromTimestamp($expiry_date);
+		} elseif ($package == "Silver") {
+			$expiry_date = strtotime(date('Y-m-d', strtotime("+1 day", strtotime("+3 months", strtotime(date("Y-m-d"))))));
+			$form['field_package_cost']['widget'][0]['value']['#default_value'] = '100';
+			$form['field_package_expiry_date']['widget'][0]['value']['#default_value'] = DrupalDateTime::createFromTimestamp($expiry_date);
+		} elseif ($package == "Gold") {
+			$expiry_date = strtotime(date('Y-m-d', strtotime("+1 day", strtotime("+6 months", strtotime(date("Y-m-d"))))));
+			$form['field_package_cost']['widget'][0]['value']['#default_value'] = '300';
+			$form['field_package_expiry_date']['widget'][0]['value']['#default_value'] = DrupalDateTime::createFromTimestamp($expiry_date);
+		} elseif ($package == "Platinum") {
+			$expiry_date = strtotime(date('Y-m-d', strtotime("+1 day", strtotime("+12 months", strtotime(date("Y-m-d"))))));
+			$form['field_package_cost']['widget'][0]['value']['#default_value'] = '500';
+			$form['field_package_expiry_date']['widget'][0]['value']['#default_value'] = DrupalDateTime::createFromTimestamp($expiry_date);
+		}
 		$form['account']['status']['#element_validate'][] = 'company_status_submit';
-		if(\Drupal::currentUser()->id()){
-			// dump('test');
+		if (\Drupal::currentUser()->id()) {
 			$form['#attached']['library'][] = 'fleet_management_theme/back-style';
-		}else{
+		} else {
 			$form['actions']['submit']['#submit'][] = '_redirect_after_registration_user_register_submit';
 		}
-		
 	}
 	return $form;
-	// dump($form);
 }
 
 
@@ -549,173 +950,238 @@ function _user_register_form($form, $path_args, &$form_state)
 
 function _get_company_userid()
 {
-$current_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+	$current_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
 
 	$current_now = \Drupal::currentUser();
 	$roles_now = $current_user->getRoles();
 	$current_user_id = $current_now->id();
-	if(in_array('data_entry',$roles_now)) {
+	if (in_array('data_entry', $roles_now)) {
 		$user123 = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
 		$current_user_id = $user123->field_operatorcompany->getValue()[0]['target_id'];
 	}
 
 	return $current_user_id;
 }
-function _operatorname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+function _operatorname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
 	///dump($form_state);
- 
 
- 	$companyid =	_get_company_userid();		
-     $firstname = $form_state->getValue('field_first_name');
-     $first_name = $firstname['0']['value'];
+
+	$companyid =	_get_company_userid();
+	$firstname = $form_state->getValue('field_first_name');
+	$first_name = $firstname['0']['value'];
 	$connection = \Drupal::database();
 	$query = $connection->query("SELECT * FROM {user__field_first_name} as firstname
-	 INNER JOIN {user__field_operatorcompany} as company ON company.entity_id = firstname.entity_id AND company.field_operatorcompany_target_id='".$companyid."' 
-	 WHERE firstname.field_first_name_value ='". $first_name."'");
-	
+	 INNER JOIN {user__field_operatorcompany} as company ON company.entity_id = firstname.entity_id AND company.field_operatorcompany_target_id='" . $companyid . "' 
+	 WHERE firstname.field_first_name_value ='" . $first_name . "'");
+
 	$referenced_nids = $query->fetchObject();
 	//dump($referenced_nids);
 	//dump($first_name);
 
-	if(($referenced_nids != false) ||($referenced_nids != NULL) || ($referenced_nids != "" ))
-	{
+	if (($referenced_nids != false) || ($referenced_nids != NULL) || ($referenced_nids != "")) {
 		$form_state->setErrorByName('field_first_name', t('Operator Already exists with UserName/firstname Please try another name'));
-
 	}
-
-	
- }
+}
 
 
-function _branchname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
-//dump($form_state);
- 		//return $form;	
+function _branchname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+	//dump($form_state);
+	//return $form;	
 	//return $form;
-		 $current_user_id =	_get_company_userid();
-		
-     $branchname = $form_state->getValue('title');
-     $branch_name = $branchname['0']['value'];
+	$current_user_id =	_get_company_userid();
+
+	$branchname = $form_state->getValue('title');
+	$branch_name = $branchname['0']['value'];
 	$connection = \Drupal::database();
 	$query = $connection->query("SELECT * FROM {node} as bname
 	 INNER JOIN {node__field_companybranch} as company ON company.entity_id = bname.nid AND company.bundle='branches'
 	 INNER JOIN {node_field_data} as data on data.nid=bname.nid AND data.vid = bname.vid
-	 WHERE  bname.type='branches' AND company.field_companybranch_target_id ='". $current_user_id."' AND 
-	 data.title='".$branch_name."'");
-	
+	 WHERE  bname.type='branches' AND company.field_companybranch_target_id ='" . $current_user_id . "' AND 
+	 data.title='" . $branch_name . "'");
+
 	$referenced_nids = $query->fetchObject();
 	//dump($referenced_nids);
-	
-	
-	if(($referenced_nids != false) ||($referenced_nids != NULL) || ($referenced_nids != "" ))
-	{
+
+
+	if (($referenced_nids != false) || ($referenced_nids != NULL) || ($referenced_nids != "")) {
 		$form_state->setErrorByName('title', t('Branch Name Already exists  Please try another name'));
-
 	}
-
-	
- }
+}
 
 
- function _employeeid_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+function _employeeid_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
 
 
 
 	$current_user_id =	_get_company_userid();
-	
+
 	//dump($current_user_id);
-				
-     $empname = $form_state->getValue('field_driver_id');
-     $emp_name = $empname['0']['value'];
-	 $connection = \Drupal::database();
-	 $query = $connection->query("SELECT * FROM {node__field_driver_id} as ename
+
+	$empname = $form_state->getValue('field_driver_id');
+	$emp_name = $empname['0']['value'];
+	$connection = \Drupal::database();
+	$query = $connection->query("SELECT * FROM {node__field_driver_id} as ename
 	
 	 INNER JOIN {node_field_data} as data on data.nid=ename.entity_id 
-	 WHERE data.uid ='". $current_user_id."' AND  data.type='driver' AND ename.field_driver_id_value='".$emp_name."'");
-	
+	 WHERE data.uid ='" . $current_user_id . "' AND  data.type='driver' AND ename.field_driver_id_value='" . $emp_name . "'");
+
 	$referenced_nids = $query->fetchObject();
 	/*dump("SELECT * FROM {node__field_driver_id} as ename
 	INNER JOIN {node_field_data} as data on data.nid=ename.entity_id 
 	 WHERE data.uid ='". $current_user_id."' AND  data.type='driver' AND ename.field_driver_id_value='".$emp_name."'");
 	dump($referenced_nids);
 	dump(($referenced_nids != false) ||($referenced_nids != NULL) || ($referenced_nids != "" ));*/
-	
-	if(($referenced_nids != false) ||($referenced_nids != NULL) || ($referenced_nids != "" ))
-	{
-		$form_state->setErrorByName('field_driver_id', t('Employee ID Already exists  Please try another name'));
 
+	if (($referenced_nids != false) || ($referenced_nids != NULL) || ($referenced_nids != "")) {
+		$form_state->setErrorByName('field_driver_id', t('Employee ID Already exists  Please try another name'));
 	}
 
-		return $form;
-	
- }
+	return $form;
+}
 
 
-function _departmentname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+function _departmentname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
 	//dump($form_state);
 	//exit;
- 	
- 			//return $form;
-		 $current_user_id =	_get_company_userid();
-		
-     $depname = $form_state->getValue('title');
-     $dep_name = $depname['0']['value'];
+
+	//return $form;
+	$current_user_id =	_get_company_userid();
+
+	$depname = $form_state->getValue('title');
+	$dep_name = $depname['0']['value'];
 	$connection = \Drupal::database();
 	$query = $connection->query("SELECT * FROM {node} as bname
 	 INNER JOIN {node__field_companybranch} as company ON company.entity_id = bname.nid AND company.bundle='departments'
 	 INNER JOIN {node_field_data} as data on data.nid=bname.nid AND data.vid = bname.vid
-	 WHERE  bname.type='departments' AND company.field_companybranch_target_id ='". $current_user_id."' AND 
-	 data.title='".$dep_name."'");
-	
+	 WHERE  bname.type='departments' AND company.field_companybranch_target_id ='" . $current_user_id . "' AND 
+	 data.title='" . $dep_name . "'");
+
 	$referenced_nids = $query->fetchObject();
 	//dump($referenced_nids);
-	
-	
-	if(($referenced_nids != false) ||($referenced_nids != NULL) || ($referenced_nids != "" ))
-	{
+
+
+	if (($referenced_nids != false) || ($referenced_nids != NULL) || ($referenced_nids != "")) {
 		$form_state->setErrorByName('title', t('Department Name Already exists  Please try another name'));
-
 	}
+}
 
-	
- }
+function _companyname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+	//  dump($form_state);
 
-function _companyname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
- // dump($form_state);
- 		
-     $companyname = $form_state->getValue('field_company_name');
-     $companyname = $companyname['0']['value'];
+	$companyname = $form_state->getValue('field_company_name');
+
+	$companyname = $companyname['0']['value'];
 	$connection = \Drupal::database();
-	
-	$query = $connection->query("SELECT * FROM {user__field_company_name} as companyname WHERE companyname.field_company_name_value ='". $companyname."'");
-	
+
+	$query = $connection->query("SELECT * FROM {user__field_company_name} as companyname WHERE companyname.field_company_name_value ='" . $companyname . "'");
+
 	$referenced_nids = $query->fetchObject();
-	if(($referenced_nids != false) ||($referenced_nids != NULL) || ($referenced_nids != "" ))
-	{
+	if (($referenced_nids != false) || ($referenced_nids != NULL) || ($referenced_nids != "")) {
 		$form_state->setErrorByName('field_company_name', t('Company Already exists with this namee= Please try another name'));
-
 	}
+}
 
-	
- }
+function makereq($wirecardMerchantId, $merchant_ref, $amount, $currency, $card, $expiry_month, $expiry_year, $cvv, $ctype)
+{
+	$data = array();
+	$data['payment']['merchant-account-id']['value'] = $wirecardMerchantId;
+	$data['payment']['request-id'] = $merchant_ref;
+	$data['payment']['transaction-type'] = 'purchase';
+	$data['payment']['requested-amount']['value'] = $amount;
+	$data['payment']['requested-amount']['currency'] = $currency;
+	$data['payment']['account-holder']['first-name'] = 'Pruthvi';
+	$data['payment']['account-holder']['last-name'] = 'Dhamecha';
+	$data['payment']['account-holder']['email'] = 'pruthvi.abs@gmail.com';
+	$data['payment']['account-holder']['phone'] = '9998236897';
+	$data['payment']['account-holder']['address']['street1'] = 'Manjalpur';
+	$data['payment']['account-holder']['address']['city'] = 'Vadodara';
+	$data['payment']['account-holder']['address']['state'] = 'Gujarat';
+	$data['payment']['account-holder']['address']['country'] = 'India';
+	$data['payment']['three-d']['attempt-three-d'] = 'true';
+	$data['payment']['card']['account-number'] = $card;
+	$data['payment']['card']['expiration-month'] = $expiry_month;
+	$data['payment']['card']['expiration-year'] = $expiry_year;
+	$data['payment']['card']['card-security-code'] = $cvv;
+	$data['payment']['card']['card-type'] = $ctype;
+	$data['payment']['ip-address'] = '127.0.0.1';
+	$data['payment']['payment-methods']['payment-method'][0]['name'] = 'creditcard';
 
-
-
+	return json_encode($data);
+}
 
 
 
 function _redirect_after_registration_user_register_submit($form, &$form_state)
 {
+	$field_package = $form_state->getValue('field_package')[0]['value'];
 	$company_email = $form_state->getValue('mail');
+
 	$request = \Drupal::request();
 	$session = $request->getSession();
 	$session->set('company_email', $company_email);
-	// dump($company_email);
-	// die();
 
-	$redirect_destination = '/thankyou_subscription';
-	if (!empty($redirect_destination)) {
-		$url = Url::fromUri('internal:' . $redirect_destination);
-		$form_state->setRedirectUrl($url);
+
+	if ($field_package != 'Bronze') {
+		//payment gateway
+		$_URL = 'https://wpp-ipg.bsp.com.pg/api/payment/register';
+		$_username = 'bsp_digitecict';
+		$_password = '0Sz7As8Fy';
+
+		$data['merchant_id'] = '990b26b2-fbbd-11ea-adc1-0242ac120002';
+		$data['currency'] = 'PGK';
+		$data['card'] = '4200000000000018';
+		$data['expiry_month'] = '01';
+		$data['expiry_year'] = '2023';
+		$data['cvv'] = '018';
+		$data['ctype'] = 'visa';
+		$data['merchant_ref'] = 'payment' . rand(11111, 99999) . '-' . time() . '-' . rand(1000, 10000);
+
+		if ($field_package == 'Silver') {
+			$data['amount'] = '100';
+		} elseif ($field_package == 'Gold') {
+			$data['amount'] = '300';
+		} elseif ($field_package == 'Platinum') {
+			$data['amount'] = '500';
+		}
+
+		$_data = makereq($data['merchant_id'], $data['merchant_ref'], $data['amount'], $data['currency'], $data['card'], $data['expiry_month'], $data['expiry_year'], $data['cvv'], $data['ctype']);
+		// dump($_data);
+		$ch = curl_init();
+		$headers = array(
+			'content-Type: application/json',
+			'Authorization: Basic ' . base64_encode($_username . ":" . $_password)
+		);
+
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $_data);
+		curl_setopt($ch, CURLOPT_URL, $_URL);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+		$res = curl_exec($ch);
+		curl_close($ch);
+		$res = json_decode($res, true);
+
+		// dump(json_decode($res,true));	
+
+		$redirect_destination = $res['payment-redirect-url'];
+		if (!empty($redirect_destination)) {
+			$url = Url::fromUri($redirect_destination);
+			$form_state->setResponse(new TrustedRedirectResponse($redirect_destination, 302));
+		}
+	} else {
+		$redirect_destination = '/thankyou_subscription';
+		if (!empty($redirect_destination)) {
+			$url = Url::fromUri('internal:' . $redirect_destination);
+			$form_state->setRedirectUrl($url);
+		}
 	}
 }
 
@@ -779,6 +1245,39 @@ function _branch_list_exposed_options($form, $path_args)
 	}
 	return $form;
 }
+
+
+function _department_list_exposed_options($form, $path_args)
+{
+
+	$view = \Drupal\views\Views::getView('department_list');
+	$view->setDisplay('entity_reference_1');
+	// contextual relationship filter  
+
+	//$view->setArguments([$id]);
+	$view->execute();
+
+	/*$render_view = $view->result;
+	$form['field_branch_name_target_id_verf']['#options']=$render_view;*/
+
+	$render_view = $view->result;
+	$depList = array('All' => $form['field_de_target_id_verf']['#options']['All']);
+	foreach ($view->result as $value) {
+		$tet = $value->_entity;
+		$nid = $tet->get("nid")->getValue()[0]['value'];
+		$title = $tet->get("title")->getValue()[0]['value'];
+		$depList[$nid] = $title;
+	}
+	if (!empty($depList)) {
+		/*		dump($form['field_branch_name_target_id_verf']['#options'])	;
+*/
+		$form['field_de_target_id_verf']['#options'] = $depList;
+	} else {
+		unset($form['field_de_target_id_verf']);
+	}
+	return $form;
+}
+
 function _driver_assignment_options($form, $path_args)
 {
 
@@ -820,7 +1319,7 @@ function _vehicle_assignment_submit(array $form, \Drupal\Core\Form\FormStateInte
 }
 
 
-function _trip_assignment_vehicle_options($form,$path_args)
+function _trip_assignment_vehicle_options($form, $path_args)
 {
 
 	$view = \Drupal\views\Views::getView('trip_logging');
@@ -829,11 +1328,11 @@ function _trip_assignment_vehicle_options($form,$path_args)
 	//$view->setArguments([$id]);
 	$view->execute();
 	$render_view = $view->result;
-	$unpubishedList = array('_none'=>'- Select a value -');
+	$unpubishedList = array('_none' => '- Select a value -');
 
-		//dump($view->result);
+	//dump($view->result);
 
-	foreach($view->result as $value){
+	foreach ($view->result as $value) {
 		//dump($view->result);
 		$tet = $value->_entity;
 
@@ -845,29 +1344,28 @@ function _trip_assignment_vehicle_options($form,$path_args)
 	//dump($form['field_driver_name']['widget']['#options']);
 	$form['field_vehicle_regno']['widget']['#options'] = $unpubishedList;
 	return $form;
-
 }
 
 
-function _trip_assignment_vehicle_edit_options($form,$form_state)
+function _trip_assignment_vehicle_edit_options($form, $form_state)
 {
-		$vehicledefaultid = $form['field_vehicle_regno']['widget']['#default_value']['0'];
-		$vehicledefaulttext = $form['field_vehicle_regno']['widget']['#options'][$vehicledefaultid];
-		//dump($form['field_vehicle_regno']);
+	$vehicledefaultid = $form['field_vehicle_regno']['widget']['#default_value']['0'];
+	$vehicledefaulttext = $form['field_vehicle_regno']['widget']['#options'][$vehicledefaultid];
+	//dump($form['field_vehicle_regno']);
 
 	$view = \Drupal\views\Views::getView('trip_logging');
-	
+
 	$view->setDisplay('entity_reference_5');
-					
+
 	// contextual relationship filter  
 	//$view->setArguments([$id]);
 	$view->execute();
 	$render_view = $view->result;
-	$unpubishedList = array('_none'=>'- Select a value -');
+	$unpubishedList = array('_none' => '- Select a value -');
 
-//	dump($form_state);
+	//	dump($form_state);
 
-	foreach($view->result as $value){
+	foreach ($view->result as $value) {
 		//dump($view->result);
 		$tet = $value->_entity;
 
@@ -875,15 +1373,14 @@ function _trip_assignment_vehicle_edit_options($form,$form_state)
 		$title = $tet->get("title")->getValue()[0]['value'];
 		$unpubishedList[$nid] = $title;
 	}
-	$unpubishedList[$vehicledefaultid]=$vehicledefaulttext;
+	$unpubishedList[$vehicledefaultid] = $vehicledefaulttext;
 	//  	dump($unpubishedList);
 	//dump($form['field_driver_name']['widget']['#options']);
 	$form['field_vehicle_regno']['widget']['#options'] = $unpubishedList;
 	return $form;
-
 }
 
-function _trip_assignment_driver_options($form,$path_args)
+function _trip_assignment_driver_options($form, $path_args)
 {
 
 	$view = \Drupal\views\Views::getView('trip_logging');
@@ -892,11 +1389,11 @@ function _trip_assignment_driver_options($form,$path_args)
 	//$view->setArguments([$id]);
 	$view->execute();
 	$render_view = $view->result;
-	$unpubishedList = array('_none'=>'- Select a value -');
+	$unpubishedList = array('_none' => '- Select a value -');
 
-		//dump($view->result);
+	//dump($view->result);
 
-	foreach($view->result as $value){
+	foreach ($view->result as $value) {
 		//dump($view->result);
 		$tet = $value->_entity;
 
@@ -904,33 +1401,32 @@ function _trip_assignment_driver_options($form,$path_args)
 		$title = $tet->get("title")->getValue()[0]['value'];
 		$unpubishedList[$nid] = $title;
 	}
-	  	//dump($unpubishedList);
+	//dump($unpubishedList);
 	//dump($form['field_driver_name']['widget']['#options']);
 	$form['field_driver_name']['widget']['#options'] = $unpubishedList;
 	return $form;
-
 }
 
 
-function _trip_assignment_driver_edit_options($form,$form_state)
+function _trip_assignment_driver_edit_options($form, $form_state)
 {
-		$driverdefaultid = $form['field_driver_name']['widget']['#default_value']['0'];
-		$driverdefaulttext = $form['field_driver_name']['widget']['#options'][$driverdefaultid];
-		//dump($form['field_driver_name']);
+	$driverdefaultid = $form['field_driver_name']['widget']['#default_value']['0'];
+	$driverdefaulttext = $form['field_driver_name']['widget']['#options'][$driverdefaultid];
+	//dump($form['field_driver_name']);
 
 	$view = \Drupal\views\Views::getView('trip_logging');
-	
+
 	$view->setDisplay('entity_reference_1');
-					
+
 	// contextual relationship filter  
 	//$view->setArguments([$id]);
 	$view->execute();
 	$render_view = $view->result;
-	$unpubishedList = array('_none'=>'- Select a value -');
+	$unpubishedList = array('_none' => '- Select a value -');
 
-//	dump($form_state);
+	//	dump($form_state);
 
-	foreach($view->result as $value){
+	foreach ($view->result as $value) {
 		//dump($view->result);
 		$tet = $value->_entity;
 
@@ -938,12 +1434,11 @@ function _trip_assignment_driver_edit_options($form,$form_state)
 		$title = $tet->get("title")->getValue()[0]['value'];
 		$unpubishedList[$nid] = $title;
 	}
-	$unpubishedList[$driverdefaultid]=$driverdefaulttext;
-	  	//dump($unpubishedList);
+	$unpubishedList[$driverdefaultid] = $driverdefaulttext;
+	//dump($unpubishedList);
 	//dump($form['field_driver_name']['widget']['#options']);
 	$form['field_driver_name']['widget']['#options'] = $unpubishedList;
 	return $form;
-
 }
 
 
