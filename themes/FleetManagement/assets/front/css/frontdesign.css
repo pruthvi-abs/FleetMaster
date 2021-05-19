@@ -40,6 +40,12 @@
 {
   display: none;
 }
+#edit-field-package-wrapper,
+#edit-field-package-cost-wrapper,
+#edit-field-package-start-date-wrapper,
+#edit-field-package-expiry-date-wrapper{
+  display: none;
+}
 
 #user-register-form #edit-submit {
   margin-top: 30px;
@@ -240,6 +246,24 @@ ul.clist li {
 
 #user-login-form .form-control {
   width: 30% !important;
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=file],
+textarea{
+  width: 53% !important;
+  border-radius: 5px !important;
+  border-color: #6d6d6d !important;
+}
+
+#webform-submission-contact-add-form input[type=text],
+#webform-submission-contact-add-form input[type=email],
+#webform-submission-contact-add-form textarea{
+  width: 100% !important;
+  border-radius: 5px !important;
+  border-color: #6d6d6d !important;
 }
 
 /* @media only screen and (max-width: 768px) {

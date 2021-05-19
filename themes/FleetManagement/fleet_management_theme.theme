@@ -17,6 +17,8 @@ use Drupal\file\Plugin\Core\Entity\FileInterface;
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\Core\Block\BlockPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 /**
  * Implements hook_preprocess_page() for block templates.
@@ -44,9 +46,106 @@ function statuschange($uid, $status)
     $user->save();
   }
 }
+
+function user_data(){
+  $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+  $data['companyname'] = $user->get('field_company_name')->getValue()[0]['value'];
+  $data['mail'] = $user->getEmail();
+  $data['contact'] = $user->get('field_contac')->getValue()[0]['value'];
+  $data['address'] = $user->get('field_address')->getValue()[0]['value'];
+  $data['first_name'] = $user->get('field_first_name')->getValue()[0]['value'];
+  $data['last_name'] = $user->get('field_last_name')->getValue()[0]['value'];
+  // dump($user);
+  // dump($data);
+  return $data;
+}
+
+function makereq($wirecardMerchantId, $merchant_ref, $amount, $currency, $card, $expiry_month, $expiry_year, $cvv, $ctype)
+{
+	$data = array();
+  $userdata = user_data();
+  // dump($userdata);
+	$data['payment']['merchant-account-id']['value'] = $wirecardMerchantId;
+	$data['payment']['request-id'] = $merchant_ref;
+	$data['payment']['transaction-type'] = 'purchase';
+	$data['payment']['requested-amount']['value'] = $amount;
+	$data['payment']['requested-amount']['currency'] = $currency;
+	$data['payment']['account-holder']['first-name'] = $userdata['first_name'];
+	$data['payment']['account-holder']['last-name'] = $userdata['last_name'];
+	$data['payment']['account-holder']['email'] = $userdata['mail'];
+	$data['payment']['account-holder']['phone'] = $userdata['contact'];
+	$data['payment']['account-holder']['address']['street1'] = 'Manjalpur';
+	$data['payment']['account-holder']['address']['city'] = 'Vadodara';
+	$data['payment']['account-holder']['address']['state'] = 'Gujarat';
+	$data['payment']['account-holder']['address']['country'] = 'India';
+	$data['payment']['three-d']['attempt-three-d'] = 'true';
+	$data['payment']['card']['account-number'] = $card;
+	$data['payment']['card']['expiration-month'] = $expiry_month;
+	$data['payment']['card']['expiration-year'] = $expiry_year;
+	$data['payment']['card']['card-security-code'] = $cvv;
+	$data['payment']['card']['card-type'] = $ctype;
+	$data['payment']['ip-address'] = '127.0.0.1';
+	$data['payment']['payment-methods']['payment-method'][0]['name'] = 'creditcard';
+
+  // dump($data);
+  // die;
+	return json_encode($data);
+}
+
+function payment($package){
+	
+	$_URL = 'https://wpp-ipg.bsp.com.pg/api/payment/register';
+	$_username = 'bsp_digitecict';
+	$_password = '0Sz7As8Fy';
+
+	$data['merchant_id'] = '990b26b2-fbbd-11ea-adc1-0242ac120002';
+	$data['currency'] = 'PGK';
+	$data['card'] = '4200000000000018';
+	$data['expiry_month'] = '01';
+	$data['expiry_year'] = '2023';
+	$data['cvv'] = '018';
+	$data['ctype'] = 'visa';
+	$data['merchant_ref'] = 'payment' . rand(11111, 99999) . '-' . time() . '-' . rand(1000, 10000);
+
+	if ($package == 'Silver') {
+		$data['amount'] = '100';
+	} elseif ($package == 'Gold') {
+		$data['amount'] = '300';
+	} elseif ($package == 'Platinum') {
+		$data['amount'] = '500';
+	}
+	$_data = makereq($data['merchant_id'], $data['merchant_ref'], $data['amount'], $data['currency'], $data['card'], $data['expiry_month'], $data['expiry_year'], $data['cvv'], $data['ctype']);
+	$ch = curl_init();
+	$headers = array(
+		'content-Type: application/json',
+		'Authorization: Basic ' . base64_encode($_username . ":" . $_password)
+	);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $_data);
+	curl_setopt($ch, CURLOPT_URL, $_URL);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+	$res = curl_exec($ch);
+	curl_close($ch);
+	$res = json_decode($res, true);
+  // dump($res);
+	$redirect_destination = $res['payment-redirect-url'];
+  // dump($redirect_destination);
+	if (!empty($redirect_destination)) {
+		// $url = Url::fromUri($redirect_destination);
+    $response = new TrustedRedirectResponse($redirect_destination);
+    $response->send();
+	}
+	return $res;
+}
+
 function fleet_management_theme_preprocess_page(&$variables)
 {
   global $base_url;
+
   $session = \Drupal::request()->getSession();
   $database = \Drupal::database();
   $variables['company_email'] = $session->get('company_email');
@@ -60,28 +159,34 @@ function fleet_management_theme_preprocess_page(&$variables)
   $current_path = \Drupal::service('path.current')->getPath();
   $path_args = explode('/', $current_path);
   // dump($path_args);
-  if ($uid) {
-    $user = \Drupal\user\Entity\User::load($uid);
-
-    if ($path_args[2] == '126') { // for thank you subscription page
-      switch ($field_package_value) {
-        case 'Bronze':
-          // $user->activate();
-          // $user->save();
-          break;
-        case 'Silver':
-          // $user->block();
-          // $user->save();
-          break;
-        case 'Gold':
-          // $user->block();
-          // $user->save();
-          break;
-        case 'Platinum':
-          // $user->block();
-          // $user->save();
-          break;
+  // dump($uid);
+  if ($current_user->id()) {
+    $user = \Drupal\user\Entity\User::load($current_user->id());
+    if ($path_args[2] == '246') { // for thank you subscription page
+      if(isset($_POST['bronze-btn'])){
+        $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+        // $field_package_expiry_date = $user->get('field_package_expiry_date');
+        // dump($field_package_expiry_date);
+        // $package = 'Bronze';
+        // $res = payment($package);
+        // dump('Bronze');
       }
+      if(isset($_POST['silver-btn'])){
+        $package = 'Silver';
+        $res = payment($package);
+        // dump('Silver');
+      }
+      if(isset($_POST['gold-btn'])){
+        $package = 'Gold';
+        $res = payment($package);
+        // dump('Gold');
+      }
+      if(isset($_POST['platinum-btn'])){
+        // dump('Platinum');
+        $package = 'Platinum';
+        $res = payment($package);
+      }
+      // dump($res);
     }
   }
 
@@ -89,19 +194,20 @@ function fleet_management_theme_preprocess_page(&$variables)
     $user = \Drupal\user\Entity\User::load($current_user->id());
     $variables['package'] = $user->get('field_package')->value;
     $variables['package_expiry_date'] = $user->get('field_package_expiry_date')->value;
+    $variables['role'] = $user->getRoles();
     $current_date =  date("Y-m-d");
     // dump($user);
+    // dump($variables['role']);
     // dump($variables['package_expiry_date']);
+    // dump($current_date);
     if ($user->id() != '1') {
-      if ($path_args[1] == 'company') {
-        if ($current_date > $variables['package_expiry_date']) {
+      if (in_array('company',$variables['role'])) {
+        if ($current_date >= $variables['package_expiry_date']) {
           $variables['expiry_status'] = 'expired';
-          // $user->block();
-          // $user->save();
         } else {
           $variables['expiry_status'] = $variables['package'];
         }
-      } elseif ($path_args[1] == 'operator') {
+      } elseif (in_array('Operator',$variables['role'])) {
         $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];
         if ($parent_company_id) {
           $parent_company = \Drupal\user\Entity\User::load($parent_company_id);
@@ -192,6 +298,7 @@ function fleet_management_theme_preprocess_page(&$variables)
       $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ")");
       $result = $query->fetchAll();
       $current_date =  date("Y-m-d");
+      $notifications = array();
 
       for ($i = 0, $k = 0, $j = 0; $i < count($result); $i++) {
         $field_insurance_expiry_date_value = $result[$i]->field_insurance_expiry_date_value;
@@ -262,6 +369,7 @@ function fleet_management_theme_preprocess_page(&$variables)
         }
       }
 
+      // fuel limit notification
       $user_ids = array();
       $user_id = '';
       $database = \Drupal::database();
@@ -320,20 +428,23 @@ function fleet_management_theme_preprocess_page(&$variables)
       }
       // dump($title);
       $keys = array_keys($vehicle_ids);
-      for ($i = 0; $i < count($vehicle_ids); $i++) {
+      for ($i = 0, $j = 0; $i < count($vehicle_ids); $i++) {
         if ((string) $total_litres_pumped[$keys[$i]] > $vehicle_ids[$keys[$i]]) {
-          $data[$keys[$i]]['title'] = $title[$keys[$i]];
-          $data[$keys[$i]]['date'] = $result[$i]->field_fuel_date_value;
-          $data[$keys[$i]]['liters_pumped'] = (string) $total_litres_pumped[$keys[$i]];
+          $data[$j]['vid'] = $keys[$i];
+          $data[$j]['title'] = $title[$keys[$i]];
+          $data[$j]['date'] = $result[$i]->field_fuel_date_value;
+          $data[$j]['liters_pumped'] = (string) $total_litres_pumped[$keys[$i]];
+          $j++;
         }
       }
 
+      // dump($keys);
       // dump($data);
       for ($l = 0, $k = 0, $j = count($notifications); $l < count($data); $l++) {
         $notifications[$j][$k]['icon'] = 'ti-alert';
         $notifications[$j][$k]['type'] = 'Fuel Limit Exceeded';
         $notifications[$j][$k]['id'] = 'fuelLimitExceed';
-        $notifications[$j][$k]['title'] = $data[$keys[$l]]['title'] . '\'s Fuel Limit is Exceeded on ' . $data[$keys[$l]]['date'];
+        $notifications[$j][$k]['title'] = $data[$l]['title'] . '\'s Fuel Limit is Exceeded on ' . $data[$l]['date'];
         $k++;
       }
       // dump($result);       
@@ -499,37 +610,7 @@ function fleet_management_theme_preprocess_page(&$variables)
     // dump($notifications);
   }
   $variables['notifications'] = json_encode($notifications);
-  // dump($roles);
-  // dump($current_path);
-  // if ($current_path == '/company/dashboard') {
-  //   $block = \Drupal\block_content\Entity\BlockContent::load('1');
-  //   // dump($block->get('body')->value);
-  //   // $block->get('body')->value = '<h3>Hello World</h3>';
-
-  //   $original_message = $block->get('body')->getValue();
-  //   // dump($original_message);
-  //   $original_message[0]['value'] = '<h3>Hello World</h3>';
-  //   $original_message[0]['summary'] = '';
-  //   $original_message[0]['format'] = 'full_html';
-  //   $block->set('body', $original_message[0]['value']);
-  //   //$value = $block->get('values')->value;
-  //   dump($block);
-  // }
-
-  // dump($current_user->getAccount());
-  // echo '<pre>';
-  // print_r($current_user);
-  // echo '</pre>';
-  // dump($current_user);
-  // echo $current_user->getEmail();
-  // dump($current_user->getRoles());
-  // echo $current_user->getDisplayName();
-  // echo $current_user->getAccountName();
-  //echo $current_user->getUsername();
-  // die;
-  // {% set roles = user.getroles(TRUE) %}
-  // {{ dump(roles) }}
-
+  
   $variables['username'] = $current_user->getDisplayName();
 
   // Add responsive class

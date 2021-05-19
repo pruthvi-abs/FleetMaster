@@ -1314,7 +1314,7 @@ a.block.block-link-pop:hover {
   border-bottom: 1px solid #dee2e6 !important;
 }
 
-#node-driver-form .text-full,
+/* #node-driver-form .text-full,
 #node-driver-form .form-date,
 #node-driver-form .form-email,
 #node-driver-form .form-select,
@@ -1431,4 +1431,4 @@ a.block.block-link-pop:hover {
 #node-accident-reporting-edit-form .form-number
  {
   width: 53%;
-}
+} */

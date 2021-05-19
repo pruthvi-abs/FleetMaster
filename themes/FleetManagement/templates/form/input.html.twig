@@ -18,6 +18,12 @@ attributes.type != 'submit' %}
   attributes.addClass("form-control")
 }}
 />{{ children }}
+{% elseif attributes.value == 'Remove' %}
+<div class="lorvens-widget">
+  <div class="col-sm-3">
+    <input{{ attributes.addClass("btn btn-primary btn-lg btn-block h-50 rounded-5") }}/>
+  </div>
+</div>
 {% elseif attributes.type == 'submit' %}
 <div class="lorvens-widget">
   <div class="col-sm-12">
