@@ -496,9 +496,9 @@ a.menu_lvl_0_link.is-active {
   display:block;
 } */
 .filter form label,
-.filter form input[type=text],
-.filter form input[type=number],
-.filter form input[type=email],
+.filter form input[type="text"],
+.filter form input[type="number"],
+.filter form input[type="email"],
 .filter form select {
   width: 250px !important;
   float: left;
@@ -678,43 +678,54 @@ a.menu_lvl_0_link.is-active {
   pointer-events: none;
 }
 
-.nav-item.active{
+.nav-item.active {
   cursor: default;
 }
-.nav-item.active a{
+.nav-item.active a {
   pointer-events: all;
 }
 
-.import-btn
-{
+.import-btn {
   vertical-align: middle;
   padding: 10px;
   position: absolute;
   top: 44%;
   right: 8%;
 }
-.description{
+.description {
   margin-bottom: 10px;
 }
 
-.download_temp
-{
+.download_temp {
   position: absolute;
   top: 44%;
   right: 4%;
   /* height: auto; */
 }
 
-input[type=text],
-input[type=email],
-input[type=password],
-input[type=file],
-input[type=date],
-input[type=time],
-input[type=number],
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
 select,
-textarea{
+textarea {
   width: 53% !important;
   border-radius: 5px !important;
   border-color: #6d6d6d !important;
+}
+
+#edit-delete {
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #37517e;
+  border-color: #37517e;
+  height: 50% !important;
+  display: inline-table;
+  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
+  font-size: 1.25rem;
+  line-height: 1.5;
 }

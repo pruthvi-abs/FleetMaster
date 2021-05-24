@@ -103,7 +103,7 @@
     </div>
       <script>
     var graphdata3 = $("#tripanalysis").val();
-    if( graphdata3 == '""'){
+    if( graphdata3 == '[]'){
           $('.trip_analysis').addClass('d-none');
         }
     var $tripanalysis = JSON.parse(graphdata3);
@@ -270,7 +270,7 @@
     </div>
       <script>
     var graphdata2 = $("#accidentanalysis").val();
-    if( graphdata2 == '""'){
+    if( graphdata2 == '[]'){
           $('.accident_analysis').addClass('d-none');
         }
     var $accidentanalysis = JSON.parse(graphdata2);
@@ -301,7 +301,7 @@
     </div>
       <script>
     var graphdata2 = $("#fuel_filling").val();
-    if( graphdata2 == '""'){
+    if( graphdata2 == '[]'){
           $('.fuel_filling').addClass('d-none');
         }
     var $fuel_filling = JSON.parse(graphdata2);
@@ -378,7 +378,7 @@
     </div>
       <script>
     var graphdata2 = $("#accidentanalysis").val();
-    if( graphdata2 == '""'){
+    if( graphdata2 == '[]'){
           $('.accident_analysis').addClass('d-none');
         }
     var $accidentanalysis = JSON.parse(graphdata2);
@@ -485,7 +485,8 @@
     </div>
       <script>
     var graphdata2 = $("#tripanalysis").val();
-    if( graphdata2 == '""'){
+    console.log()
+    if( graphdata2 == '[]'){
           $('.trip_analysis').addClass('d-none');
         }
     var $tripanalysis = JSON.parse(graphdata2);
@@ -573,7 +574,7 @@
     </div>
       <script>
     var graphdata2 = $("#fuel_filling").val();
-    if( graphdata2 == '""'){
+    if( graphdata2 == '[]'){
           $('.fuel_filling').addClass('d-none');
         }
     var $fuel_filling = JSON.parse(graphdata2);
@@ -619,7 +620,7 @@
     </div>
       <script>
     var graphdata2 = $("#numberofcompany").val();
-    if( graphdata2 == '""'){
+    if( graphdata2 == '[]'){
           $('.number_of_companies').addClass('d-none');
         }
     var $numberofcompanies = JSON.parse(graphdata2);
@@ -652,7 +653,7 @@
     </div>
       <script>
       var graphdata1 = $("#empstatus").val();
-      if( graphdata1 == '""'){
+      if( graphdata1 == '[]'){
           $('.company_status').addClass('d-none');
         }
       if ($("#donutMorris_emp").length == 1) {

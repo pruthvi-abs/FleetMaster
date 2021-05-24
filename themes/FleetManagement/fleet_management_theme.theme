@@ -192,8 +192,10 @@ function fleet_management_theme_preprocess_page(&$variables)
 
   if ($current_user->id()) {
     $user = \Drupal\user\Entity\User::load($current_user->id());
+    // dump($user);
     $variables['package'] = $user->get('field_package')->value;
     $variables['package_expiry_date'] = $user->get('field_package_expiry_date')->value;
+    $variables['package_start_date'] = $user->get('field_package_start_date')->value;
     $variables['role'] = $user->getRoles();
     $current_date =  date("Y-m-d");
     // dump($user);
@@ -202,10 +204,15 @@ function fleet_management_theme_preprocess_page(&$variables)
     // dump($current_date);
     if ($user->id() != '1') {
       if (in_array('company',$variables['role'])) {
-        if ($current_date >= $variables['package_expiry_date']) {
-          $variables['expiry_status'] = 'expired';
-        } else {
-          $variables['expiry_status'] = $variables['package'];
+        if($current_date != $variables['package_start_date']){
+          if ($current_date >= $variables['package_expiry_date']) {
+            $variables['expiry_status'] = 'expired';
+          } else {
+            $variables['expiry_status'] = $variables['package'];
+          }
+        }
+        else{
+          $variables['expiry_status'] = 'new-user';
         }
       } elseif (in_array('Operator',$variables['role'])) {
         $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];
@@ -295,7 +302,7 @@ function fleet_management_theme_preprocess_page(&$variables)
       $notification_count = 0;
       $current_user = \Drupal::currentUser();
       $user_id = $current_user->id();
-      $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ")");
+      $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ") order by date(field_insurance_expiry_date_value)");
       $result = $query->fetchAll();
       $current_date =  date("Y-m-d");
       $notifications = array();
@@ -314,7 +321,7 @@ function fleet_management_theme_preprocess_page(&$variables)
 
       // fuel card
       $database = \Drupal::database();
-      $query = $database->query("SELECT * FROM `node_field_data` data,`node__field_fuel_card_expiry_date` expiry_date, `node__field_fuel` fuel WHERE data.type = 'vehicle' and expiry_date.entity_id = data.nid and fuel.entity_id = data.nid and `uid` in (" . $user_id . ")");
+      $query = $database->query("SELECT * FROM `node_field_data` data,`node__field_fuel_card_expiry_date` expiry_date, `node__field_fuel` fuel WHERE data.type = 'vehicle' and expiry_date.entity_id = data.nid and fuel.entity_id = data.nid and `uid` in (" . $user_id . ")  order by date(field_fuel_card_expiry_date_value)");
       $result = $query->fetchAll();
       // dump($query);
       for ($i = 0, $k = 0, $j = count($notifications); $i < count($result); $i++) {
@@ -332,7 +339,7 @@ function fleet_management_theme_preprocess_page(&$variables)
 
       // safet stickers
       $database = \Drupal::database();
-      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_safet` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ")");
+      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_safet` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ") order by date(field_safet_value)");
       $result = $query->fetchAll();
       // dump($query);
       for ($i = 0, $k = 0, $j = count($notifications); $i < count($result); $i++) {
@@ -353,7 +360,7 @@ function fleet_management_theme_preprocess_page(&$variables)
       // echo "</pre>";
 
       $database = \Drupal::database();
-      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_licence_expiry_date` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ")");
+      $query = $database->query("SELECT * FROM `node_field_data`,`node__field_licence_expiry_date` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ") order by date(field_licence_expiry_date_value)");
       $result = $query->fetchAll();
       // dump($query);
       for ($i = 0, $k = 0, $j = count($notifications); $i < count($result); $i++) {
@@ -413,9 +420,9 @@ function fleet_management_theme_preprocess_page(&$variables)
       }
       // dump($vehicle_ids);
 
-      $query = $database->query("SELECT t1.nid,t1.vid,t1.title,t3.field_fuel_date_value,t2.field_litres_pumped_value,t4.field_vehicle_regno_target_id FROM node_field_data as t1 inner join node__field_litres_pumped as t2 on t1.nid = t2.entity_id inner join node__field_fuel_date as t3 on t1.nid = t3.entity_id inner join node__field_vehicle_regno as t4 on t4.entity_id = t1.nid WHERE `type` LIKE 'fuel_master' and `uid` in (57,191,192,194) and ( t3.field_fuel_date_value >= '$start_date' and t3.field_fuel_date_value <= '$end_date')");
+      $query = $database->query("SELECT t1.nid,t1.vid,t1.title,t3.field_fuel_date_value,t2.field_litres_pumped_value,t4.field_vehicle_regno_target_id FROM node_field_data as t1 inner join node__field_litres_pumped as t2 on t1.nid = t2.entity_id inner join node__field_fuel_date as t3 on t1.nid = t3.entity_id inner join node__field_vehicle_regno as t4 on t4.entity_id = t1.nid WHERE `type` LIKE 'fuel_master' and `uid` in (" . $user_id . ") and ( t3.field_fuel_date_value >= '$start_date' and t3.field_fuel_date_value <= '$end_date') order by date(field_fuel_date_value)");
       $result = $query->fetchAll();
-      // dump($query);
+      // dump($query);  
       // dump($result);
       $title = array();
       $date = array();
@@ -429,10 +436,11 @@ function fleet_management_theme_preprocess_page(&$variables)
       // dump($title);
       $keys = array_keys($vehicle_ids);
       for ($i = 0, $j = 0; $i < count($vehicle_ids); $i++) {
+        // dump($date[$keys[$i]]);
         if ((string) $total_litres_pumped[$keys[$i]] > $vehicle_ids[$keys[$i]]) {
           $data[$j]['vid'] = $keys[$i];
           $data[$j]['title'] = $title[$keys[$i]];
-          $data[$j]['date'] = $result[$i]->field_fuel_date_value;
+          $data[$j]['date'] = $date[$keys[$i]];
           $data[$j]['liters_pumped'] = (string) $total_litres_pumped[$keys[$i]];
           $j++;
         }
@@ -462,9 +470,10 @@ function fleet_management_theme_preprocess_page(&$variables)
       $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];
       array_push($user_ids, $parent_company_id);
       $user_id .= ',' . $parent_company_id;
+      $notifications = array();
 
       if (in_array('vehicle_', $roles)) {
-        $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ")");
+        $query = $database->query("SELECT *,nid,field_insurance_expiry_date_value,title FROM `node_field_data`,`node__field_insurance_expiry_date` WHERE `type` LIKE 'vehicle' and `nid` = `entity_id` and `uid` in (" . $user_id . ") order by date(field_insurance_expiry_date_value)");
         $result = $query->fetchAll();
         $current_date =  date("Y-m-d");
 
@@ -484,7 +493,7 @@ function fleet_management_theme_preprocess_page(&$variables)
       // fuel card
       if (in_array('fuel_filling', $roles)) {
         $database = \Drupal::database();
-        $query = $database->query("SELECT * FROM `node_field_data` data,`node__field_fuel_card_expiry_date` expiry_date, `node__field_fuel` fuel WHERE data.type = 'vehicle' and expiry_date.entity_id = data.nid and fuel.entity_id = data.nid and `uid` in (" . $user_id . ")");
+        $query = $database->query("SELECT * FROM `node_field_data` data,`node__field_fuel_card_expiry_date` expiry_date, `node__field_fuel` fuel WHERE data.type = 'vehicle' and expiry_date.entity_id = data.nid and fuel.entity_id = data.nid and `uid` in (" . $user_id . ") order by date(field_fuel_card_expiry_date_value)");
         $result = $query->fetchAll();
         // dump($query);
         for ($i = 0, $k = 0, $j = count($notifications); $i < count($result); $i++) {
@@ -528,9 +537,9 @@ function fleet_management_theme_preprocess_page(&$variables)
       }
       // dump($vehicle_ids);
 
-      $query = $database->query("SELECT t1.nid,t1.vid,t1.title,t3.field_fuel_date_value,t2.field_litres_pumped_value,t4.field_vehicle_regno_target_id FROM node_field_data as t1 inner join node__field_litres_pumped as t2 on t1.nid = t2.entity_id inner join node__field_fuel_date as t3 on t1.nid = t3.entity_id inner join node__field_vehicle_regno as t4 on t4.entity_id = t1.nid WHERE `type` LIKE 'fuel_master' and `uid` in (57,191,192,194) and ( t3.field_fuel_date_value >= '$start_date' and t3.field_fuel_date_value <= '$end_date')");
+      $query = $database->query("SELECT t1.nid,t1.vid,t1.title,t3.field_fuel_date_value,t2.field_litres_pumped_value,t4.field_vehicle_regno_target_id FROM node_field_data as t1 inner join node__field_litres_pumped as t2 on t1.nid = t2.entity_id inner join node__field_fuel_date as t3 on t1.nid = t3.entity_id inner join node__field_vehicle_regno as t4 on t4.entity_id = t1.nid WHERE `type` LIKE 'fuel_master' and `uid` in (" . $user_id . ") and ( t3.field_fuel_date_value >= '$start_date' and t3.field_fuel_date_value <= '$end_date') order by date(field_fuel_date_value)");
       $result = $query->fetchAll();
-      // dump($query);
+      // dump($query);  
       // dump($result);
       $title = array();
       $date = array();
@@ -543,20 +552,24 @@ function fleet_management_theme_preprocess_page(&$variables)
       }
       // dump($title);
       $keys = array_keys($vehicle_ids);
-      for ($i = 0; $i < count($vehicle_ids); $i++) {
+      for ($i = 0, $j = 0; $i < count($vehicle_ids); $i++) {
+        // dump($date[$keys[$i]]);
         if ((string) $total_litres_pumped[$keys[$i]] > $vehicle_ids[$keys[$i]]) {
-          $data[$keys[$i]]['title'] = $title[$keys[$i]];
-          $data[$keys[$i]]['date'] = $result[$i]->field_fuel_date_value;
-          $data[$keys[$i]]['liters_pumped'] = (string) $total_litres_pumped[$keys[$i]];
+          $data[$j]['vid'] = $keys[$i];
+          $data[$j]['title'] = $title[$keys[$i]];
+          $data[$j]['date'] = $date[$keys[$i]];
+          $data[$j]['liters_pumped'] = (string) $total_litres_pumped[$keys[$i]];
+          $j++;
         }
       }
 
+      // dump($keys);
       // dump($data);
       for ($l = 0, $k = 0, $j = count($notifications); $l < count($data); $l++) {
         $notifications[$j][$k]['icon'] = 'ti-alert';
         $notifications[$j][$k]['type'] = 'Fuel Limit Exceeded';
         $notifications[$j][$k]['id'] = 'fuelLimitExceed';
-        $notifications[$j][$k]['title'] = $data[$keys[$l]]['title'] . '\'s Fuel Limit is Exceeded on ' . $data[$keys[$l]]['date'];
+        $notifications[$j][$k]['title'] = $data[$l]['title'] . '\'s Fuel Limit is Exceeded on ' . $data[$l]['date'];
         $k++;
       }
 
@@ -565,7 +578,7 @@ function fleet_management_theme_preprocess_page(&$variables)
       // safet stickers
       if (in_array('vehicle_', $roles)) {
         $database = \Drupal::database();
-        $query = $database->query("SELECT * FROM `node_field_data`,`node__field_safet` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ")");
+        $query = $database->query("SELECT * FROM `node_field_data`,`node__field_safet` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ") order by date(field_safet_value)");
         $result = $query->fetchAll();
         // dump($query);
         for ($i = 0, $k = 0, $j = count($notifications); $i < count($result); $i++) {
@@ -588,7 +601,7 @@ function fleet_management_theme_preprocess_page(&$variables)
 
       if (in_array('employee', $roles)) {
         $database = \Drupal::database();
-        $query = $database->query("SELECT * FROM `node_field_data`,`node__field_licence_expiry_date` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ")");
+        $query = $database->query("SELECT * FROM `node_field_data`,`node__field_licence_expiry_date` WHERE type = bundle and entity_id = nid and `uid` in (" . $user_id . ") order by date(field_licence_expiry_date_value)");
         $result = $query->fetchAll();
         // dump($query);
         for ($i = 0, $k = 0, $j = count($notifications); $i < count($result); $i++) {

@@ -54,8 +54,8 @@ class EmployeeCount extends BlockBase
       $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];
       array_push($user_ids,$parent_company_id);
       $user_id .= ',' . $parent_company_id;
-    //   dump($user_id);
     }
+      dump($user_id);
     
     // employee
     // $query = $database->query("SELECT * FROM `node_field_data` WHERE `type` LIKE 'driver' and `uid` in ( " . $user_id . ")");
@@ -69,8 +69,8 @@ class EmployeeCount extends BlockBase
       $data = '';
     }
 
-    // dump($total_emp);
-    // dump($data);
+    dump($total_emp);
+    dump($data);
 
     return array(
       '#type' => 'markup-cust',

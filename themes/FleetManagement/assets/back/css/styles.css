@@ -730,7 +730,12 @@ div[class*="col-"] div[class*="col-"] {
   color: #076ad0;
 }
 
-.dropdown-menu.notifications h5,
+.dropdown-menu.notifications .notification-heading{
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown-menu.notifications .notification-heading,
 .dropdown-menu.profile h5 {
   padding: 15px;
   background: #555;

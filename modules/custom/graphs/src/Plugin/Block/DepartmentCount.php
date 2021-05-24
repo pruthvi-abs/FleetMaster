@@ -55,7 +55,8 @@ class DepartmentCount extends BlockBase
       array_push($user_ids,$parent_company_id);
       $user_id .= ',' . $parent_company_id;
     //   dump($user_id);
-    }
+  }
+  //   dump($user_id);
     
     // department
     $query = $database->query("SELECT count(*) as total_department FROM `node_field_data` WHERE `type` LIKE 'departments' and `uid` in (" . $user_id . ")");

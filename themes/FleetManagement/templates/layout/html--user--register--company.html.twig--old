@@ -86,7 +86,7 @@
     <div class="sidebar-header">
       <a href="../admin/dashboard"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
     </div>
-    {% if expiry_status != 'expired' %}
+    {% if expiry_status not in ['expired', 'new-user'] %}
     <ul class="list-unstyled components">
       {{
         page.header

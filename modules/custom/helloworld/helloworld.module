@@ -67,6 +67,8 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 
 	switch ($form_id) {
 		case 'user_register_form':
+			// dump($form);
+			$form['actions']['submit']['#value'] = t('Register Company');
 			$form = _user_register_form($form, $path_args, $form_state);
 			break;
 		case 'webform_submission_company_report_node_203_add_form':

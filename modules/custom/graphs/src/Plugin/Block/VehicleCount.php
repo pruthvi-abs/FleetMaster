@@ -54,13 +54,15 @@ class VehicleCount extends BlockBase
       $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];
       array_push($user_ids,$parent_company_id);
       $user_id .= ',' . $parent_company_id;
-      // dump($user_id);
     }
+    // dump($user_id);
     
     // vehicles
     $query = $database->query("SELECT count(*) as total_vehicle FROM `node_field_data` WHERE `type` LIKE 'vehicle' and `uid` in (" . $user_id . ")");
     $total_vehicle = $query->fetchAll();
     $total_vehicle = json_decode(json_encode($total_vehicle), true);
+    // dump($query);
+    // dump($total_vehicle);
     
     $data[0]['total_vehicle'] = (int)$total_vehicle[0]['total_vehicle'];
 
