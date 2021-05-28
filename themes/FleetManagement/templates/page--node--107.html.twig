@@ -1,0 +1,40 @@
+{% if page.header and logged_in %}
+{{ attach_library('fleet_management_theme/front-style') }}
+{# <link rel="stylesheet" href="{{ url('<front>') }}themes/FleetManagement/assets/front/css/thankyou.css"> #}
+  <style>
+    #footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+  </style>
+<header id="header" class="fixed-top" style="background: rgba(40, 58, 90)">
+  <div class="container-fluid px-5 d-flex align-items-center">
+    <h1 class="logo mr-auto"><a href="{{ url('<front>') }}">DIGIFLEET</a></h1>
+  </div>
+</header>
+{% endif %} {% if page.content %}
+<div class="container" style="margin-top:15%">
+  <div class="content">
+    <div class="wrapper-1">
+    <div class="wrapper-2">
+    <h2 class="thankyou">Payment Success !</h2>
+    <p>Thanks for subscribing to our Package.</p>
+    <a class="btn btn-success go-home" href="{{ url('<front>') }}company/dashboard">go home</a></div>
+    </div>
+    </div>
+    
+</div>
+{% endif %}
+<footer id="footer">
+
+  <div class="container footer-bottom clearfix">
+    {% if page.footer_first %}
+    {{ page.footer_first }}
+    {% endif %} {% if page.footer_second %}
+    {{ page.footer_second }}
+    {% endif %}
+  </div>
+</footer>

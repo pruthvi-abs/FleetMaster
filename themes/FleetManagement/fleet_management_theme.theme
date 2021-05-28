@@ -62,6 +62,7 @@ function user_data(){
 
 function makereq($wirecardMerchantId, $merchant_ref, $amount, $currency, $card, $expiry_month, $expiry_year, $cvv, $ctype)
 {
+  global $base_url;
 	$data = array();
   $userdata = user_data();
   // dump($userdata);
@@ -86,7 +87,13 @@ function makereq($wirecardMerchantId, $merchant_ref, $amount, $currency, $card, 
 	$data['payment']['card']['card-type'] = $ctype;
 	$data['payment']['ip-address'] = '127.0.0.1';
 	$data['payment']['payment-methods']['payment-method'][0]['name'] = 'creditcard';
-
+	$data['payment']['success-redirect-url'] = $base_url . '/paymentsuccess';
+	$data['payment']['fail-redirect-url'] = $base_url . '/paymentfailed';
+	$data['payment']['cancel-redirect-url'] = $base_url . '/renew';
+  
+	// $data['payment']['success-redirect-url'] = "https://demoshop-test.wirecard.com/demoshop/#/success";
+	// $data['payment']['fail-redirect-url'] = "https://demoshop-test.wirecard.com/demoshop/#/error";
+	// $data['payment']['cancel-redirect-url'] = "https://demoshop-test.wirecard.com/demoshop/#/cancel";
   // dump($data);
   // die;
 	return json_encode($data);
@@ -139,6 +146,8 @@ function payment($package){
     $response = new TrustedRedirectResponse($redirect_destination);
     $response->send();
 	}
+  // dump($res);
+  // die;
 	return $res;
 }
 
@@ -187,6 +196,71 @@ function fleet_management_theme_preprocess_page(&$variables)
         $res = payment($package);
       }
       // dump($res);
+    }
+
+  }
+  if($path_args[1] == 'node' && $path_args[2] == '107'){
+    if($_POST['response-base64']){
+      $data = base64_decode($_POST['response-base64']);
+      $data = json_decode($data,true);
+      $status = $data['payment']['transaction-state'];
+      $requested_amount = (String)$data['payment']['requested-amount']['value'];
+      $token_id = $data['payment']['card-token']['token-id'];
+      $completion_date = $data['payment']['completion-time-stamp'];
+
+      if($status == 'failed'){
+        $data['status'] = 'Payment Failed';
+      } elseif($status == 'success'){
+        $data['status'] = 'Payment Success';
+      }
+
+      $data['requested_amount'] = $requested_amount;
+      $data['token_id'] = $token_id;
+      $data['completion_date'] = $completion_date;
+
+      // dump($data);
+      // dump($status);
+      // dump($requested_amount);
+      // dump($token_id);
+      // dump($completion_date);
+      // die;
+
+      if($data){
+        $response = new RedirectResponse($base_url.'/paymentsuccess');
+        return $response->send();
+      }
+    }
+  }
+  if($path_args[1] == 'node' && $path_args[2] == '262'){
+    if($_POST['response-base64']){
+      $data = base64_decode($_POST['response-base64']);
+      $data = json_decode($data,true);
+      $status = $data['payment']['transaction-state'];
+      $requested_amount = (String)$data['payment']['requested-amount']['value'];
+      $token_id = $data['payment']['card-token']['token-id'];
+      $completion_date = $data['payment']['completion-time-stamp'];
+
+      if($status == 'failed'){
+        $data['status'] = 'Payment Failed';
+      } elseif($status == 'success'){
+        $data['status'] = 'Payment Success';
+      }
+
+      $data['requested_amount'] = $requested_amount;
+      $data['token_id'] = $token_id;
+      $data['completion_date'] = $completion_date;
+
+      // dump($data);
+      // dump($status);
+      // dump($requested_amount);
+      // dump($token_id);
+      // dump($completion_date);
+      // die;
+
+      if($data){
+        $response = new RedirectResponse($base_url.'/paymentfailed');
+        return $response->send();
+      }
     }
   }
 
