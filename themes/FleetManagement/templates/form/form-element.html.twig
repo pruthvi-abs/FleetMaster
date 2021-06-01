@@ -91,7 +91,7 @@
     </div>
   {% endif %}
   {% if description_display in ['after', 'invisible'] and description.content %}
-    {% if description.attributes.id == 'edit-user-picture-0--description' %}
+    {% if description.attributes.id == 'edit-user-picture-0--description' or description.attributes.id  =='edit-field-fuel-0-value--description' %} 
       <div{{ description.attributes.addClass(description_classes) }}>
         {{ description.content }}
       </div>

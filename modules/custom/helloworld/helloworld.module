@@ -79,6 +79,15 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 			// dump($form);
 			$form['actions']['submit']['#submit'][] = '_company_report_handler';
 			break;
+
+		case 'node_driver_edit_form':
+			unset($form['actions']['delete']);
+			break;
+		
+		case 'node_vehicle_edit_form':
+			unset($form['actions']['delete']);
+			break;
+
 		case 'node_driver_form':
 			//$form=_employeeid_duplication_validate($form,$form_state);
 		$form['#validate'][] = '_employeeid_duplication_validate';
@@ -127,21 +136,21 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 			if($path_args[1]=="employeelist")
 			{ 
 				$form['views_exposed_form'] = array(
-					'#markup' => '<div class="import-btn"><a href="'.$base_url.'/node/add/employees_import">Import File</a></div>
-					<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/employee_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div>');
+					'#markup' => '<div class="text-right exposed-div"><div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/node/add/employees_import"><i class="fa fa-upload" aria-hidden="true"></i></a></div>
+					<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/employee_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div></div>');
 			}
 
 			if($path_args[1]=="vehicles")
 			{
 				$form['views_exposed_form'] = array(
-					'#markup' => '<div class="import-btn"><a href="'.$base_url.'/node/add/vehicles_import">Import File</a></div>
-					<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/vehicle_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div>');
+					'#markup' => '<div class="text-right exposed-div"><div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/node/add/vehicles_import"><i class="fa fa-upload" aria-hidden="true"></i></a></div>
+					<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/vehicle_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div></div>');
 			}
 			if($path_args[1]=="fuelmaster")
 			{
 				$form['views_exposed_form'] = array(
-					'#markup' => '<div class="import-btn"><a href="'.$base_url.'/node/add/fuel_master_import">Import File</a></div>
-					<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/fuel_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div>');
+					'#markup' => '<div class="text-right exposed-div"><div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/node/add/fuel_master_import"><i class="fa fa-upload" aria-hidden="true"></i></a></div>
+					<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/fuel_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div></div>');
 			}
 
 			break;
@@ -152,7 +161,7 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 			$form = _addcompanynameforbranch($form,$form_state);
 			$form['#validate'][] = '_branchname_duplication_validate';
 
-
+			unset($form['actions']['delete']);
 
 			break;
 
@@ -986,7 +995,6 @@ function _company_report_handler($form, &$form_state){
 	//dump($status);
 	// die;
 }
-
 /**
  * Generate the node editing form array.
  */
@@ -1406,7 +1414,6 @@ function _branchname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInt
 	if(($referenced_nids != false) ||($referenced_nids != NULL) || ($referenced_nids != "" ))
 	{
 		$form_state->setErrorByName('title', t('Branch Name Already exists  Please try another name'));
-
 	}
 
 
@@ -1414,8 +1421,6 @@ function _branchname_duplication_validate(&$form, \Drupal\Core\Form\FormStateInt
 
 
 function _employeeid_duplication_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
-
-
 
 	$current_user_id =	_get_company_userid();
 

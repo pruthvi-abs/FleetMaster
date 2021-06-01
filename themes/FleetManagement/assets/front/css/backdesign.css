@@ -525,7 +525,7 @@ a.menu_lvl_0_link.is-active {
 
 .filter #edit-actions {
   display: block;
-  margin-top: 2.55%;
+  /* margin-top: 2.55%; */
 }
 .notification-menu {
   height: 250px;
@@ -685,23 +685,23 @@ a.menu_lvl_0_link.is-active {
   pointer-events: all;
 }
 
-.import-btn {
+/* .import-btn {
   vertical-align: middle;
   padding: 10px;
   position: absolute;
   top: 44%;
   right: 8%;
 }
-.description {
-  margin-bottom: 10px;
-}
-
 .download_temp {
   position: absolute;
   top: 44%;
   right: 4%;
-  /* height: auto; */
+} */
+
+.description {
+  margin-bottom: 10px;
 }
+
 
 input[type="text"],
 input[type="email"],
@@ -728,4 +728,10 @@ textarea {
   /* padding: 0.5rem 1rem; */
   font-size: 1.25rem;
   line-height: 1.5;
+}
+
+
+.exposed-div{
+  width: 100%;
+  padding: 20px 40px 0 0;
 }

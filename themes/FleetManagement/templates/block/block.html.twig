@@ -46,7 +46,7 @@
   </div>
   <script>
         var graphdata = $("#vehicle").val();
-        if( graphdata == '""'){
+        if( graphdata == '""' || graphdata == '[]'){
           $('.vehicle_allotment').addClass('d-none');
         }
         if ($("#donutMorris_vehicle").length == 1) {
@@ -75,7 +75,7 @@
     </div>
       <script>
       var graphdata1 = $("#empstatus").val();
-      if( graphdata1 == '""'){
+      if( graphdata1 == '""' || graphdata1 == '[]'){
           $('.employee_status').addClass('d-none');
         }
       if ($("#donutMorris_emp").length == 1) {
@@ -103,7 +103,7 @@
     </div>
       <script>
     var graphdata3 = $("#tripanalysis").val();
-    if( graphdata3 == '[]'){
+    if( graphdata3 == '[]' || graphdata3 == '""'){
           $('.trip_analysis').addClass('d-none');
         }
     var $tripanalysis = JSON.parse(graphdata3);
@@ -187,13 +187,13 @@
     {% set bcount = content['#markup'] | json_decode %}
     <div class="row">
       <div class="col-md-12">
-        <div class="widget-area lorvens-box-shadow text-white bg-info">
+        <div class="widget-area lorvens-box-shadow text-white bg-info totalbranches">
           <div class="widget-left text-white">
             <span class="fas fa-building"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold h5">Total Branches</h3>
-            <span class="numeric text-white">{{ bcount[0].total_branches }}</span>
+            <span class="numeric text-white" id="totalbranches">{{ bcount[0].total_branches }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
             <div class="text-right text-white">
@@ -201,6 +201,13 @@
               <a href="{{ url('<front>') }}node/add/branches" class="ml-3">Add New</a>
             </div>
           </footer>
+          <script>
+            var totalvehicle = $("#totalbranches").html();
+            // console.log(totalvehicle);
+            if(!totalvehicle){
+                  $('.totalbranches').addClass('d-none');
+                }
+        </script>
         </div>
       </div>
     </div>
@@ -240,13 +247,13 @@
     {% set dcount = content['#markup'] | json_decode %}
     <div class="row">
       <div class="col-md-12">
-        <div class="widget-area lorvens-box-shadow text-white bg-warning">
+        <div class="widget-area lorvens-box-shadow text-white bg-warning totaldepartments">
           <div class="widget-left text-white">
             <span class="fas fa-briefcase"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold h5">Total Departments</h3>
-            <span class="numeric text-white">{{ dcount[0].total_department }}</span>
+            <span class="numeric text-white" id="totaldepartments">{{ dcount[0].total_department }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
             <div class="text-right text-white">
@@ -254,6 +261,13 @@
               <a href="{{ url('<front>') }}node/add/departments" class="ml-3">Add New</a>
             </div>
           </footer>
+          <script>
+            var totalvehicle = $("#totaldepartments").html();
+            // console.log(totalvehicle);
+            if(!totalvehicle){
+                  $('.totaldepartments').addClass('d-none');
+                }
+        </script>
         </div>
       </div>
       </div>
@@ -270,7 +284,7 @@
     </div>
       <script>
     var graphdata2 = $("#accidentanalysis").val();
-    if( graphdata2 == '[]'){
+    if( graphdata2 == '""' || graphdata2 == '[]' ){
           $('.accident_analysis').addClass('d-none');
         }
     var $accidentanalysis = JSON.parse(graphdata2);
@@ -301,7 +315,7 @@
     </div>
       <script>
     var graphdata2 = $("#fuel_filling").val();
-    if( graphdata2 == '[]'){
+    if( graphdata2 == '[]' || graphdata2 == '""'){
           $('.fuel_filling').addClass('d-none');
         }
     var $fuel_filling = JSON.parse(graphdata2);
@@ -378,7 +392,7 @@
     </div>
       <script>
     var graphdata2 = $("#accidentanalysis").val();
-    if( graphdata2 == '[]'){
+    if( graphdata2 == '[]' || graphdata2 == '""'){
           $('.accident_analysis').addClass('d-none');
         }
     var $accidentanalysis = JSON.parse(graphdata2);
@@ -432,13 +446,13 @@
     {% set bcount = content['#markup'] | json_decode %}
     <div class="row">
       <div class="col-md-12">
-        <div class="widget-area lorvens-box-shadow text-white bg-info">
+        <div class="widget-area lorvens-box-shadow text-white bg-info totalbranches">
           <div class="widget-left text-white">
             <span class="fas fa-building"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold h5">Total Branches</h3>
-            <span class="numeric text-white">{{ bcount[0].total_branches }}</span>
+            <span class="numeric text-white" id="totalbranches">{{ bcount[0].total_branches }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
             <div class="text-right text-white">
@@ -446,6 +460,13 @@
               <a href="{{ url('<front>') }}node/add/branches" class="ml-3">Add New</a>
             </div>
           </footer>
+          <script>
+            var totalvehicle = $("#totalbranches").html();
+            // console.log(totalvehicle);
+            if(!totalvehicle){
+                  $('.totalbranches').addClass('d-none');
+                }
+        </script>
         </div>
       </div>
     </div>
@@ -455,13 +476,13 @@
     {% set dcount = content['#markup'] | json_decode %}
     <div class="row">
       <div class="col-md-12">
-        <div class="widget-area lorvens-box-shadow color-blue">
+        <div class="widget-area lorvens-box-shadow totaldepartments color-blue">
           <div class="widget-left">
             <span class="fas fa-briefcase"></span>
           </div>
           <div class="widget-right">
             <h3 class="wiget-title font-weight-bold h5">Total Department</h3>
-            <span class="numeric color-blue">{{ dcount[0].total_department }}</span>
+            <span class="numeric color-blue" id='totaldepartments'>{{ dcount[0].total_department }}</span>
           </div>
           <footer class="pd-top-10 pd-bottom-10 col-md-12">
             <div class="text-right lorvens-text-color">
@@ -469,6 +490,13 @@
               <a href="{{ url('<front>') }}node/add/departments" class="ml-3">Add New</a>
             </div>
           </footer>
+          <script>
+            var totalvehicle = $("#totaldepartments").html();
+            // console.log(totalvehicle);
+            if(!totalvehicle){
+                  $('.totaldepartments').addClass('d-none');
+                }
+        </script>
         </div>
       </div>
       </div>
@@ -486,7 +514,7 @@
       <script>
     var graphdata2 = $("#tripanalysis").val();
     console.log()
-    if( graphdata2 == '[]'){
+    if( graphdata2 == '[]' || graphdata2 == '""'){
           $('.trip_analysis').addClass('d-none');
         }
     var $tripanalysis = JSON.parse(graphdata2);
@@ -517,7 +545,7 @@
   </div>
   <script>
         var graphdata = $("#vehicle").val();
-        if( graphdata == '""'){
+        if( graphdata == '""' || graphdata == '[]'){
           $('.vehicle_allotment').addClass('d-none');
         }
         if ($("#donutMorris_vehicle").length == 1) {
@@ -546,7 +574,7 @@
     </div>
       <script>
       var graphdata1 = $("#empstatus").val();
-      if( graphdata1 == '""'){
+      if( graphdata1 == '""' || graphdata1 == '[]'){
           $('.employee_status').addClass('d-none');
         }
       if ($("#donutMorris_emp").length == 1) {
@@ -574,7 +602,7 @@
     </div>
       <script>
     var graphdata2 = $("#fuel_filling").val();
-    if( graphdata2 == '[]'){
+    if( graphdata2 == '[]' || graphdata2 == '""'){
           $('.fuel_filling').addClass('d-none');
         }
     var $fuel_filling = JSON.parse(graphdata2);
@@ -620,7 +648,7 @@
     </div>
       <script>
     var graphdata2 = $("#numberofcompany").val();
-    if( graphdata2 == '[]'){
+    if( graphdata2 == '[]' ||  graphdata2 == '""'){
           $('.number_of_companies').addClass('d-none');
         }
     var $numberofcompanies = JSON.parse(graphdata2);
@@ -653,7 +681,7 @@
     </div>
       <script>
       var graphdata1 = $("#empstatus").val();
-      if( graphdata1 == '[]'){
+      if( graphdata1 == '[]' || graphdata1 == '""'){
           $('.company_status').addClass('d-none');
         }
       if ($("#donutMorris_emp").length == 1) {

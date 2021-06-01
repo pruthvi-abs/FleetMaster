@@ -65,6 +65,10 @@ class BranchCount extends BlockBase
 
     $data[0]['total_branches'] = (int)$total_branches[0]['total_branches'];
 
+    if(!in_array('branches',$role)){
+      $data = '';
+    }
+
     // dump($total_branches);
     // dump($data);
 

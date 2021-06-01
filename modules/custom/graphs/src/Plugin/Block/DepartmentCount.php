@@ -66,9 +66,10 @@ class DepartmentCount extends BlockBase
     
     $data[0]['total_department'] = (int)$total_department[0]['total_department'];
 
-    // dump($total_department);
-    // dump($data);
-
+    if(!in_array('departments',$role)){
+      $data = '';
+    }
+    
     return array(
       '#type' => 'markup-cust',
       '#temp' => "custom-data-graph",
