@@ -567,6 +567,20 @@ a.menu_lvl_0_link.is-active {
   cursor: default;
 }
 
+.disabled li.user-profile a,
+.disabled li.user-profile h5,
+.disabled .navbar-header span,
+.disabled .sidebar-header.user-profile a{
+  pointer-events: all;
+}
+
+.disabled .sidebar-header.user-profile a{
+  cursor: pointer;
+}
+.disabled li.user-profile h5{
+  cursor: default;
+}
+
 .divider {
   height: 1px;
   margin: 9px 0;
@@ -589,33 +603,6 @@ a.menu_lvl_0_link.is-active {
   font-size: 18px;
   /* vertical-align: middle !important; */
 }
-/* #sidebar.active ul li a.nav-icon span{
-  display: none !important;
-} 
-#sidebar.active ul li a.nav-icon::before{
-  padding: 15px;
-  font-size: 25px;
-} 
-#sidebar.active ul li span.cexpand{
-  display: none !important;
-} 
-
-#sidebar.active li:hover ul li a span{
-  font-size: 15px;
-}
-#sidebar.active li:hover ul li a{
-  border-radius: 0 5px 5px 0;
-}
-#sidebar.active li:hover ul{
-  left: 80px;
-  position: absolute;
-  margin-top: -45px;
-  width: 210px;
-  z-index: 4000;
-  background: #3E5367;
-  display: block;
-  font-size: 10px;
-} */
 
 #sidebar.active ul li a.nav-icon span {
   display: none !important;
@@ -649,25 +636,6 @@ a.menu_lvl_0_link.is-active {
   /* display: block; */
   font-size: 10px;
 }
-/* .nav-icon{
-  pointer-events: none;
-  cursor: pointer;
-} */
-
-/* .fixed-nav{
-  top: 0;
-  right: 0;
-  position: fixed;
-  width: 81.5%;
-  z-index: 9999;
-}
-.fixed-sidebar{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 18.5%;
-  z-index:9999;
-} */
 
 .disabled {
   cursor: not-allowed;
@@ -684,19 +652,6 @@ a.menu_lvl_0_link.is-active {
 .nav-item.active a {
   pointer-events: all;
 }
-
-/* .import-btn {
-  vertical-align: middle;
-  padding: 10px;
-  position: absolute;
-  top: 44%;
-  right: 8%;
-}
-.download_temp {
-  position: absolute;
-  top: 44%;
-  right: 4%;
-} */
 
 .description {
   margin-bottom: 10px;
@@ -734,4 +689,103 @@ textarea {
 .exposed-div{
   width: 100%;
   padding: 20px 40px 0 0;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  input[type=text],
+  input[type=email],
+  input[type=password],
+  input[type=file],
+  input[type=date],
+  select,
+  textarea{
+    width: 100% !important;
+  }
+  
+  .lorvens-bg.fixed-sidebar ul li a span {
+    display: none !important;
+  }
+  .lorvens-bg.fixed-sidebar.active ul li a span {
+    display: block !important;
+  }
+  
+  .layout.layout--threecol-33-34-33 {
+    position: relative;
+    display: inline-block;
+  }
+  
+  
+  .layout__region.layout__region--first {
+    width: 100% !important;
+    display: inline-block;
+    position: relative;
+  }
+
+  div[class*="col-"] div[class*="col-"] {
+    padding-right: 0px;
+    padding-left: 15px;
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .lorvens-bg.fixed-sidebar ul li a span {
+    display: none !important;
+  }
+  .lorvens-bg.fixed-sidebar.active ul li a span {
+    display: block !important;
+  }
+  
+  .layout.layout--threecol-33-34-33 {
+    position: relative;
+    /* display: inline-block; */
+  }
+  
+  .layout__region.layout__region--first {
+    width: 32% !important;
+    display: inline-block;
+    position: relative;
+  }
+  .layout__region.layout__region--second {
+    width: 32% !important;
+    display: inline-block;
+    position: relative;
+  }
+  .layout__region.layout__region--third {
+    width: 32% !important;
+    display: inline-block;
+    position: relative;
+  }
+  
+  div[class*="col-"] div[class*="col-"] {
+    padding-right: 0px;
+    padding-left: 15px;
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+  }
+  
+  span.cexpand{
+    margin-top: -40%;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1024px) { 
+  #sidebar {
+    min-width: 0px;
+    max-width: 0px;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1400px) {
+  .widget-area .wiget-title{
+    font-size: 1rem;
+  }
 }

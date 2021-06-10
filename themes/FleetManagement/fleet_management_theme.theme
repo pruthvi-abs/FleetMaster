@@ -90,14 +90,10 @@ function makereq($wirecardMerchantId, $merchant_ref, $amount, $currency, $card, 
 	$data['payment']['ip-address'] = '127.0.0.1';
 	$data['payment']['payment-methods']['payment-method'][0]['name'] = 'creditcard';
 	$data['payment']['success-redirect-url'] = $base_url . '/paymentsuccess?uid=' . $userdata['uid'];
+	// $data['payment']['fail-redirect-url'] = $base_url . '/paymentsuccess?uid=' . $userdata['uid'];
 	$data['payment']['fail-redirect-url'] = $base_url . '/paymentfailed?uid=' . $userdata['uid'];
 	$data['payment']['cancel-redirect-url'] = $base_url . '/renew';
   
-	// $data['payment']['success-redirect-url'] = "https://demoshop-test.wirecard.com/demoshop/#/success";
-	// $data['payment']['fail-redirect-url'] = "https://demoshop-test.wirecard.com/demoshop/#/error";
-	// $data['payment']['cancel-redirect-url'] = "https://demoshop-test.wirecard.com/demoshop/#/cancel";
-  // dump($data);
-  // die;
 	return json_encode($data);
 }
 
@@ -118,11 +114,15 @@ function payment($package){
 
 	if ($package == 'Silver') {
 		$data['amount'] = '100';
+    $updated_expiry_date = date('Y-m-d', strtotime("+1 day", strtotime("+3 months", strtotime(date("Y-m-d")))));
 	} elseif ($package == 'Gold') {
 		$data['amount'] = '300';
+    $updated_expiry_date = date('Y-m-d', strtotime("+1 day", strtotime("+6 months", strtotime(date("Y-m-d")))));
 	} elseif ($package == 'Platinum') {
 		$data['amount'] = '500';
+    $updated_expiry_date = date('Y-m-d', strtotime("+1 day", strtotime("+12 months", strtotime(date("Y-m-d")))));
 	}
+  $status = 'pending';
 	$_data = makereq($data['merchant_id'], $data['merchant_ref'], $data['amount'], $data['currency'], $data['card'], $data['expiry_month'], $data['expiry_year'], $data['cvv'], $data['ctype']);
 	$ch = curl_init();
 	$headers = array(
@@ -141,6 +141,28 @@ function payment($package){
 	curl_close($ch);
 	$res = json_decode($res, true);
   // dump($res);
+  $uid = \Drupal::currentUser()->id();
+  $status = "pending";
+  $current_date = date('Y-m-d');
+
+  // dump($uid);
+  // dump($package);
+  // dump($updated_expiry_date);
+  // dump($data['amount']);
+  // dump($status);
+  // dump($data['currency']);
+  // dump($current_date);
+  // die;
+
+  $connection = \Drupal::database();
+  $result = $connection->query("INSERT INTO `payment`(`uid`, `package`,`expiry_date`, `price`, `token_id`, `status`, `currency`, `created_at`) 
+    VALUES (".$uid.",'".$package."','".$updated_expiry_date."','".$data["amount"]."','','".$status."','".$data["currency"]."','".$current_date."')"); 
+  // dump($query);
+    // die;
+    
+  // dump($connection->insert_id);
+  // dump($connection);
+  // die;
 	$redirect_destination = $res['payment-redirect-url'];
   // dump($redirect_destination);
 	if (!empty($redirect_destination)) {
@@ -160,10 +182,10 @@ function fleet_management_theme_preprocess_page(&$variables)
   $session = \Drupal::request()->getSession();
   $database = \Drupal::database();
   $variables['company_email'] = $session->get('company_email');
-  $query = $database->query("SELECT uid,field_package_value FROM user__field_package,users_field_data where uid = entity_id and mail = '" . $variables['company_email'] . "'");
-  $result = $query->fetchAll();
-  $field_package_value = $result[0]->field_package_value;
-  $uid = $result[0]->uid;
+  $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+  $variables['current_package'] = $user->field_package->getValue()[0]['value'];
+
+  $uid = \Drupal::currentUser()->id();
 
   $variables['base_url'] = $base_url;
   $current_user = \Drupal::currentUser();
@@ -176,22 +198,30 @@ function fleet_management_theme_preprocess_page(&$variables)
     $uid = $current_user->id();
     $current_date = date('Y-m-d');
     if ($path_args[2] == '246') { // for thank you subscription page
+      $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+      $variables['package'] = $user->field_package->getValue()[0]['value'];
+
       if(isset($_POST['bronze-btn'])){
-        $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
         $updated_expiry_date = date('Y-m-d', strtotime("+1 day", strtotime("+1 months", strtotime(date("Y-m-d")))));
      
         $connection = \Drupal::database();
-        $result = $connection->query("INSERT INTO `payment`(`uid`, `package`, `price`, `token_id`, `status`, `currency`, `created_at`) 
-          VALUES (".$current_user->id().",'Bronze','0','','','PGK','".$current_date."')"); 
+        $result = $connection->query("INSERT INTO `payment`(`uid`, `package`,`expiry_date`, `price`, `token_id`, `status`, `currency`, `created_at`) 
+          VALUES (".$current_user->id().",'Bronze','".$updated_expiry_date."','0','','success','PGK','".$current_date."')"); 
+        // $query = $connection->query("UPDATE user__field_package_expiry_date SET field_package_expiry_date_value = '$updated_expiry_date' where entity_id = $uid");
+        // $query = $connection->query("UPDATE user__field_package_start_date SET field_package_start_date_value = '$current_date' where entity_id = $uid");
+        // $query = $connection->query("UPDATE user__field_package_cost SET field_package_cost_value = '0' where entity_id = $uid");
 
-        $query = $connection->query("UPDATE user__field_package_expiry_date SET field_package_expiry_date_value = '$updated_expiry_date' where entity_id = $uid");
+        $user->set('field_package', 'Bronze');
+        $user->set('field_package_cost', '0');
+        $user->set('field_package_start_date', $current_date);
+        $user->set('field_package_expiry_date', $updated_expiry_date);
 
-        $data['roles'] = array('vehicle_','employee','vehicle_allotment','fuel_filling','vehicle_maintenance','accident_monitering','trip_logging','branches','departments');
+        $data['roles'] = array('vehicle_','employee','vehicle_allotment','fuel_filling','user_security','vehicle_maintenance','accident_monitering','trip_logging','branches','departments');
         foreach($data['roles'] as $role){
           $user->addRole($role);
         }
 
-        $roles = array('vehicle_maintenance','accident_monitering','trip_logging','branches','departments');
+        $roles = array('vehicle_maintenance','accident_monitering','trip_logging','user_security');
         foreach($roles as $role){
           $user->removeRole($role);
         }
@@ -221,6 +251,40 @@ function fleet_management_theme_preprocess_page(&$variables)
     }
 
   }
+  if($path_args[1] == 'node' && $path_args[2] == '268'){
+    if(\Drupal::currentUser()->id() != '1'){
+      $uid = $current_user->id();
+
+      $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+
+      // dump($user);
+      $variables['company_name'] = $user->field_company_name->getValue()[0]['value'];
+      $variables['user_address'] = $user->field_address->getValue()[0]['value'];
+      $variables['user_contact'] = $user->field_contac->getValue()[0]['value'];
+      $variables['user_mail'] = $user->mail->getValue()[0]['value'];
+      $variables['user_created_date'] = date('F j, Y', $user->created->getValue()[0]['value']);
+      
+      $variables['package_name'] = $user->field_package->getValue()[0]['value'];
+      $variables['package_start_date'] = $user->field_package_start_date->getValue()[0]['value'];
+      $variables['package_expiry_date'] = $user->field_package_expiry_date->getValue()[0]['value'];
+      $variables['package_cost'] = $user->field_package_cost->getValue()[0]['value'];
+
+      $query = $database->query("SELECT * FROM payment where uid = $uid");
+      $result = $query->fetchAll();
+      $variables['result'] = json_encode($result);
+      // dump(json_encode($result));
+
+      // dump($variables['company_name']);
+      // dump($variables['user_address']);
+      // dump($variables['user_contact']);
+      // dump($variables['user_created_date']);
+      // dump($variables['package_name']);
+      // dump($variables['package_start_date']);
+      // dump($variables['package_expiry_date']);
+      // dump($variables['package_cost']);
+      // dump($user);
+    }
+  }
   if($path_args[1] == 'node' && $path_args[2] == '107'){
     if($_POST['response-base64']){
       $user = \Drupal\user\Entity\User::load($_GET['uid']);
@@ -232,6 +296,7 @@ function fleet_management_theme_preprocess_page(&$variables)
       $currency = $data['payment']['requested-amount']['currency'];
       $token_id = $data['payment']['card-token']['token-id'];
       $completion_date = $data['payment']['completion-time-stamp'];
+      $current_date = date('Y-m-d');
 
       if($requested_amount == '100'){
         $data['package'] = 'Silver';
@@ -251,17 +316,22 @@ function fleet_management_theme_preprocess_page(&$variables)
       $data['currency'] = $currency;
       $data['token_id'] = $token_id;
       $data['completion_date'] = $completion_date;
-      $data['roles'] = array('vehicle_','employee','vehicle_allotment','fuel_filling','vehicle_maintenance','accident_monitering','trip_logging','branches','departments');
+      $data['roles'] = array('vehicle_','employee','vehicle_allotment','fuel_filling','user_security','vehicle_maintenance','accident_monitering','trip_logging','branches','departments');
 
       $connection = \Drupal::database();
-      $result = $connection->query("INSERT INTO `payment`(`uid`, `package`, `price`, `token_id`, `status`, `currency`, `created_at`) 
-        VALUES (".$data["uid"].",'".$data["package"]."','".$data["requested_amount"]."','".$data["token_id"]."','".$data["status"]."','".$data["currency"]."','".$data["completion_date"]."')"); 
+      $query = $connection->query("SELECT `pid` FROM payment 
+          WHERE `uid`='$uid' and `package`='".$data['package']."' and `status`='pending' and `created_at` = '$current_date' ORDER BY `pid` DESC LIMIT 1"); 
+      $pid = $query->fetchAll();
+      $pid = $pid[0]->pid;
+      $result = $connection->query("UPDATE `payment` SET `status`='".$data['status']."',`token_id`='".$data['token_id']."',`expiry_date`='$updated_expiry_date',`created_at`='$current_date' WHERE `pid` = '$pid'"); 
+      // $query = $connection->query("UPDATE user__field_package_expiry_date SET field_package_expiry_date_value = '$updated_expiry_date' where entity_id = $uid");
+      // $query = $connection->query("UPDATE user__field_package_start_date SET field_package_start_date_value = '$current_date' where entity_id = $uid");
+      // $query = $connection->query("UPDATE user__field_package_cost SET field_package_cost_value = '$requested_amount' where entity_id = $uid");
 
-      // $query = $connection->query("SELECT field_package_expiry_date_value FROM {user__field_package_expiry_date} where entity_id = $uid");
-      // $expiry_date = $query->fetchObject();
-      // $expiry_date = $expiry_date->field_package_expiry_date_value;
-      
-      $query = $connection->query("UPDATE user__field_package_expiry_date SET field_package_expiry_date_value = '$updated_expiry_date' where entity_id = $uid");
+      $user->set('field_package', $data['package']);
+      $user->set('field_package_cost', $requested_amount);
+      $user->set('field_package_start_date', $current_date);
+      $user->set('field_package_expiry_date', $updated_expiry_date);
 
       foreach($data['roles'] as $role){
         $user->addRole($role);
@@ -300,6 +370,7 @@ function fleet_management_theme_preprocess_page(&$variables)
   if($path_args[1] == 'node' && $path_args[2] == '262'){
     if($_POST['response-base64']){
       $user = \Drupal\user\Entity\User::load($_GET['uid']);
+      $current_date = date('Y-m-d');
 
       $data = base64_decode($_POST['response-base64']);
       $data = json_decode($data,true);
@@ -309,7 +380,6 @@ function fleet_management_theme_preprocess_page(&$variables)
       $token_id = $data['payment']['card-token']['token-id'];
       $completion_date = $data['payment']['completion-time-stamp'];
 
-      // $data['roles'] = array('vehicle_','employee','vehicle_allotment','fuel_filling');
       if($requested_amount == '100'){
         $data['package'] = 'Silver';
         $updated_expiry_date = date('Y-m-d', strtotime("+1 day", strtotime("+3 months", strtotime(date("Y-m-d")))));
@@ -328,13 +398,25 @@ function fleet_management_theme_preprocess_page(&$variables)
       $data['currency'] = $currency;
       $data['token_id'] = $token_id;
       $data['completion_date'] = $completion_date;
-      $data['roles'] = array('vehicle_','employee','vehicle_allotment','fuel_filling','vehicle_maintenance','accident_monitering','trip_logging','branches','departments');
+      $data['roles'] = array('vehicle_','employee','vehicle_allotment','fuel_filling','user_security','vehicle_maintenance','accident_monitering','trip_logging','branches','departments');
 
       $connection = \Drupal::database();
-      $result = $connection->query("INSERT INTO `payment`(`uid`, `package`, `price`, `token_id`, `status`, `currency`, `created_at`) 
-        VALUES (".$data["uid"].",'".$data["package"]."','".$data["requested_amount"]."','".$data["token_id"]."','".$data["status"]."','".$data["currency"]."','".$data["completion_date"]."')"); 
+      $query = $connection->query("SELECT `pid` FROM payment 
+      WHERE `uid`='$uid' and `package`='".$data['package']."' and `status`='pending' and `created_at` = '$current_date' ORDER BY `pid` DESC LIMIT 1"); 
+      $pid = $query->fetchAll();
+      $pid = $pid[0]->pid;
+      // dump($query);
+      // dump($pid);
+      // die;
+      $result = $connection->query("UPDATE `payment` SET `status`='".$data['status']."',`token_id`='".$data['token_id']."',`expiry_date`='$updated_expiry_date',`created_at`='$current_date' WHERE `pid` = '$pid'"); 
+      // $query = $connection->query("UPDATE user__field_package_expiry_date SET field_package_expiry_date_value = '$updated_expiry_date' where entity_id = $uid");
+      // $query = $connection->query("UPDATE user__field_package_start_date SET field_package_start_date_value = '$current_date' where entity_id = $uid");
+      // $query = $connection->query("UPDATE user__field_package_cost SET field_package_cost_value = '$requested_amount' where entity_id = $uid");
 
-      $query = $connection->query("UPDATE user__field_package_expiry_date SET field_package_expiry_date_value = '$updated_expiry_date' where entity_id = $uid");
+      $user->set('field_package', $data['package']);
+      $user->set('field_package_cost', $requested_amount);
+      $user->set('field_package_start_date', $current_date);
+      $user->set('field_package_expiry_date', $updated_expiry_date);
 
       foreach($data['roles'] as $role){
         $user->addRole($role);
@@ -352,7 +434,10 @@ function fleet_management_theme_preprocess_page(&$variables)
         }
       }
       $user->save();
-      
+
+      // dump($user);
+      // die;
+
       // $query = $connection->query("SELECT field_package_expiry_date_value FROM {user__field_package_expiry_date} where entity_id = $uid");
       // $expiry_date = $query->fetchObject();
       // $expiry_date = $expiry_date->field_package_expiry_date_value;
@@ -398,7 +483,9 @@ function fleet_management_theme_preprocess_page(&$variables)
           }
         }
         else{
-          $variables['expiry_status'] = 'new-user';
+          if ($current_date == $variables['package_expiry_date']) {
+            $variables['expiry_status'] = 'new-user';
+          }
         }
       } elseif (in_array('Operator',$variables['role'])) {
         $parent_company_id = $user->field_operatorcompany->getValue()[0]['target_id'];

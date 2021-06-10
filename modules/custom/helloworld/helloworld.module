@@ -131,30 +131,34 @@ function  helloworld_form_alter(&$form, FormStateInterface $form_state, $form_id
 			$form = _branch_list_exposed_options($form, $path_args);
 			$form=  _department_list_exposed_options($form,$path_args);
 			$form['field_trip_completed_status_value']['#options'][1]="Completed";
-			$form['field_trip_completed_status_value']['#options'][0]="Ongoing";	
-
-			if($path_args[1]=="employeelist")
-			{ 
-				$form['views_exposed_form'] = array(
-					'#markup' => '<div class="text-right exposed-div"><div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/node/add/employees_import"><i class="fa fa-upload" aria-hidden="true"></i></a></div>
+			$form['field_trip_completed_status_value']['#options'][0]="Ongoing";
+			
+			$user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+  			$current_package = $user->field_package->getValue()[0]['value'];
+			// dump($current_package);
+			if($current_package != 'Bronze')
+			{
+				if($path_args[1]=="employeelist")
+				{ 
+					$form['views_exposed_form'] = array(
+					'#markup' => '<div class="text-right exposed-div"><div class="button btn btn-outline-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/node/add/employees_import"><i class="fa fa-upload" aria-hidden="true"></i></a></div>
 					<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/employee_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div></div>');
+				}
+				if($path_args[1]=="vehicles")
+				{
+					$form['views_exposed_form'] = array(
+						'#markup' => '<div class="text-right exposed-div"><div class="button btn btn-outline-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/node/add/vehicles_import"><i class="fa fa-upload" aria-hidden="true"></i></a></div>
+						<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/vehicle_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div></div>');
+				}
+				if($path_args[1]=="fuelmaster")
+				{
+					$form['views_exposed_form'] = array(
+						'#markup' => '<div class="text-right exposed-div"><div class="button btn btn-outline-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/node/add/fuel_master_import"><i class="fa fa-upload" aria-hidden="true"></i></a></div>
+						<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/fuel_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div></div>');
+				}
 			}
-
-			if($path_args[1]=="vehicles")
-			{
-				$form['views_exposed_form'] = array(
-					'#markup' => '<div class="text-right exposed-div"><div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/node/add/vehicles_import"><i class="fa fa-upload" aria-hidden="true"></i></a></div>
-					<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/vehicle_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div></div>');
-			}
-			if($path_args[1]=="fuelmaster")
-			{
-				$form['views_exposed_form'] = array(
-					'#markup' => '<div class="text-right exposed-div"><div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/node/add/fuel_master_import"><i class="fa fa-upload" aria-hidden="true"></i></a></div>
-					<div class="button btn btn-primary btn-lg download_temp rounded-5"><a href="'.$base_url.'/sites/default/files/fuel_import.csv"><i class="fa fa-download" aria-hidden="true"></i></a></div></div>');
-			}
-
-			break;
-
+				break;
+				
 		case 'node_branches_form':
 		case 'node_branches_edit_form':	
 
@@ -1846,5 +1850,17 @@ function helloworld_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\
 				}
 			}
 		}
+	}
+	if ($view->id() == 'driver_mangement') {
+		// Traverse through the 'where' part of the query.
+		$driver_mangement = \Drupal\views\Views::getView('driver_mangement');
+		$driver_mangement->setDisplay('data_export_1');
+		$driver_mangement->execute();
+		$view_result = $driver_mangement->result;
+
+		// dump($view_result);
+		// dump($driver_mangement);
+		// dump($view->getDisplay('data_export_1'));
+		// dump($view);
 	}
 }

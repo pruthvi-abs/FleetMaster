@@ -22,7 +22,12 @@ a:hover {
   text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Jost", sans-serif;
 }
 
@@ -111,7 +116,8 @@ h1, h2, h3, h4, h5, h6 {
   padding: 15px 0;
 }
 
-#header.header-scrolled, #header.header-inner-pages {
+#header.header-scrolled,
+#header.header-inner-pages {
   background: rgba(40, 58, 90, 0.9);
 }
 
@@ -164,7 +170,9 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Open Sans", sans-serif;
 }
 
-.nav-menu a:hover, .nav-menu .active > a, .nav-menu li:hover > a {
+.nav-menu a:hover,
+.nav-menu .active > a,
+.nav-menu li:hover > a {
   color: #47b2e4;
 }
 
@@ -202,7 +210,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #0c3c53;
 }
 
-.nav-menu .drop-down ul a:hover, .nav-menu .drop-down ul .active > a, .nav-menu .drop-down ul li:hover > a {
+.nav-menu .drop-down ul a:hover,
+.nav-menu .drop-down ul .active > a,
+.nav-menu .drop-down ul li:hover > a {
   color: #47b2e4;
 }
 
@@ -296,7 +306,7 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: 55px;
   right: 15px;
-  bottom: 15px;
+  /* bottom: 15px; */
   left: 15px;
   z-index: 9999;
   overflow-y: auto;
@@ -323,7 +333,9 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
 }
 
-.mobile-nav a:hover, .mobile-nav .active > a, .mobile-nav li:hover > a {
+.mobile-nav a:hover,
+.mobile-nav .active > a,
+.mobile-nav li:hover > a {
   color: #47b2e4;
   text-decoration: none;
 }
@@ -384,7 +396,7 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 80vh;
+  height: auto;
   background: #37517e;
 }
 
@@ -453,7 +465,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 991px) {
   #hero {
-    height: 100vh;
+    height: auto;
     text-align: center;
   }
   #hero .animated {
@@ -529,7 +541,7 @@ section {
 }
 
 .section-bg {
-  background-color: #f3f5fa;
+  background-color: #fff;
 }
 
 .section-title {
@@ -548,7 +560,7 @@ section {
 }
 
 .section-title h2::before {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: 120px;
@@ -559,7 +571,7 @@ section {
 }
 
 .section-title h2::after {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: 40px;
@@ -760,7 +772,8 @@ section {
 }
 
 @media (max-width: 1024px) {
-  .why-us .content, .why-us .accordion-list {
+  .why-us .content,
+  .why-us .accordion-list {
     padding-left: 0;
     padding-right: 0;
   }
@@ -841,7 +854,7 @@ section {
 .skills .progress-bar {
   width: 1px;
   height: 10px;
-  transition: .9s;
+  transition: 0.9s;
   background-color: #4668a2;
 }
 
@@ -894,7 +907,8 @@ section {
 # Cta
 --------------------------------------------------------------*/
 .cta {
-  background: linear-gradient(rgba(40, 58, 90, 0.9), rgba(40, 58, 90, 0.9)), url("../img/cta-bg.jpg") fixed center center;
+  background: linear-gradient(rgba(40, 58, 90, 0.9), rgba(40, 58, 90, 0.9)),
+    url("../img/cta-bg.jpg") fixed center center;
   background-size: cover;
   padding: 120px 0;
 }
@@ -964,7 +978,8 @@ section {
   font-family: "Poppins", sans-serif;
 }
 
-.portfolio #portfolio-flters li:hover, .portfolio #portfolio-flters li.filter-active {
+.portfolio #portfolio-flters li:hover,
+.portfolio #portfolio-flters li.filter-active {
   background: #47b2e4;
   color: #fff;
 }
@@ -1007,7 +1022,8 @@ section {
   margin-bottom: 0;
 }
 
-.portfolio .portfolio-item .portfolio-info .preview-link, .portfolio .portfolio-item .portfolio-info .details-link {
+.portfolio .portfolio-item .portfolio-info .preview-link,
+.portfolio .portfolio-item .portfolio-info .details-link {
   position: absolute;
   right: 40px;
   font-size: 24px;
@@ -1016,7 +1032,8 @@ section {
   transition: 0.3s;
 }
 
-.portfolio .portfolio-item .portfolio-info .preview-link:hover, .portfolio .portfolio-item .portfolio-info .details-link:hover {
+.portfolio .portfolio-item .portfolio-info .preview-link:hover,
+.portfolio .portfolio-item .portfolio-info .details-link:hover {
   color: #47b2e4;
 }
 
@@ -1078,7 +1095,7 @@ section {
 }
 
 .team .member span::after {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: 50px;
@@ -1165,7 +1182,6 @@ section {
   font-size: 20px;
 }
 
-
 .pricing h4 span {
   color: #47b2e4;
   font-size: 18px;
@@ -1181,7 +1197,7 @@ section {
 }
 
 .pricing ul li {
-  padding: 5px 0 5px 30px;;
+  padding: 5px 0 5px 30px;
   position: relative;
 }
 
@@ -1275,7 +1291,7 @@ section {
 
 .faq .faq-list li {
   padding: 20px;
-  background: #fff;
+  background: #f3f5fa;
   border-radius: 4px;
   position: relative;
 }
@@ -1287,7 +1303,7 @@ section {
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
-  padding: 0 30px;
+  /* padding: 0 30px; */
   outline: none;
 }
 
@@ -1299,7 +1315,8 @@ section {
   color: #47b2e4;
 }
 
-.faq .faq-list .icon-show, .faq .faq-list .icon-close {
+.faq .faq-list .icon-show,
+.faq .faq-list .icon-close {
   font-size: 24px;
   position: absolute;
   right: 0;
@@ -1407,7 +1424,9 @@ section {
   color: #fff;
 }
 
-.contact .info .email:hover i, .contact .info .address:hover i, .contact .info .phone:hover i {
+.contact .info .email:hover i,
+.contact .info .address:hover i,
+.contact .info .phone:hover i {
   background: #47b2e4;
   color: #fff;
 }
@@ -1475,14 +1494,16 @@ section {
   animation: animate-loading 1s linear infinite;
 }
 
-.contact .php-email-form input, .contact .php-email-form textarea {
+.contact .php-email-form input,
+.contact .php-email-form textarea {
   border-radius: 0;
   box-shadow: none;
   font-size: 14px;
   border-radius: 4px;
 }
 
-.contact .php-email-form input:focus, .contact .php-email-form textarea:focus {
+.contact .php-email-form input:focus,
+.contact .php-email-form textarea:focus {
   border-color: #47b2e4;
 }
 
@@ -1583,7 +1604,8 @@ section {
   z-index: 1;
 }
 
-.portfolio-details .portfolio-details-carousel .owl-nav, .portfolio-details .portfolio-details-carousel .owl-dots {
+.portfolio-details .portfolio-details-carousel .owl-nav,
+.portfolio-details .portfolio-details-carousel .owl-dots {
   margin-top: 5px;
   text-align: left;
 }
@@ -1834,7 +1856,8 @@ section {
     padding-top: 20px;
     padding-bottom: 20px;
   }
-  #footer .copyright, #footer .credits {
+  #footer .copyright,
+  #footer .credits {
     text-align: center;
     float: none;
   }

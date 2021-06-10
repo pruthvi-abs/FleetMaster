@@ -35,6 +35,11 @@ Color : RED
     color: #37517e;
     border-color: #37517e;
 }
+.btn-outline-primary:hover {
+	color: #fff;
+    background-color: #37517e;
+    border-color: #37517e;
+}
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
 	background: #37517e;
 }

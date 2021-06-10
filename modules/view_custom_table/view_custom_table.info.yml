@@ -1,0 +1,13 @@
+type: module
+name: Views Custom Table
+description: 'Extends views to use custom table data.'
+package: Views
+core_version_requirement: 9.x
+dependencies:
+  - drupal:views
+configure: view_custom_table.customtable
+
+# Information added by Drupal.org packaging script on 2020-06-15
+version: '9.0.x-dev'
+project: 'view_custom_table'
+datestamp: 1592223983

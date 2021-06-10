@@ -1,0 +1,360 @@
+{{ attach_library("fleet_management_theme/back-style") }}
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/modernizr.min.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/jquery-3.2.1.min.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/popper.min.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/bootstrap.min.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/jquery-jvectormap.min.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/jquery-jvectormap-world-mill.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/custom-vector.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/charts/js/raphael-min.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/charts/js/morris.min.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/css/sweetalert2.min.css"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/sweetalert2.all.js"></script>
+<link rel="stylesheet" href="{{url('<front>')}}themes/FleetManagement/assets/back/charts/css/morris.css"
+/>
+{#
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+#}
+<!-- Pre Loader -->
+<div class="loading">
+  <div class="spinner">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  </div>
+</div>
+<!--/Pre Loader -->
+<div class="wrapper">
+  <!-- Sidebar -->
+  <nav id="sidebar" class="lorvens-bg">
+    <div class="sidebar-header">
+      {% if role == 'company' %} {% set home_url = base_url ~
+      '/company/dashboard' %} {% elseif role == 'data_entry' %} {% set home_url =
+      base_url ~ '/operator/dashboard' %} {% elseif role == 'administrator' %}
+      {% set home_url = base_url ~ '/admin/dashboard' %} {% endif %}
+      <a href="{{ home_url }}"><h5 class="logo" alt="logo">DIGIFLEET</h5></a>
+      <a href="{{ home_url }}"
+        ><h5 class="minimal-logo" alt="logo"><strong>DF</strong></h5></a
+      >
+    </div>
+    {% if expiry_status not in ['expired', 'new-user'] %}
+    <ul class="list-unstyled components">
+      {{
+        page.header
+      }}
+    </ul>
+    {% endif %}
+  </nav>
+  <!-- /Sidebar -->
+  <!-- Page Content -->
+  <div id="content">
+    <!-- Top Navigation -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <span class="ti-menu" id="sidebarCollapse"></span>
+        </div>
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              {% if notifications | json_decode %}
+              <span class="ti-announcement"><span class="notification-badges"></span></span>
+              {% else %}
+              <span class="ti-announcement"></span>
+              {% endif %}
+            </a>
+            <div class="dropdown-menu lorvens-box-shadow notifications animated flipInY">
+              <div class="notification-heading row m-0">                
+                <div class="text-left col-6 pt-1">
+                  <h5>Notifications</h5>
+                </div>
+                <div class="text-right col-4">
+                  <a href="{{ base_url }}/notifications" class="dropdown-header text-light btn btn-success font-weight-bold text-right m-auto">View More</a>
+                  {# <a href="{{ base_url }}/notifications" class="btn btn-primary h-50 rounded-5">View More</a> #}
+                </div>
+              </div>
+              <div class="notification-menu">
+              {% if notifications | json_decode %}
+              {% for i in 0..4 %}
+                {% set notification = notifications | json_decode %}
+                {% if notification[i][0].type %}
+                <p class="dropdown-header font-weight-bold text-left bg-lightgrey">{{ notification[i][0].type }}</p>
+                {% endif %}
+                {% for j in 0..2 %}
+                  {% if notification[i][j] %}
+                    <a class="dropdown-item" href="#">
+                      <span class="{{ notification[i][j].icon }}"></span> {{ notification[i][j].title }}</a>
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+              {#
+                <hr class="m-0">
+                   <a href="{{ base_url }}/notifications" class="dropdown-header text-center text-primary font-weight-bold text-left m-auto">View More</a> #}
+              {% else %}
+                <a class="dropdown-item" href="#">
+                  <span class="ti-info"></span> No Notification Yet!</a>
+              {% endif %}
+                </div>
+            </div>
+          </li>
+          <li class="nav-item user-profile">
+            <a
+              class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              href="#"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span class="ti-user"></span>
+            </a>
+            <div
+              class="dropdown-menu lorvens-box-shadow profile animated flipInY"
+            >
+              <h5>{{ username }}</h5>
+              <!-- <a class="dropdown-item" href="#">
+                <span class="ti-settings"></span> Settings</a
+              > -->
+              <a class="dropdown-item" href="{{ base_url }}/help">
+                <span class="ti-help-alt"></span> Help</a
+              >
+              <a class="dropdown-item" href="{{ base_url }}/user/logout">
+                <span class="ti-power-off"></span> Logout</a
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- /Top Navigation -->
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="index.html">
+          <span class="ti-home"></span>
+        </a>
+      </li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <!-- /Breadcrumb -->
+    <!-- Main Content -->
+    <div class="container-fluid">
+      <!-- Page Title -->
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="block-title">Profile</h3>
+        </div>
+      </div>
+      <!-- /Page Title -->
+      <div class="row">
+          <div class="col-md-12">
+            <div class="widget-area-2 lorvens-box-shadow pb-3">
+              <!-- Invoice Head -->
+              <div class="row ">
+                <div class="col-sm-6 mb-5">
+                  <h5 class="lorvens-text-color">Company Name</h5>
+                  <span>{{ company_name }}</span>
+                  <br>
+  
+                  <br>
+                  <span class="pr-2">Address: {{ user_address }}</span>
+                  <br>
+                  <span class="pr-2">Phone: {{ user_contact }}</span>
+                  <br>
+                  <span class="pr-2">Email: {{ user_mail }}</span>
+                </div>
+                <div class="col-sm-6 text-md-right mb-5">
+                  <h3>PROFILE</h3>
+                  <br>
+                  <br>
+                  <span>Created At #</span>
+                  <br>
+                  <span>Date: {{ user_created_date }}</span>
+                </div>
+              </div>
+              <!-- /Invoice Head -->
+              <!-- Invoice Content -->
+              <div class="row">
+                <div class="col-sm-12 mb-5">
+                  <strong class="lorvens-text-color">CURRENT PACKAGE:</strong>
+                </div>
+                <div class="col-sm-12 mb-5">
+                  <table class="table table-bordered table-striped table-invioce">
+                    <thead>
+                      <tr>
+                        <th scope="col">Package Name</th>
+                        <th scope="col">Package Cost</th>
+                        <th scope="col">Package Start Date</th>
+                        <th scope="col">Package End Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{ package_name }}</td>
+                        <td>{{ package_cost }}</td>
+                        <td>{{ package_start_date }}</td>
+                        <td>{{ package_expiry_date }}</td>
+                      </tr>
+  
+                    </tbody>
+                  </table>
+                </div>
+                <div class="lorvens-widget mb-5">
+                  <div class="col-sm-12">
+                      <a href="{{ base_url }}/renew">
+                        <input id="update" value="Update Subscriptions" class="button button--primary js-form-submit form-submit btn btn-primary btn-lg btn-block h-50 rounded-5">
+                      </a>
+                      {# <a class="btn btn-primary btn-lg btn-block h-50 rounded-5">Update Subscriptions</a> #}
+                  </div>
+                </div>
+                 <div class="col-sm-12 mb-5">
+                  <strong class="lorvens-text-color">SUBSCRIPTIONS DETAILS:</strong>
+                </div>
+                <div class="col-sm-12">
+                  <table class="table table-bordered table-striped table-invioce">
+                    <thead>
+                      <tr>
+                        <th scope="col">Package Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Package Start Date</th>
+                        <th scope="col">Package End Date</th>
+                        <th scope="col">Package Cost</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% if result | json_decode %}
+                        {% set data = result | json_decode %}
+                        {% set total = 0 %}
+                        {% set count = (result | json_decode)|length - 1 %}
+                        {% for i in 0..count %}
+                          {% set total = total + data[i].price %}
+                        <tr>
+                          <th scope="row">{{ data[i].package }}</th>
+                          <td>{{ data[i].status }}</td>
+                          <td>{{ data[i].created_at }}</td>
+                          <td>{{ data[i].expiry_date }}</td>
+                          <td>{{ data[i].price }}</td>
+                        </tr>
+                        {% endfor %}
+                      {% endif %}
+  
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-sm-4 ml-auto">
+                  <table class="table table-bordered table-striped">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>GRAND TOTAL</strong>
+                        </td>
+                        <td>
+                          <strong>{{ total }}</strong>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div> 
+  
+                <!-- <div class="col-sm-12">
+                  <div class="border p-4">
+                    <strong>Note:</strong>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur id illo incidunt, iste libero quisquam? A aut cumque
+                    fuga fugit iusto libero officia optio quasi, quisquam saepe voluptate voluptatibus voluptatum.
+                    <br>
+                    <br>
+                    <strong class="f12">Thanks for your business</strong>
+                  </div>
+                </div> -->
+  
+              </div>
+              <!-- /Invoice Content -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Main Content -->
+  </div>
+  <!-- /Page Content -->
+</div>
+<!-- Back to Top -->
+
+<!-- 
+  File Include
+-->
+<a id="back-to-top" href="#" class="back-to-top">
+  <span class="ti-angle-up"></span>
+</a>
+<script>
+  var package = document.getElementById("package").value;
+  // console.log(package);
+  if (package == "expired") {
+    Swal.fire({
+      title: 'Package Expired!',
+      text: "Please Renew Your Package!",
+      icon: 'error',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Subscribe!',
+      cancelButtonText: 'Logout',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey:false,
+      showClass: {
+        popup: 'swal2-noanimation',
+        backdrop: 'swal2-noanimation'
+      },
+      hideClass: {
+        popup: '',
+        backdrop: ''
+      }
+    }).then((result) => {
+      console.log(result);
+      if (result.isConfirmed) {
+        // window.location.href = "https://www.google.com/";
+        window.location.href = '{{ base_url }}/renew';
+      }
+      if(result.isDismissed){
+        // window.location.href = "https://www.google.com/";
+        window.location.href = '{{ base_url }}/user/logout';
+      }
+    })
+  }
+
+  if (package == "new-user") {
+    Swal.fire({
+      title: 'Subscribe Package!',
+      text: "Please Choose Your Package!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Subscribe!',
+      cancelButtonText: 'Logout',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey:false,
+      showClass: {
+        popup: 'swal2-noanimation',
+        backdrop: 'swal2-noanimation'
+      },
+      hideClass: {
+        popup: '',
+        backdrop: ''
+      }
+    }).then((result) => {
+      console.log(result);
+      if (result.isConfirmed) {
+        // window.location.href = "https://www.google.com/";
+        window.location.href = '{{ base_url }}/renew';
+      }
+      if(result.isDismissed){
+        // window.location.href = "https://www.google.com/";
+        window.location.href = '{{ base_url }}/user/logout';
+      }
+    })
+  }
+</script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/sweetalert2.all.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/custom.js"></script>
+<script src="{{url('<front>')}}themes/FleetManagement/assets/back/js/bootstrap.min.js"></script>
